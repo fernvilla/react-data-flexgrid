@@ -1,0 +1,28 @@
+.flexgrid {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc; }
+  .flexgrid .flexgrid-header {
+    display: flex;
+    flex-direction: row;
+    background-color: #cccccc;
+    padding-left: 1em;
+    padding-right: 1em; }
+  .flexgrid .flexgrid-header-item {
+    padding: 0.5em; }
+  .flexgrid .flexgrid-row {
+    display: flex;
+    flex-direction: row;
+    padding-left: 1em;
+    padding-right: 1em; }
+    .flexgrid .flexgrid-row:nth-child(odd) {
+      background-color: #f2f2f2; }
+    .flexgrid .flexgrid-row:hover {
+      background-color: rgba(176, 223, 184, 0.5); }
+  .flexgrid .flexgrid-footer {
+    display: inline-flex;
+    padding: 0.5em 1em;
+    font-size: 0.9em; }
+  .flexgrid .page-toggle {
+    padding: 0 0.3em;
+    cursor: pointer; }

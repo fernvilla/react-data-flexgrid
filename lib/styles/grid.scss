@@ -1,0 +1,45 @@
+@import "_variables.scss";
+
+.flexgrid {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+
+  .flexgrid-header {
+    display: flex;
+    flex-direction: row;
+    background-color: $grid-header-color;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+
+  .flexgrid-header-item {
+    padding: 0.5em;
+  }
+
+  .flexgrid-row {
+    display: flex;
+    flex-direction: row;
+    padding-left: 1em;
+    padding-right: 1em;
+
+    &:nth-child(odd) {
+      background-color: $grid-striped-color;
+    }
+
+    &:hover {
+      background-color: rgba(176, 223, 184, 0.5);
+    }
+  }
+
+  .flexgrid-footer {
+    display: inline-flex;
+    padding: 0.5em 1em;
+    font-size: 0.9em;
+  }
+
+  .page-toggle {
+    padding: 0 0.3em;
+    cursor: pointer;
+  }
+}
