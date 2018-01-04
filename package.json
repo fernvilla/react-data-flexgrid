@@ -4,9 +4,12 @@
   "description": "data grid",
   "main": "dist/index.js",
   "style": "dist/grid.css",
-  "files": ["*.md", "dist", "lib"],
-  "author":
-    "Fernando Villasenor <fvilla18@gmail.com> (http://fernvillasenor.com)",
+  "files": [
+    "*.md",
+    "dist",
+    "lib"
+  ],
+  "author": "Fernando Villasenor <fvilla18@gmail.com> (http://fernvillasenor.com)",
   "license": "ISC",
   "scripts": {
     "build": "yarn run js && yarn run css",
