@@ -14,6 +14,10 @@ var _propTypes = require("prop-types");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+var _Pager = require("./Pager");
+
+var _Pager2 = _interopRequireDefault(_Pager);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30,18 +34,36 @@ var Flexflexgrid = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Flexflexgrid.__proto__ || Object.getPrototypeOf(Flexflexgrid)).call(this, props));
 
-    _this.state = { page: props.currentPage, rowsPerPage: props.rowsPerPage };
-    _this.totalPages = Math.ceil(props.data.length / props.rowsPerPage);
+    _this.state = {
+      page: props.currentPage,
+      rowsPerPage: props.rowsPerPage,
+      totalPages: Math.ceil(props.data.length / props.rowsPerPage)
+    };
+
+    _this.pageUp = _this.pageUp.bind(_this);
+    _this.pageDown = _this.pageDown.bind(_this);
+    _this.setPage = _this.setPage.bind(_this);
     return _this;
   }
 
   _createClass(Flexflexgrid, [{
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(nextProps) {
+      var data = nextProps.data,
+          rowsPerPage = nextProps.rowsPerPage;
+
+
+      this.setState({ totalPages: Math.ceil(data.length / rowsPerPage) });
+    }
+  }, {
     key: "pageUp",
     value: function pageUp() {
-      var page = this.state.page;
+      var _state = this.state,
+          page = _state.page,
+          totalPages = _state.totalPages;
 
 
-      if (page === this.totalPages) return null;
+      if (page === totalPages) return null;
 
       this.setPage(page + 1);
     }
@@ -89,6 +111,9 @@ var Flexflexgrid = function (_Component) {
           rowsPerPage = _props.rowsPerPage;
       var page = this.state.page;
 
+
+      if (!data.length) return null;
+
       var pagedData = data.slice((page - 1) * rowsPerPage, page * rowsPerPage);
 
       return pagedData.map(function (d, i) {
@@ -108,63 +133,25 @@ var Flexflexgrid = function (_Component) {
       });
     }
   }, {
-    key: "renderPagination",
-    value: function renderPagination() {
-      var _this2 = this;
-
-      return _react2.default.createElement(
-        "div",
-        { className: "flexgrid-footer" },
-        _react2.default.createElement(
-          "div",
-          null,
-          _react2.default.createElement(
-            "span",
-            { className: "page-toggle", onClick: function onClick() {
-                return _this2.setPage(1);
-              } },
-            "\xAB"
-          ),
-          _react2.default.createElement(
-            "span",
-            { className: "page-toggle", onClick: function onClick() {
-                return _this2.pageDown();
-              } },
-            "\u2039"
-          ),
-          "Page ",
-          this.state.page,
-          " of ",
-          this.totalPages,
-          _react2.default.createElement(
-            "span",
-            { className: "page-toggle", onClick: function onClick() {
-                return _this2.pageUp();
-              } },
-            "\u203A"
-          ),
-          _react2.default.createElement(
-            "span",
-            {
-              className: "page-toggle",
-              onClick: function onClick() {
-                return _this2.setPage(_this2.totalPages);
-              }
-            },
-            "\xBB"
-          )
-        )
-      );
-    }
-  }, {
     key: "render",
     value: function render() {
+      var _state2 = this.state,
+          page = _state2.page,
+          totalPages = _state2.totalPages;
+
+
       return _react2.default.createElement(
         "div",
         { className: "flexgrid" },
         this.renderHeader(),
         this.renderData(),
-        this.renderPagination()
+        _react2.default.createElement(_Pager2.default, {
+          page: page,
+          totalPages: totalPages,
+          pageUp: this.pageUp,
+          pageDown: this.pageDown,
+          setPage: this.setPage
+        })
       );
     }
   }]);
@@ -173,14 +160,12 @@ var Flexflexgrid = function (_Component) {
 }(_react.Component);
 
 Flexflexgrid.propTypes = {
-  columnMetadata: _propTypes2.default.array,
-  data: _propTypes2.default.array,
+  columnMetadata: _propTypes2.default.array.isRequired,
+  data: _propTypes2.default.array.isRequired,
   rowsPerPage: _propTypes2.default.number,
   currentPage: _propTypes2.default.number
 };
 Flexflexgrid.defaultProps = {
-  columnMetadata: [],
-  data: [],
   rowsPerPage: 10,
   currentPage: 1
 };

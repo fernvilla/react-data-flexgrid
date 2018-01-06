@@ -24,5 +24,9 @@
     padding: 0.5em 1em;
     font-size: 0.9em; }
   .flexgrid .page-toggle {
-    padding: 0 0.3em;
+    padding: 0.35em;
     cursor: pointer; }
+  .flexgrid .page-count {
+    display: inline-block;
+    padding-left: 0.5em;
+    padding-right: 0.5em; }

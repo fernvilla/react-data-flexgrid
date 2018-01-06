@@ -27,13 +27,32 @@ export const columnMetadata = [
     columnName: "city",
     displayName: "City",
     style: { flex: "1 1 100px", alignSelf: "center" }
+  },
+  {
+    columnName: "state",
+    displayName: "State",
+    style: { flex: "1 1 100px", alignSelf: "center" }
+  },
+  {
+    columnName: "country",
+    displayName: "Country",
+    style: { flex: "1 1 100px", alignSelf: "center" }
+  },
+  {
+    columnName: "phone",
+    displayName: "Phone Number",
+    style: { flex: "1 1 100px", alignSelf: "center" }
   }
 ];
 
-export const data = _times(24, i => ({
-  id: i,
-  firstName: faker.name.firstName(),
-  lastName: faker.name.lastName(),
-  address: faker.address.streetAddress(),
-  city: faker.address.city()
-}));
+export const data = amount =>
+  _times(amount, i => ({
+    id: i,
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    address: faker.address.streetAddress(),
+    city: faker.address.city(),
+    state: faker.address.state(),
+    country: faker.address.country(),
+    phone: faker.phone.phoneNumber()
+  }));

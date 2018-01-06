@@ -1,17 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import Pager from "./Pager";
 
 export default class Flexflexgrid extends Component {
   static propTypes = {
-    columnMetadata: PropTypes.array,
-    data: PropTypes.array,
+    columnMetadata: PropTypes.array.isRequired,
+    data: PropTypes.array.isRequired,
     rowsPerPage: PropTypes.number,
     currentPage: PropTypes.number
   };
 
   static defaultProps = {
-    columnMetadata: [],
-    data: [],
     rowsPerPage: 10,
     currentPage: 1
   };
@@ -19,14 +18,27 @@ export default class Flexflexgrid extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { page: props.currentPage, rowsPerPage: props.rowsPerPage };
-    this.totalPages = Math.ceil(props.data.length / props.rowsPerPage);
+    this.state = {
+      page: props.currentPage,
+      rowsPerPage: props.rowsPerPage,
+      totalPages: Math.ceil(props.data.length / props.rowsPerPage)
+    };
+
+    this.pageUp = this.pageUp.bind(this);
+    this.pageDown = this.pageDown.bind(this);
+    this.setPage = this.setPage.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { data, rowsPerPage } = nextProps;
+
+    this.setState({ totalPages: Math.ceil(data.length / rowsPerPage) });
   }
 
   pageUp() {
-    const { page } = this.state;
+    const { page, totalPages } = this.state;
 
-    if (page === this.totalPages) return null;
+    if (page === totalPages) return null;
 
     this.setPage(page + 1);
   }
@@ -64,6 +76,9 @@ export default class Flexflexgrid extends Component {
   renderData() {
     const { columnMetadata, data, rowsPerPage } = this.props;
     const { page } = this.state;
+
+    if (!data.length) return null;
+
     const pagedData = data.slice((page - 1) * rowsPerPage, page * rowsPerPage);
 
     return pagedData.map((d, i) => (
@@ -81,37 +96,20 @@ export default class Flexflexgrid extends Component {
     ));
   }
 
-  renderPagination() {
-    return (
-      <div className="flexgrid-footer">
-        <div>
-          <span className="page-toggle" onClick={() => this.setPage(1)}>
-            &laquo;
-          </span>
-          <span className="page-toggle" onClick={() => this.pageDown()}>
-            &lsaquo;
-          </span>
-          Page {this.state.page} of {this.totalPages}
-          <span className="page-toggle" onClick={() => this.pageUp()}>
-            &rsaquo;
-          </span>
-          <span
-            className="page-toggle"
-            onClick={() => this.setPage(this.totalPages)}
-          >
-            &raquo;
-          </span>
-        </div>
-      </div>
-    );
-  }
-
   render() {
+    const { page, totalPages } = this.state;
+
     return (
       <div className="flexgrid">
         {this.renderHeader()}
         {this.renderData()}
-        {this.renderPagination()}
+        <Pager
+          page={page}
+          totalPages={totalPages}
+          pageUp={this.pageUp}
+          pageDown={this.pageDown}
+          setPage={this.setPage}
+        />
       </div>
     );
   }
