@@ -45,14 +45,18 @@ var Pager = function Pager(props) {
       totalPages = props.totalPages,
       setPage = props.setPage,
       pageDown = props.pageDown,
-      pageUp = props.pageUp;
+      pageUp = props.pageUp,
+      setRowsPerPage = props.setRowsPerPage,
+      rowsPerPage = props.rowsPerPage;
+
+  var rows = [1, 2, 3, 4, 5, 10, 25, 50, 100, 500, 1000, "All"];
 
   return _react2.default.createElement(
     "div",
     { className: "flexgrid-footer" },
     _react2.default.createElement(
       "div",
-      null,
+      { className: "flexgrid-footer-left" },
       _react2.default.createElement(
         "span",
         { className: "page-toggle", onClick: function onClick() {
@@ -88,6 +92,27 @@ var Pager = function Pager(props) {
             return setPage(totalPages);
           } },
         _react2.default.createElement(_reactFontawesome2.default, { icon: "angle-double-right" })
+      )
+    ),
+    _react2.default.createElement(
+      "div",
+      { className: "flexgrid-footer-right" },
+      "Rows per page:",
+      _react2.default.createElement(
+        "select",
+        {
+          onChange: function onChange(e) {
+            return setRowsPerPage(e.target.value);
+          },
+          defaultValue: rowsPerPage
+        },
+        rows.map(function (row, i) {
+          return _react2.default.createElement(
+            "option",
+            { value: row, key: i },
+            row
+          );
+        })
       )
     )
   );

@@ -22,7 +22,11 @@
   .flexgrid .flexgrid-footer {
     display: inline-flex;
     padding: 0.5em 1em;
-    font-size: 0.9em; }
+    font-size: 0.9em;
+    border-top: 1px solid #cccccc;
+    background-color: #cccccc; }
+  .flexgrid .flexgrid-footer-right {
+    margin-left: auto; }
   .flexgrid .page-toggle {
     padding: 0.35em;
     cursor: pointer; }

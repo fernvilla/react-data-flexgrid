@@ -18,6 +18,8 @@ var _Pager = require("./Pager");
 
 var _Pager2 = _interopRequireDefault(_Pager);
 
+var _utils = require("./../utils");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -37,23 +39,28 @@ var Flexflexgrid = function (_Component) {
     _this.state = {
       page: props.currentPage,
       rowsPerPage: props.rowsPerPage,
-      totalPages: Math.ceil(props.data.length / props.rowsPerPage)
+      totalPages: (0, _utils.getTotalPages)(props.data.length, props.rowsPerPage)
     };
 
     _this.pageUp = _this.pageUp.bind(_this);
     _this.pageDown = _this.pageDown.bind(_this);
     _this.setPage = _this.setPage.bind(_this);
+    _this.setRowsPerPage = _this.setRowsPerPage.bind(_this);
     return _this;
   }
 
   _createClass(Flexflexgrid, [{
     key: "componentWillReceiveProps",
     value: function componentWillReceiveProps(nextProps) {
-      var data = nextProps.data,
-          rowsPerPage = nextProps.rowsPerPage;
+      var data = nextProps.data;
 
+      var totalPages = (0, _utils.getTotalPages)(data.length, this.state.rowsPerPage);
 
-      this.setState({ totalPages: Math.ceil(data.length / rowsPerPage) });
+      this.setState({ totalPages: totalPages });
+
+      if (totalPages < this.state.page) {
+        this.setPage(1);
+      }
     }
   }, {
     key: "pageUp",
@@ -63,7 +70,7 @@ var Flexflexgrid = function (_Component) {
           totalPages = _state.totalPages;
 
 
-      if (page === totalPages) return null;
+      if (page === totalPages) return;
 
       this.setPage(page + 1);
     }
@@ -73,7 +80,7 @@ var Flexflexgrid = function (_Component) {
       var page = this.state.page;
 
 
-      if (page === 1) return null;
+      if (page === 1) return;
 
       this.setPage(page - 1);
     }
@@ -81,6 +88,24 @@ var Flexflexgrid = function (_Component) {
     key: "setPage",
     value: function setPage(page) {
       this.setState({ page: page });
+    }
+  }, {
+    key: "setRowsPerPage",
+    value: function setRowsPerPage(rows) {
+      var _this2 = this;
+
+      var rowsPerPage = rows === "All" ? this.props.data.length : Number(rows);
+
+      this.setState({ rowsPerPage: rowsPerPage }, function () {
+        return _this2.setTotalPages();
+      });
+    }
+  }, {
+    key: "setTotalPages",
+    value: function setTotalPages() {
+      this.setState({
+        totalPages: (0, _utils.getTotalPages)(this.props.data.length, this.state.rowsPerPage)
+      });
     }
   }, {
     key: "renderHeader",
@@ -107,9 +132,10 @@ var Flexflexgrid = function (_Component) {
     value: function renderData() {
       var _props = this.props,
           columnMetadata = _props.columnMetadata,
-          data = _props.data,
-          rowsPerPage = _props.rowsPerPage;
-      var page = this.state.page;
+          data = _props.data;
+      var _state2 = this.state,
+          page = _state2.page,
+          rowsPerPage = _state2.rowsPerPage;
 
 
       if (!data.length) return null;
@@ -135,14 +161,18 @@ var Flexflexgrid = function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _state2 = this.state,
-          page = _state2.page,
-          totalPages = _state2.totalPages;
+      var _state3 = this.state,
+          page = _state3.page,
+          totalPages = _state3.totalPages,
+          rowsPerPage = _state3.rowsPerPage;
+      var _state4 = this.state,
+          className = _state4.className,
+          style = _state4.style;
 
 
       return _react2.default.createElement(
         "div",
-        { className: "flexgrid" },
+        { className: "flexgrid " + className, style: style },
         this.renderHeader(),
         this.renderData(),
         _react2.default.createElement(_Pager2.default, {
@@ -150,7 +180,9 @@ var Flexflexgrid = function (_Component) {
           totalPages: totalPages,
           pageUp: this.pageUp,
           pageDown: this.pageDown,
-          setPage: this.setPage
+          setPage: this.setPage,
+          setRowsPerPage: this.setRowsPerPage,
+          rowsPerPage: rowsPerPage
         })
       );
     }
@@ -163,10 +195,16 @@ Flexflexgrid.propTypes = {
   columnMetadata: _propTypes2.default.array.isRequired,
   data: _propTypes2.default.array.isRequired,
   rowsPerPage: _propTypes2.default.number,
-  currentPage: _propTypes2.default.number
+  currentPage: _propTypes2.default.number,
+  sort: _propTypes2.default.array,
+  className: _propTypes2.default.string,
+  style: _propTypes2.default.object
 };
 Flexflexgrid.defaultProps = {
   rowsPerPage: 10,
-  currentPage: 1
+  currentPage: 1,
+  sort: [],
+  className: "",
+  style: {}
 };
 exports.default = Flexflexgrid;

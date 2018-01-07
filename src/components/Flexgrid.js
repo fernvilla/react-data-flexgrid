@@ -1,18 +1,25 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Pager from "./Pager";
+import { getTotalPages } from "./../utils";
 
 export default class Flexflexgrid extends Component {
   static propTypes = {
     columnMetadata: PropTypes.array.isRequired,
     data: PropTypes.array.isRequired,
     rowsPerPage: PropTypes.number,
-    currentPage: PropTypes.number
+    currentPage: PropTypes.number,
+    sort: PropTypes.array,
+    className: PropTypes.string,
+    style: PropTypes.object
   };
 
   static defaultProps = {
     rowsPerPage: 10,
-    currentPage: 1
+    currentPage: 1,
+    sort: [],
+    className: "",
+    style: {}
   };
 
   constructor(props) {
@@ -21,24 +28,30 @@ export default class Flexflexgrid extends Component {
     this.state = {
       page: props.currentPage,
       rowsPerPage: props.rowsPerPage,
-      totalPages: Math.ceil(props.data.length / props.rowsPerPage)
+      totalPages: getTotalPages(props.data.length, props.rowsPerPage)
     };
 
     this.pageUp = this.pageUp.bind(this);
     this.pageDown = this.pageDown.bind(this);
     this.setPage = this.setPage.bind(this);
+    this.setRowsPerPage = this.setRowsPerPage.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { data, rowsPerPage } = nextProps;
+    const { data } = nextProps;
+    const totalPages = getTotalPages(data.length, this.state.rowsPerPage);
 
-    this.setState({ totalPages: Math.ceil(data.length / rowsPerPage) });
+    this.setState({ totalPages: totalPages });
+
+    if (totalPages < this.state.page) {
+      this.setPage(1);
+    }
   }
 
   pageUp() {
     const { page, totalPages } = this.state;
 
-    if (page === totalPages) return null;
+    if (page === totalPages) return;
 
     this.setPage(page + 1);
   }
@@ -46,13 +59,25 @@ export default class Flexflexgrid extends Component {
   pageDown() {
     const { page } = this.state;
 
-    if (page === 1) return null;
+    if (page === 1) return;
 
     this.setPage(page - 1);
   }
 
   setPage(page) {
     this.setState({ page });
+  }
+
+  setRowsPerPage(rows) {
+    const rowsPerPage = rows === "All" ? this.props.data.length : Number(rows);
+
+    this.setState({ rowsPerPage }, () => this.setTotalPages());
+  }
+
+  setTotalPages() {
+    this.setState({
+      totalPages: getTotalPages(this.props.data.length, this.state.rowsPerPage)
+    });
   }
 
   renderHeader() {
@@ -74,8 +99,8 @@ export default class Flexflexgrid extends Component {
   }
 
   renderData() {
-    const { columnMetadata, data, rowsPerPage } = this.props;
-    const { page } = this.state;
+    const { columnMetadata, data } = this.props;
+    const { page, rowsPerPage } = this.state;
 
     if (!data.length) return null;
 
@@ -97,18 +122,22 @@ export default class Flexflexgrid extends Component {
   }
 
   render() {
-    const { page, totalPages } = this.state;
+    const { page, totalPages, rowsPerPage } = this.state;
+    const { className, style } = this.state;
 
     return (
-      <div className="flexgrid">
+      <div className={`flexgrid ${className}`} style={style}>
         {this.renderHeader()}
         {this.renderData()}
+
         <Pager
           page={page}
           totalPages={totalPages}
           pageUp={this.pageUp}
           pageDown={this.pageDown}
           setPage={this.setPage}
+          setRowsPerPage={this.setRowsPerPage}
+          rowsPerPage={rowsPerPage}
         />
       </div>
     );

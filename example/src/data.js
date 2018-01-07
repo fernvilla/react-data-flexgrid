@@ -45,6 +45,8 @@ export const columnMetadata = [
   }
 ];
 
+export const sort = ["id", "firstName"];
+
 export const data = amount =>
   _times(amount, i => ({
     id: i,

@@ -1,14 +1,12 @@
 {
   "name": "react-data-flexgrid",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "data grid",
   "main": "dist/index.js",
   "style": "dist/grid.css",
-  "files": [
-    "*.md",
-    "dist"
-  ],
-  "author": "Fernando Villasenor <fvilla18@gmail.com> (http://fernvillasenor.com)",
+  "files": ["*.md", "dist"],
+  "author":
+    "Fernando Villasenor <fvilla18@gmail.com> (http://fernvillasenor.com)",
   "license": "ISC",
   "scripts": {
     "build": "yarn run js && yarn run css",
