@@ -18,6 +18,10 @@ var _Pager = require("./Pager");
 
 var _Pager2 = _interopRequireDefault(_Pager);
 
+var _Header = require("./Header");
+
+var _Header2 = _interopRequireDefault(_Header);
+
 var _utils = require("./../utils");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -108,26 +112,6 @@ var Flexflexgrid = function (_Component) {
       });
     }
   }, {
-    key: "renderHeader",
-    value: function renderHeader() {
-      var columnMetadata = this.props.columnMetadata;
-
-
-      return _react2.default.createElement(
-        "div",
-        { className: "flexgrid-header" },
-        columnMetadata.map(function (column, i) {
-          var style = column.style || null;
-
-          return _react2.default.createElement(
-            "span",
-            { className: "flexgrid-header-item", key: i, style: style },
-            column.displayName
-          );
-        })
-      );
-    }
-  }, {
     key: "renderData",
     value: function renderData() {
       var _props = this.props,
@@ -165,15 +149,16 @@ var Flexflexgrid = function (_Component) {
           page = _state3.page,
           totalPages = _state3.totalPages,
           rowsPerPage = _state3.rowsPerPage;
-      var _state4 = this.state,
-          className = _state4.className,
-          style = _state4.style;
+      var _props2 = this.props,
+          className = _props2.className,
+          style = _props2.style,
+          columnMetadata = _props2.columnMetadata;
 
 
       return _react2.default.createElement(
         "div",
         { className: "flexgrid " + className, style: style },
-        this.renderHeader(),
+        _react2.default.createElement(_Header2.default, { columnMetadata: columnMetadata }),
         this.renderData(),
         _react2.default.createElement(_Pager2.default, {
           page: page,

@@ -17,7 +17,7 @@
     "js:watch": "babel src -w -d dist",
     "lint": "eslint src/**; exit 0",
     "lint:watch": "esw -w src/**",
-    "prepublish": "npm run build",
+    "prepublish": "yarn run build",
     "start": "npm-run-all -p js:watch css:watch",
     "start:all": "npm-run-all -p js:watch css:watch example"
   },
@@ -30,7 +30,7 @@
     "@fortawesome/fontawesome-free-brands": "^5.0.2",
     "@fortawesome/fontawesome-free-solid": "^5.0.2",
     "@fortawesome/react-fontawesome": "^0.0.17",
-    "autoprefixer": "^7.2.3",
+    "autoprefixer": "^7.2.4",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.1.2",
@@ -38,9 +38,9 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "classnames": "^2.2.5",
-    "eslint": "^4.14.0",
+    "eslint": "^4.15.0",
     "eslint-config-react-app": "^2.0.1",
-    "eslint-plugin-flowtype": "^2.40.1",
+    "eslint-plugin-flowtype": "^2.41.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
@@ -48,7 +48,7 @@
     "lodash": "^4.17.4",
     "node-sass": "^4.7.2",
     "npm-run-all": "^4.1.2",
-    "postcss": "^6.0.14",
+    "postcss": "^6.0.16",
     "postcss-cli": "^4.1.1",
     "prop-types": "^15.6.0"
   }

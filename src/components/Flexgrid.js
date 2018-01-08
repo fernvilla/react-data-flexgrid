@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Pager from "./Pager";
+import Header from "./Header";
 import { getTotalPages } from "./../utils";
 
 export default class Flexflexgrid extends Component {
@@ -80,24 +81,6 @@ export default class Flexflexgrid extends Component {
     });
   }
 
-  renderHeader() {
-    const { columnMetadata } = this.props;
-
-    return (
-      <div className="flexgrid-header">
-        {columnMetadata.map((column, i) => {
-          const style = column.style || null;
-
-          return (
-            <span className="flexgrid-header-item" key={i} style={style}>
-              {column.displayName}
-            </span>
-          );
-        })}
-      </div>
-    );
-  }
-
   renderData() {
     const { columnMetadata, data } = this.props;
     const { page, rowsPerPage } = this.state;
@@ -123,11 +106,12 @@ export default class Flexflexgrid extends Component {
 
   render() {
     const { page, totalPages, rowsPerPage } = this.state;
-    const { className, style } = this.state;
+    const { className, style, columnMetadata } = this.props;
 
     return (
       <div className={`flexgrid ${className}`} style={style}>
-        {this.renderHeader()}
+        <Header columnMetadata={columnMetadata} />
+
         {this.renderData()}
 
         <Pager
