@@ -42,10 +42,20 @@ export const columnMetadata = [
     columnName: "phone",
     displayName: "Phone Number",
     style: { flex: "1 1 100px", alignSelf: "center" }
+  },
+  {
+    columnName: "birthdate",
+    displayName: "Birthdate",
+    style: { flex: "1 1 100px", alignSelf: "center" }
+  },
+  {
+    columnName: "amount",
+    displayName: "Cash/Money",
+    style: { flex: "1 1 100px", alignSelf: "center" }
   }
 ];
 
-export const sort = ["id", "firstName"];
+export const sortableCols = ["id", "firstName", "birthdate", "amount", "phone"];
 
 export const data = amount =>
   _times(amount, i => ({
@@ -56,5 +66,7 @@ export const data = amount =>
     city: faker.address.city(),
     state: faker.address.state(),
     country: faker.address.country(),
-    phone: faker.phone.phoneNumber()
+    phone: faker.phone.phoneNumber(),
+    birthdate: faker.date.future().toString(),
+    amount: faker.finance.amount()
   }));

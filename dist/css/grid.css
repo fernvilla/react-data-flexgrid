@@ -1,1 +1,54 @@
-.flexgrid{display:flex;flex-direction:column;border:1px solid #ccc}.flexgrid .flexgrid-header{display:flex;flex-direction:row;background-color:#ccc;padding-left:1em;padding-right:1em}.flexgrid .flexgrid-header-item{padding:0.5em}.flexgrid .flexgrid-row{display:flex;flex-direction:row;padding-left:1em;padding-right:1em}.flexgrid .flexgrid-row:nth-child(odd){background-color:#f2f2f2}.flexgrid .flexgrid-row:hover{background-color:rgba(176,223,184,0.5)}.flexgrid .flexgrid-footer{display:inline-flex;padding:0.5em 1em;font-size:0.9em;border-top:1px solid #ccc;background-color:#ccc}.flexgrid .flexgrid-footer-right{margin-left:auto}.flexgrid .page-toggle{padding:0.35em;cursor:pointer}.flexgrid .page-count{display:inline-block;padding-left:0.5em;padding-right:0.5em}
+.flexgrid {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #cccccc;
+  box-sizing: border-box; }
+  .flexgrid .flexgrid-header {
+    display: flex;
+    flex-direction: row;
+    background-color: #ececee;
+    padding-left: 1em;
+    padding-right: 1em;
+    border-bottom: 1px solid #cccccc; }
+  .flexgrid .flexgrid-header-item {
+    padding: 0.5em;
+    align-self: center;
+    display: flex;
+    align-items: center; }
+  .flexgrid .flexgrid-header-sort {
+    font-size: 0.8em;
+    margin-left: 0.5em;
+    color: #666666;
+    line-height: 0;
+    cursor: pointer; }
+    .flexgrid .flexgrid-header-sort:hover, .flexgrid .flexgrid-header-sort.active {
+      color: #333333; }
+  .flexgrid .flexgrid-row {
+    display: flex;
+    flex-direction: row;
+    padding-left: 1em;
+    padding-right: 1em; }
+    .flexgrid .flexgrid-row:nth-child(odd) {
+      background-color: #f2f2f2; }
+    .flexgrid .flexgrid-row:hover {
+      background-color: rgba(176, 223, 184, 0.5); }
+  .flexgrid .flexgrid-footer {
+    display: inline-flex;
+    padding: 0.5em 1em;
+    font-size: 0.9em;
+    border-top: 1px solid #cccccc;
+    background-color: #ececee; }
+    .flexgrid .flexgrid-footer select {
+      margin-left: 0.5em; }
+  .flexgrid .flexgrid-footer-right {
+    margin-left: auto; }
+  .flexgrid .page-toggle {
+    padding: 0.35em;
+    color: #666666;
+    cursor: pointer; }
+    .flexgrid .page-toggle:hover {
+      color: #333333; }
+  .flexgrid .page-count {
+    display: inline-block;
+    padding-left: 0.5em;
+    padding-right: 0.5em; }

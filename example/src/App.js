@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Flexgrid } from "react-data-flexgrid";
 import "react-data-flexgrid/dist/css/grid.css";
 
-import { columnMetadata, data, sort } from "./data";
+import { columnMetadata, data, sortableCols } from "./data";
 import "./App.css";
 
 const amounts = [10, 20, 50, 100, 200, 500, 1000, 5000, 10000];
@@ -41,7 +41,11 @@ export default class App extends Component {
           </select>
         </p>
 
-        <Flexgrid data={data} columnMetadata={columnMetadata} sort={sort} />
+        <Flexgrid
+          columnMetadata={columnMetadata}
+          data={data}
+          sortableCols={sortableCols}
+        />
       </div>
     );
   }

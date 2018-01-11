@@ -3,7 +3,8 @@
 .flexgrid {
   display: flex;
   flex-direction: column;
-  border: 1px solid #ccc;
+  border: 1px solid $gray-medium;
+  box-sizing: border-box;
 
   .flexgrid-header {
     display: flex;
@@ -11,10 +12,27 @@
     background-color: $grid-header-color;
     padding-left: 1em;
     padding-right: 1em;
+    border-bottom: 1px solid $gray-medium;
   }
 
   .flexgrid-header-item {
     padding: 0.5em;
+    align-self: center;
+    display: flex;
+    align-items: center;
+  }
+
+  .flexgrid-header-sort {
+    font-size: 0.8em;
+    margin-left: 0.5em;
+    color: $gray-dark;
+    line-height: 0;
+    cursor: pointer;
+
+    &:hover,
+    &.active {
+      color: $gray-darkest;
+    }
   }
 
   .flexgrid-row {
@@ -38,6 +56,10 @@
     font-size: 0.9em;
     border-top: 1px solid $gray-medium;
     background-color: $grid-footer-color;
+
+    select {
+      margin-left: 0.5em;
+    }
   }
 
   .flexgrid-footer-right {
@@ -46,7 +68,12 @@
 
   .page-toggle {
     padding: 0.35em;
+    color: $gray-dark;
     cursor: pointer;
+
+    &:hover {
+      color: $gray-darkest;
+    }
   }
 
   .page-count {

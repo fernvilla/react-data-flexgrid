@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Pager from "./Pager";
 import Header from "./Header";
-import { getTotalPages } from "./../utils";
+import { getTotalPages, sortData } from "./../utils";
 
 export default class Flexflexgrid extends Component {
   static propTypes = {
@@ -10,7 +10,7 @@ export default class Flexflexgrid extends Component {
     data: PropTypes.array.isRequired,
     rowsPerPage: PropTypes.number,
     currentPage: PropTypes.number,
-    sort: PropTypes.array,
+    sortableCols: PropTypes.array,
     className: PropTypes.string,
     style: PropTypes.object
   };
@@ -18,9 +18,9 @@ export default class Flexflexgrid extends Component {
   static defaultProps = {
     rowsPerPage: 10,
     currentPage: 1,
-    sort: [],
+    sortableCols: [],
     className: "",
-    style: {}
+    data: []
   };
 
   constructor(props) {
@@ -29,24 +29,41 @@ export default class Flexflexgrid extends Component {
     this.state = {
       page: props.currentPage,
       rowsPerPage: props.rowsPerPage,
-      totalPages: getTotalPages(props.data.length, props.rowsPerPage)
+      totalPages: getTotalPages(props.data.length, props.rowsPerPage),
+      sortDirection: null,
+      sortName: null,
+      data: props.data
     };
 
     this.pageUp = this.pageUp.bind(this);
     this.pageDown = this.pageDown.bind(this);
     this.setPage = this.setPage.bind(this);
     this.setRowsPerPage = this.setRowsPerPage.bind(this);
+    this.sort = this.sort.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     const { data } = nextProps;
-    const totalPages = getTotalPages(data.length, this.state.rowsPerPage);
+    const { rowsPerPage, sortName, sortDirection } = this.state;
+    const totalPages = getTotalPages(data.length, rowsPerPage);
 
-    this.setState({ totalPages: totalPages });
+    this.setState({ totalPages: totalPages, data }, () => {
+      this.sort(sortName, sortDirection);
+    });
 
     if (totalPages < this.state.page) {
       this.setPage(1);
     }
+  }
+
+  sort(column, direction) {
+    if (!column || !direction || direction === this.state.sortDirection) return;
+
+    this.setState({
+      data: sortData(this.props.data, column, direction),
+      sortName: column,
+      sortDirection: direction
+    });
   }
 
   pageUp() {
@@ -105,12 +122,24 @@ export default class Flexflexgrid extends Component {
   }
 
   render() {
-    const { page, totalPages, rowsPerPage } = this.state;
-    const { className, style, columnMetadata } = this.props;
+    const {
+      page,
+      totalPages,
+      rowsPerPage,
+      sortName,
+      sortDirection
+    } = this.state;
+    const { className, columnMetadata, sortableCols } = this.props;
 
     return (
-      <div className={`flexgrid ${className}`} style={style}>
-        <Header columnMetadata={columnMetadata} />
+      <div className={`flexgrid ${className}`}>
+        <Header
+          columnMetadata={columnMetadata}
+          sortableCols={sortableCols}
+          sort={this.sort}
+          sortName={sortName}
+          sortDirection={sortDirection}
+        />
 
         {this.renderData()}
 
