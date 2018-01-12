@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Flexgrid } from "react-data-flexgrid";
 import "react-data-flexgrid/dist/css/grid.css";
 
-import { columnMetadata, data, sortableCols } from "./data";
+import { columnMetadata, data } from "./data";
 import "./App.css";
 
 const amounts = [10, 20, 50, 100, 200, 500, 1000, 5000, 10000];
@@ -32,6 +32,7 @@ export default class App extends Component {
     return (
       <div className="example-container">
         <p>
+          Items:{" "}
           <select onChange={e => this.onChange(e)}>
             {amounts.map(i => (
               <option value={i} key={i}>
@@ -41,11 +42,7 @@ export default class App extends Component {
           </select>
         </p>
 
-        <Flexgrid
-          columnMetadata={columnMetadata}
-          data={data}
-          sortableCols={sortableCols}
-        />
+        <Flexgrid columnMetadata={columnMetadata} data={data} />
       </div>
     );
   }

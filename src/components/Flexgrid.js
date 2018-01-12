@@ -31,7 +31,7 @@ export default class Flexflexgrid extends Component {
       rowsPerPage: props.rowsPerPage,
       totalPages: getTotalPages(props.data.length, props.rowsPerPage),
       sortDirection: null,
-      sortName: null,
+      sortColumn: null,
       data: props.data
     };
 
@@ -44,11 +44,11 @@ export default class Flexflexgrid extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { data } = nextProps;
-    const { rowsPerPage, sortName, sortDirection } = this.state;
+    const { rowsPerPage, sortColumn, sortDirection } = this.state;
     const totalPages = getTotalPages(data.length, rowsPerPage);
 
     this.setState({ totalPages: totalPages, data }, () => {
-      this.sort(sortName, sortDirection);
+      this.sort(sortColumn, sortDirection);
     });
 
     if (totalPages < this.state.page) {
@@ -61,7 +61,7 @@ export default class Flexflexgrid extends Component {
 
     this.setState({
       data: sortData(this.props.data, column, direction),
-      sortName: column,
+      sortColumn: column,
       sortDirection: direction
     });
   }
@@ -126,7 +126,7 @@ export default class Flexflexgrid extends Component {
       page,
       totalPages,
       rowsPerPage,
-      sortName,
+      sortColumn,
       sortDirection
     } = this.state;
     const { className, columnMetadata, sortableCols } = this.props;
@@ -135,9 +135,8 @@ export default class Flexflexgrid extends Component {
       <div className={`flexgrid ${className}`}>
         <Header
           columnMetadata={columnMetadata}
-          sortableCols={sortableCols}
           sort={this.sort}
-          sortName={sortName}
+          sortColumn={sortColumn}
           sortDirection={sortDirection}
         />
 

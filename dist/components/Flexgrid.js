@@ -45,7 +45,7 @@ var Flexflexgrid = function (_Component) {
       rowsPerPage: props.rowsPerPage,
       totalPages: (0, _utils.getTotalPages)(props.data.length, props.rowsPerPage),
       sortDirection: null,
-      sortName: null,
+      sortColumn: null,
       data: props.data
     };
 
@@ -65,13 +65,13 @@ var Flexflexgrid = function (_Component) {
       var data = nextProps.data;
       var _state = this.state,
           rowsPerPage = _state.rowsPerPage,
-          sortName = _state.sortName,
+          sortColumn = _state.sortColumn,
           sortDirection = _state.sortDirection;
 
       var totalPages = (0, _utils.getTotalPages)(data.length, rowsPerPage);
 
       this.setState({ totalPages: totalPages, data: data }, function () {
-        _this2.sort(sortName, sortDirection);
+        _this2.sort(sortColumn, sortDirection);
       });
 
       if (totalPages < this.state.page) {
@@ -85,7 +85,7 @@ var Flexflexgrid = function (_Component) {
 
       this.setState({
         data: (0, _utils.sortData)(this.props.data, column, direction),
-        sortName: column,
+        sortColumn: column,
         sortDirection: direction
       });
     }
@@ -172,7 +172,7 @@ var Flexflexgrid = function (_Component) {
           page = _state4.page,
           totalPages = _state4.totalPages,
           rowsPerPage = _state4.rowsPerPage,
-          sortName = _state4.sortName,
+          sortColumn = _state4.sortColumn,
           sortDirection = _state4.sortDirection;
       var _props2 = this.props,
           className = _props2.className,
@@ -185,9 +185,8 @@ var Flexflexgrid = function (_Component) {
         { className: "flexgrid " + className },
         _react2.default.createElement(_Header2.default, {
           columnMetadata: columnMetadata,
-          sortableCols: sortableCols,
           sort: this.sort,
-          sortName: sortName,
+          sortColumn: sortColumn,
           sortDirection: sortDirection
         }),
         this.renderData(),

@@ -9,24 +9,23 @@ import classNames from "classnames";
 fontawesome.library.add(solid, faCaretUp, faCaretDown);
 
 const Row = props => {
-  const { columnMetadata, sortableCols, sortName, sortDirection, sort } = props;
-  console.log(sortName, sortDirection);
+  const { columnMetadata, sortColumn, sortDirection, sort } = props;
+
   return (
     <div className="flexgrid-header">
       {columnMetadata.map((column, i) => {
         const style = column.style || null;
         const { columnName, displayName } = column;
-        const isSortable = sortableCols.includes(columnName);
 
         return (
           <span className="flexgrid-header-item" key={i} style={style}>
             {displayName}
 
-            {isSortable && (
+            {column.sortable && (
               <span>
                 <div
                   className={classNames("flexgrid-header-sort", {
-                    active: sortName === columnName && sortDirection === "ASC"
+                    active: sortColumn === columnName && sortDirection === "ASC"
                   })}
                   onClick={() => sort(columnName, "ASC")}
                 >
@@ -35,7 +34,8 @@ const Row = props => {
 
                 <div
                   className={classNames("flexgrid-header-sort", {
-                    active: sortName === columnName && sortDirection === "DESC"
+                    active:
+                      sortColumn === columnName && sortDirection === "DESC"
                   })}
                   onClick={() => sort(columnName, "DESC")}
                 >

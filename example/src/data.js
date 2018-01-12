@@ -1,12 +1,14 @@
 import React from "react";
 import faker from "faker";
 import _times from "lodash/times";
+import moment from "moment";
 
 export const columnMetadata = [
   {
     columnName: "id",
     displayName: "ID",
-    style: { flex: "0 1 50px", alignSelf: "center" }
+    style: { flex: "0 1 50px", alignSelf: "center" },
+    sortable: true
   },
   {
     columnName: "firstName",
@@ -46,7 +48,8 @@ export const columnMetadata = [
   {
     columnName: "birthdate",
     displayName: "Birthdate",
-    style: { flex: "1 1 100px", alignSelf: "center" }
+    style: { flex: "1 1 100px", alignSelf: "center" },
+    sortable: true
   },
   {
     columnName: "amount",
@@ -54,8 +57,6 @@ export const columnMetadata = [
     style: { flex: "1 1 100px", alignSelf: "center" }
   }
 ];
-
-export const sortableCols = ["id", "firstName", "birthdate", "amount", "phone"];
 
 export const data = amount =>
   _times(amount, i => ({
@@ -67,6 +68,6 @@ export const data = amount =>
     state: faker.address.state(),
     country: faker.address.country(),
     phone: faker.phone.phoneNumber(),
-    birthdate: faker.date.future().toString(),
+    birthdate: moment(faker.date.future()).format("M/D/YY"),
     amount: faker.finance.amount()
   }));

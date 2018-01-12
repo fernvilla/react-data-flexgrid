@@ -38,12 +38,11 @@ _fontawesome2.default.library.add(_fontawesomeFreeSolid2.default, _faCaretUp2.de
 
 var Row = function Row(props) {
   var columnMetadata = props.columnMetadata,
-      sortableCols = props.sortableCols,
-      sortName = props.sortName,
+      sortColumn = props.sortColumn,
       sortDirection = props.sortDirection,
       sort = props.sort;
 
-  console.log(sortName, sortDirection);
+
   return _react2.default.createElement(
     "div",
     { className: "flexgrid-header" },
@@ -52,20 +51,19 @@ var Row = function Row(props) {
       var columnName = column.columnName,
           displayName = column.displayName;
 
-      var isSortable = sortableCols.includes(columnName);
 
       return _react2.default.createElement(
         "span",
         { className: "flexgrid-header-item", key: i, style: style },
         displayName,
-        isSortable && _react2.default.createElement(
+        column.sortable && _react2.default.createElement(
           "span",
           null,
           _react2.default.createElement(
             "div",
             {
               className: (0, _classnames2.default)("flexgrid-header-sort", {
-                active: sortName === columnName && sortDirection === "ASC"
+                active: sortColumn === columnName && sortDirection === "ASC"
               }),
               onClick: function onClick() {
                 return sort(columnName, "ASC");
@@ -77,7 +75,7 @@ var Row = function Row(props) {
             "div",
             {
               className: (0, _classnames2.default)("flexgrid-header-sort", {
-                active: sortName === columnName && sortDirection === "DESC"
+                active: sortColumn === columnName && sortDirection === "DESC"
               }),
               onClick: function onClick() {
                 return sort(columnName, "DESC");
