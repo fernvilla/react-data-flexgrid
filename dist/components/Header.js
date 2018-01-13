@@ -45,7 +45,7 @@ var Row = function Row(props) {
 
   return _react2.default.createElement(
     "div",
-    { className: "flexgrid-header" },
+    { className: "flexgrid-header-row" },
     columnMetadata.map(function (column, i) {
       var style = column.style || null;
       var columnName = column.columnName,
@@ -54,7 +54,7 @@ var Row = function Row(props) {
 
       return _react2.default.createElement(
         "span",
-        { className: "flexgrid-header-item", key: i, style: style },
+        { className: "flexgrid-header-col", key: i, style: style },
         displayName,
         column.sortable && _react2.default.createElement(
           "span",
@@ -62,7 +62,7 @@ var Row = function Row(props) {
           _react2.default.createElement(
             "div",
             {
-              className: (0, _classnames2.default)("flexgrid-header-sort", {
+              className: (0, _classnames2.default)("flexgrid-header-sort-icon", {
                 active: sortColumn === columnName && sortDirection === "ASC"
               }),
               onClick: function onClick() {
@@ -74,7 +74,7 @@ var Row = function Row(props) {
           _react2.default.createElement(
             "div",
             {
-              className: (0, _classnames2.default)("flexgrid-header-sort", {
+              className: (0, _classnames2.default)("flexgrid-header-sort-icon", {
                 active: sortColumn === columnName && sortDirection === "DESC"
               }),
               onClick: function onClick() {

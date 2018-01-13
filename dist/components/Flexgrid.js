@@ -22,6 +22,14 @@ var _Header = require("./Header");
 
 var _Header2 = _interopRequireDefault(_Header);
 
+var _Filter = require("./Filter");
+
+var _Filter2 = _interopRequireDefault(_Filter);
+
+var _GridData = require("./GridData");
+
+var _GridData2 = _interopRequireDefault(_GridData);
+
 var _utils = require("./../utils");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -54,6 +62,7 @@ var Flexflexgrid = function (_Component) {
     _this.setPage = _this.setPage.bind(_this);
     _this.setRowsPerPage = _this.setRowsPerPage.bind(_this);
     _this.sort = _this.sort.bind(_this);
+    _this.filter = _this.filter.bind(_this);
     return _this;
   }
 
@@ -79,12 +88,21 @@ var Flexflexgrid = function (_Component) {
       }
     }
   }, {
+    key: "filter",
+    value: function filter(column, text) {
+      var data = (0, _utils.filterData)(this.props.data, column, text);
+
+      this.setState({ data: !text.length ? this.props.data : data });
+    }
+  }, {
     key: "sort",
     value: function sort(column, direction) {
       if (!column || !direction || direction === this.state.sortDirection) return;
 
+      var data = (0, _utils.sortData)(this.props.data, column, direction);
+
       this.setState({
-        data: (0, _utils.sortData)(this.props.data, column, direction),
+        data: data,
         sortColumn: column,
         sortDirection: direction
       });
@@ -135,61 +153,37 @@ var Flexflexgrid = function (_Component) {
       });
     }
   }, {
-    key: "renderData",
-    value: function renderData() {
-      var _props = this.props,
-          columnMetadata = _props.columnMetadata,
-          data = _props.data;
-      var _state3 = this.state,
-          page = _state3.page,
-          rowsPerPage = _state3.rowsPerPage;
-
-
-      if (!data.length) return null;
-
-      var pagedData = data.slice((page - 1) * rowsPerPage, page * rowsPerPage);
-
-      return pagedData.map(function (d, i) {
-        return _react2.default.createElement(
-          "div",
-          { className: "flexgrid-row", key: i },
-          columnMetadata.map(function (column, i) {
-            var style = column.style || null;
-
-            return _react2.default.createElement(
-              "span",
-              { className: "flexgrid-header-item", key: i, style: style },
-              d[column.columnName]
-            );
-          })
-        );
-      });
-    }
-  }, {
     key: "render",
     value: function render() {
-      var _state4 = this.state,
-          page = _state4.page,
-          totalPages = _state4.totalPages,
-          rowsPerPage = _state4.rowsPerPage,
-          sortColumn = _state4.sortColumn,
-          sortDirection = _state4.sortDirection;
-      var _props2 = this.props,
-          className = _props2.className,
-          columnMetadata = _props2.columnMetadata,
-          sortableCols = _props2.sortableCols;
+      var _state3 = this.state,
+          page = _state3.page,
+          totalPages = _state3.totalPages,
+          rowsPerPage = _state3.rowsPerPage,
+          sortColumn = _state3.sortColumn,
+          sortDirection = _state3.sortDirection,
+          data = _state3.data;
+      var _props = this.props,
+          gridClass = _props.gridClass,
+          columnMetadata = _props.columnMetadata,
+          filterable = _props.filterable;
 
 
       return _react2.default.createElement(
         "div",
-        { className: "flexgrid " + className },
+        { className: "flexgrid " + gridClass },
         _react2.default.createElement(_Header2.default, {
           columnMetadata: columnMetadata,
           sort: this.sort,
           sortColumn: sortColumn,
           sortDirection: sortDirection
         }),
-        this.renderData(),
+        filterable && _react2.default.createElement(_Filter2.default, { columnMetadata: columnMetadata, filter: this.filter }),
+        _react2.default.createElement(_GridData2.default, {
+          columnMetadata: columnMetadata,
+          data: data,
+          rowsPerPage: rowsPerPage,
+          page: page
+        }),
         _react2.default.createElement(_Pager2.default, {
           page: page,
           totalPages: totalPages,
@@ -212,14 +206,14 @@ Flexflexgrid.propTypes = {
   rowsPerPage: _propTypes2.default.number,
   currentPage: _propTypes2.default.number,
   sortableCols: _propTypes2.default.array,
-  className: _propTypes2.default.string,
-  style: _propTypes2.default.object
+  gridClass: _propTypes2.default.string,
+  filterable: _propTypes2.default.bool
 };
 Flexflexgrid.defaultProps = {
   rowsPerPage: 10,
   currentPage: 1,
   sortableCols: [],
-  className: "",
-  data: []
+  gridClass: "",
+  filterable: false
 };
 exports.default = Flexflexgrid;

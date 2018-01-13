@@ -12,19 +12,19 @@ const Row = props => {
   const { columnMetadata, sortColumn, sortDirection, sort } = props;
 
   return (
-    <div className="flexgrid-header">
+    <div className="flexgrid-header-row">
       {columnMetadata.map((column, i) => {
         const style = column.style || null;
         const { columnName, displayName } = column;
 
         return (
-          <span className="flexgrid-header-item" key={i} style={style}>
+          <span className="flexgrid-header-col" key={i} style={style}>
             {displayName}
 
             {column.sortable && (
               <span>
                 <div
-                  className={classNames("flexgrid-header-sort", {
+                  className={classNames("flexgrid-header-sort-icon", {
                     active: sortColumn === columnName && sortDirection === "ASC"
                   })}
                   onClick={() => sort(columnName, "ASC")}
@@ -33,7 +33,7 @@ const Row = props => {
                 </div>
 
                 <div
-                  className={classNames("flexgrid-header-sort", {
+                  className={classNames("flexgrid-header-sort-icon", {
                     active:
                       sortColumn === columnName && sortDirection === "DESC"
                   })}

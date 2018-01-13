@@ -50,11 +50,6 @@ export const columnMetadata = [
     displayName: "Birthdate",
     style: { flex: "1 1 100px", alignSelf: "center" },
     sortable: true
-  },
-  {
-    columnName: "amount",
-    displayName: "Cash/Money",
-    style: { flex: "1 1 100px", alignSelf: "center" }
   }
 ];
 
@@ -68,6 +63,5 @@ export const data = amount =>
     state: faker.address.state(),
     country: faker.address.country(),
     phone: faker.phone.phoneNumber(),
-    birthdate: moment(faker.date.future()).format("M/D/YY"),
-    amount: faker.finance.amount()
+    birthdate: moment(faker.date.future()).format("M/D/YY")
   }));

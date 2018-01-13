@@ -5,41 +5,66 @@
   flex-direction: column;
   border: 1px solid $gray-medium;
   box-sizing: border-box;
+  line-height: $line-height;
+  font-size: $font-size;
+  font-family: $font-family;
 
-  .flexgrid-header {
+  .flexgrid-header-row {
     display: flex;
     flex-direction: row;
     background-color: $grid-header-color;
-    padding-left: 1em;
-    padding-right: 1em;
     border-bottom: 1px solid $gray-medium;
-  }
 
-  .flexgrid-header-item {
-    padding: 0.5em;
-    align-self: center;
-    display: flex;
-    align-items: center;
-  }
+    .flexgrid-header-col {
+      padding: $padding;
+      display: flex;
+      align-items: center;
+    }
 
-  .flexgrid-header-sort {
-    font-size: 0.8em;
-    margin-left: 0.5em;
-    color: $gray-dark;
-    line-height: 0;
-    cursor: pointer;
+    .flexgrid-header-sort-icon {
+      font-size: 0.8em;
+      margin-left: 0.5em;
+      color: $gray-dark;
+      line-height: 0;
+      cursor: pointer;
 
-    &:hover,
-    &.active {
-      color: $gray-darkest;
+      &:hover,
+      &.active {
+        color: $gray-darkest;
+      }
     }
   }
 
-  .flexgrid-row {
+  .flexgrid-filter-row {
     display: flex;
     flex-direction: row;
-    padding-left: 1em;
-    padding-right: 1em;
+
+    .flexgrid-filter-col {
+      padding: $padding;
+    }
+
+    input {
+      font-size: inherit;
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+      flex: 1 0 auto;
+      outline: 0;
+      text-align: left;
+      background: #fff;
+      border: 1px solid rgba(34, 36, 38, 0.15);
+      border-radius: 0.3em;
+      box-shadow: none;
+    }
+  }
+
+  .flexgrid-item-row {
+    display: flex;
+    flex-direction: row;
+
+    .flexgrid-item-col {
+      padding: $padding;
+    }
 
     &:nth-child(odd) {
       background-color: $gray-light;
@@ -60,25 +85,25 @@
     select {
       margin-left: 0.5em;
     }
-  }
 
-  .flexgrid-footer-right {
-    margin-left: auto;
-  }
-
-  .page-toggle {
-    padding: 0.35em;
-    color: $gray-dark;
-    cursor: pointer;
-
-    &:hover {
-      color: $gray-darkest;
+    .flexgrid-footer-right {
+      margin-left: auto;
     }
-  }
 
-  .page-count {
-    display: inline-block;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
+    .page-toggle {
+      padding: 0.35em;
+      color: $gray-dark;
+      cursor: pointer;
+
+      &:hover {
+        color: $gray-darkest;
+      }
+    }
+
+    .page-count {
+      display: inline-block;
+      padding-left: 0.5em;
+      padding-right: 0.5em;
+    }
   }
 }
