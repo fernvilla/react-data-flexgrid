@@ -79,12 +79,14 @@ var Flexflexgrid = function (_Component) {
 
       var totalPages = (0, _utils.getTotalPages)(data.length, rowsPerPage);
 
-      this.setState({ totalPages: totalPages, data: data }, function () {
-        _this2.sort(sortColumn, sortDirection);
-      });
+      if (this.props.data !== data) {
+        this.setState({ totalPages: totalPages, data: data }, function () {
+          _this2.sort(sortColumn, sortDirection);
+        });
 
-      if (totalPages < this.state.page) {
-        this.setPage(1);
+        if (totalPages < this.state.page) {
+          this.setPage(1);
+        }
       }
     }
   }, {
@@ -92,7 +94,7 @@ var Flexflexgrid = function (_Component) {
     value: function filter(column, text) {
       var data = (0, _utils.filterData)(this.props.data, column, text);
 
-      this.setState({ data: !text.length ? this.props.data : data });
+      this.setState({ page: 1, data: !text.length ? this.props.data : data });
     }
   }, {
     key: "sort",

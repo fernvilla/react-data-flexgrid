@@ -50,19 +50,21 @@ export default class Flexflexgrid extends Component {
     const { rowsPerPage, sortColumn, sortDirection } = this.state;
     const totalPages = getTotalPages(data.length, rowsPerPage);
 
-    this.setState({ totalPages: totalPages, data }, () => {
-      this.sort(sortColumn, sortDirection);
-    });
+    if (this.props.data !== data) {
+      this.setState({ totalPages: totalPages, data }, () => {
+        this.sort(sortColumn, sortDirection);
+      });
 
-    if (totalPages < this.state.page) {
-      this.setPage(1);
+      if (totalPages < this.state.page) {
+        this.setPage(1);
+      }
     }
   }
 
   filter(column, text) {
     const data = filterData(this.props.data, column, text);
 
-    this.setState({ data: !text.length ? this.props.data : data });
+    this.setState({ page: 1, data: !text.length ? this.props.data : data });
   }
 
   sort(column, direction) {
