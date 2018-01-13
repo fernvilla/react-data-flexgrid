@@ -4,24 +4,24 @@
   "description": "data grid",
   "main": "dist/index.js",
   "style": "dist/grid.css",
-  "files": [
-    "*.md",
-    "dist"
-  ],
-  "author": "Fernando Villasenor <fvilla18@gmail.com> (http://fernvillasenor.com)",
+  "files": ["*.md", "dist"],
+  "author":
+    "Fernando Villasenor <fvilla18@gmail.com> (http://fernvillasenor.com)",
   "license": "ISC",
   "scripts": {
-    "build": "yarn run js && yarn run css",
-    "css": "node-sass src/styles -o dist/css --output-style compressed",
+    "build": "npm-run-all -p build:*",
+    "build:autoprefixer":
+      "postcss dist/css/*.css --use autoprefixer --no-map -d dist/css",
+    "build:css": "node-sass src/styles -o dist/css --output-style compressed",
+    "build:js": "babel src -d dist",
     "css:watch": "node-sass -w src/styles -o dist/css",
-    "example": "cd example && yarn start",
-    "js": "babel src -d dist",
     "js:watch": "babel src -w -d dist",
     "lint": "eslint src/**; exit 0",
     "lint:watch": "esw -w src/**",
     "prepublish": "yarn run build",
     "start": "npm-run-all -p js:watch css:watch",
-    "start:all": "npm-run-all -p js:watch css:watch example"
+    "start:all": "npm-run-all -p js:watch css:watch example",
+    "example": "cd example && yarn start"
   },
   "peerDependencies": {
     "react": "^16.2.0",
