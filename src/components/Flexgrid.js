@@ -47,10 +47,11 @@ export default class Flexflexgrid extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { data } = nextProps;
-    const { rowsPerPage, sortColumn, sortDirection } = this.state;
-    const totalPages = getTotalPages(data.length, rowsPerPage);
 
     if (this.props.data !== data) {
+      const { rowsPerPage, sortColumn, sortDirection } = this.state;
+      const totalPages = getTotalPages(data.length, rowsPerPage);
+
       this.setState({ totalPages: totalPages, data }, () => {
         this.sort(sortColumn, sortDirection);
       });

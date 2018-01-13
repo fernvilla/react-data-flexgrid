@@ -72,14 +72,16 @@ var Flexflexgrid = function (_Component) {
       var _this2 = this;
 
       var data = nextProps.data;
-      var _state = this.state,
-          rowsPerPage = _state.rowsPerPage,
-          sortColumn = _state.sortColumn,
-          sortDirection = _state.sortDirection;
 
-      var totalPages = (0, _utils.getTotalPages)(data.length, rowsPerPage);
 
       if (this.props.data !== data) {
+        var _state = this.state,
+            rowsPerPage = _state.rowsPerPage,
+            sortColumn = _state.sortColumn,
+            sortDirection = _state.sortDirection;
+
+        var totalPages = (0, _utils.getTotalPages)(data.length, rowsPerPage);
+
         this.setState({ totalPages: totalPages, data: data }, function () {
           _this2.sort(sortColumn, sortDirection);
         });
