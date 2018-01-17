@@ -50,8 +50,8 @@ var Pager = function Pager(props) {
       setPage = props.setPage,
       pageDown = props.pageDown,
       pageUp = props.pageUp,
-      setRowsPerPage = props.setRowsPerPage,
-      rowsPerPage = props.rowsPerPage;
+      setdefaultPageSize = props.setdefaultPageSize,
+      defaultPageSize = props.defaultPageSize;
 
   var rows = [1, 2, 3, 4, 5, 10, 25, 50, 100, 500, 1000, "All"];
 
@@ -106,9 +106,9 @@ var Pager = function Pager(props) {
         "select",
         {
           onChange: function onChange(e) {
-            return setRowsPerPage(e.target.value);
+            return setdefaultPageSize(e.target.value);
           },
-          defaultValue: rowsPerPage
+          defaultValue: defaultPageSize
         },
         rows.map(function (row, i) {
           return _react2.default.createElement(
@@ -128,8 +128,8 @@ Pager.propType = {
   setPage: _propTypes2.default.func.isRequirede,
   pageDown: _propTypes2.default.func.isRequired,
   pageUp: _propTypes2.default.func.isRequired,
-  setRowsPerPage: _propTypes2.default.func.isRequired,
-  rowsPerPage: _propTypes2.default.number.isRequired
+  setdefaultPageSize: _propTypes2.default.func.isRequired,
+  defaultPageSize: _propTypes2.default.number.isRequired
 };
 
 exports.default = Pager;

@@ -1,13 +1,13 @@
 import React from "react";
 
 const GridData = props => {
-  const { columns, currentPage, rowsPerPage, data } = props;
+  const { columns, currentPage, defaultPageSize, data } = props;
 
   if (!data.length) return null;
 
   const pagedData = data.slice(
-    (currentPage - 1) * rowsPerPage,
-    currentPage * rowsPerPage
+    (currentPage - 1) * defaultPageSize,
+    currentPage * defaultPageSize
   );
 
   return pagedData.map((d, i) => (

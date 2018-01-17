@@ -11,7 +11,7 @@ export default class Flexflexgrid extends Component {
   static propTypes = {
     columns: PropTypes.array.isRequired,
     data: PropTypes.array.isRequired,
-    rowsPerPage: PropTypes.number,
+    defaultPageSize: PropTypes.number,
     currentPage: PropTypes.number,
     sortableCols: PropTypes.array,
     gridClass: PropTypes.string,
@@ -20,7 +20,7 @@ export default class Flexflexgrid extends Component {
   };
 
   static defaultProps = {
-    rowsPerPage: 10,
+    defaultPageSize: 10,
     currentPage: 1,
     sortableCols: [],
     gridClass: null,
@@ -31,11 +31,11 @@ export default class Flexflexgrid extends Component {
   constructor(props) {
     super(props);
 
-    const { currentPage, rowsPerPage, data } = props;
+    const { currentPage, defaultPageSize, data } = props;
 
     this.state = {
       currentPage,
-      rowsPerPage,
+      defaultPageSize,
       totalPages: 1,
       sortDirection: null,
       sortColumn: null,
@@ -47,8 +47,8 @@ export default class Flexflexgrid extends Component {
     const { data } = nextProps;
 
     if (this.props.data !== data) {
-      const { rowsPerPage, sortColumn, sortDirection } = this.state;
-      const totalPages = getTotalPages(data.length, rowsPerPage);
+      const { defaultPageSize, sortColumn, sortDirection } = this.state;
+      const totalPages = getTotalPages(data.length, defaultPageSize);
 
       this.setState({ totalPages: totalPages, data }, () => {
         this.sort(sortColumn, sortDirection);
@@ -101,15 +101,19 @@ export default class Flexflexgrid extends Component {
     this.setState({ currentPage: page });
   };
 
-  setRowsPerPage = rows => {
-    const rowsPerPage = rows === "All" ? this.props.data.length : Number(rows);
+  setdefaultPageSize = rows => {
+    const defaultPageSize =
+      rows === "All" ? this.props.data.length : Number(rows);
 
-    this.setState({ rowsPerPage }, () => this.setTotalPages());
+    this.setState({ defaultPageSize }, () => this.setTotalPages());
   };
 
   setTotalPages() {
     this.setState({
-      totalPages: getTotalPages(this.props.data.length, this.state.rowsPerPage)
+      totalPages: getTotalPages(
+        this.props.data.length,
+        this.state.defaultPageSize
+      )
     });
   }
 
@@ -117,7 +121,7 @@ export default class Flexflexgrid extends Component {
     const {
       currentPage,
       totalPages,
-      rowsPerPage,
+      defaultPageSize,
       sortColumn,
       sortDirection,
       data
@@ -138,7 +142,7 @@ export default class Flexflexgrid extends Component {
         <GridData
           columns={columns}
           data={data}
-          rowsPerPage={rowsPerPage}
+          defaultPageSize={defaultPageSize}
           currentPage={currentPage}
         />
 
@@ -149,8 +153,8 @@ export default class Flexflexgrid extends Component {
             pageUp={this.pageUp}
             pageDown={this.pageDown}
             setPage={this.setPage}
-            setRowsPerPage={this.setRowsPerPage}
-            rowsPerPage={rowsPerPage}
+            setdefaultPageSize={this.setdefaultPageSize}
+            defaultPageSize={defaultPageSize}
             showPager={showPager}
           />
         )}

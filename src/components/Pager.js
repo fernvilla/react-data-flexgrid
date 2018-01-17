@@ -23,8 +23,8 @@ const Pager = props => {
     setPage,
     pageDown,
     pageUp,
-    setRowsPerPage,
-    rowsPerPage
+    setdefaultPageSize,
+    defaultPageSize
   } = props;
   const rows = [1, 2, 3, 4, 5, 10, 25, 50, 100, 500, 1000, "All"];
 
@@ -55,8 +55,8 @@ const Pager = props => {
       <div className="flexgrid-footer-right">
         Rows per page:
         <select
-          onChange={e => setRowsPerPage(e.target.value)}
-          defaultValue={rowsPerPage}
+          onChange={e => setdefaultPageSize(e.target.value)}
+          defaultValue={defaultPageSize}
         >
           {rows.map((row, i) => (
             <option value={row} key={i}>
@@ -75,8 +75,8 @@ Pager.propType = {
   setPage: PropTypes.func.isRequirede,
   pageDown: PropTypes.func.isRequired,
   pageUp: PropTypes.func.isRequired,
-  setRowsPerPage: PropTypes.func.isRequired,
-  rowsPerPage: PropTypes.number.isRequired
+  setdefaultPageSize: PropTypes.func.isRequired,
+  defaultPageSize: PropTypes.number.isRequired
 };
 
 export default Pager;

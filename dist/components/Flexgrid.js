@@ -57,13 +57,13 @@ var Flexflexgrid = function (_Component) {
     _initialiseProps.call(_this);
 
     var currentPage = props.currentPage,
-        rowsPerPage = props.rowsPerPage,
+        defaultPageSize = props.defaultPageSize,
         data = props.data;
 
 
     _this.state = {
       currentPage: currentPage,
-      rowsPerPage: rowsPerPage,
+      defaultPageSize: defaultPageSize,
       totalPages: 1,
       sortDirection: null,
       sortColumn: null,
@@ -82,11 +82,11 @@ var Flexflexgrid = function (_Component) {
 
       if (this.props.data !== data) {
         var _state = this.state,
-            rowsPerPage = _state.rowsPerPage,
+            defaultPageSize = _state.defaultPageSize,
             sortColumn = _state.sortColumn,
             sortDirection = _state.sortDirection;
 
-        var totalPages = (0, _utils.getTotalPages)(data.length, rowsPerPage);
+        var totalPages = (0, _utils.getTotalPages)(data.length, defaultPageSize);
 
         this.setState({ totalPages: totalPages, data: data }, function () {
           _this2.sort(sortColumn, sortDirection);
@@ -101,7 +101,7 @@ var Flexflexgrid = function (_Component) {
     key: "setTotalPages",
     value: function setTotalPages() {
       this.setState({
-        totalPages: (0, _utils.getTotalPages)(this.props.data.length, this.state.rowsPerPage)
+        totalPages: (0, _utils.getTotalPages)(this.props.data.length, this.state.defaultPageSize)
       });
     }
   }, {
@@ -110,7 +110,7 @@ var Flexflexgrid = function (_Component) {
       var _state2 = this.state,
           currentPage = _state2.currentPage,
           totalPages = _state2.totalPages,
-          rowsPerPage = _state2.rowsPerPage,
+          defaultPageSize = _state2.defaultPageSize,
           sortColumn = _state2.sortColumn,
           sortDirection = _state2.sortDirection,
           data = _state2.data;
@@ -134,7 +134,7 @@ var Flexflexgrid = function (_Component) {
         _react2.default.createElement(_GridData2.default, {
           columns: columns,
           data: data,
-          rowsPerPage: rowsPerPage,
+          defaultPageSize: defaultPageSize,
           currentPage: currentPage
         }),
         showPager && _react2.default.createElement(_Pager2.default, {
@@ -143,8 +143,8 @@ var Flexflexgrid = function (_Component) {
           pageUp: this.pageUp,
           pageDown: this.pageDown,
           setPage: this.setPage,
-          setRowsPerPage: this.setRowsPerPage,
-          rowsPerPage: rowsPerPage,
+          setdefaultPageSize: this.setdefaultPageSize,
+          defaultPageSize: defaultPageSize,
           showPager: showPager
         })
       );
@@ -157,7 +157,7 @@ var Flexflexgrid = function (_Component) {
 Flexflexgrid.propTypes = {
   columns: _propTypes2.default.array.isRequired,
   data: _propTypes2.default.array.isRequired,
-  rowsPerPage: _propTypes2.default.number,
+  defaultPageSize: _propTypes2.default.number,
   currentPage: _propTypes2.default.number,
   sortableCols: _propTypes2.default.array,
   gridClass: _propTypes2.default.string,
@@ -165,7 +165,7 @@ Flexflexgrid.propTypes = {
   showPager: _propTypes2.default.bool
 };
 Flexflexgrid.defaultProps = {
-  rowsPerPage: 10,
+  defaultPageSize: 10,
   currentPage: 1,
   sortableCols: [],
   gridClass: null,
@@ -221,10 +221,10 @@ var _initialiseProps = function _initialiseProps() {
     _this3.setState({ currentPage: page });
   };
 
-  this.setRowsPerPage = function (rows) {
-    var rowsPerPage = rows === "All" ? _this3.props.data.length : Number(rows);
+  this.setdefaultPageSize = function (rows) {
+    var defaultPageSize = rows === "All" ? _this3.props.data.length : Number(rows);
 
-    _this3.setState({ rowsPerPage: rowsPerPage }, function () {
+    _this3.setState({ defaultPageSize: defaultPageSize }, function () {
       return _this3.setTotalPages();
     });
   };

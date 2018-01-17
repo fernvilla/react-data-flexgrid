@@ -13,13 +13,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var GridData = function GridData(props) {
   var columns = props.columns,
       currentPage = props.currentPage,
-      rowsPerPage = props.rowsPerPage,
+      defaultPageSize = props.defaultPageSize,
       data = props.data;
 
 
   if (!data.length) return null;
 
-  var pagedData = data.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+  var pagedData = data.slice((currentPage - 1) * defaultPageSize, currentPage * defaultPageSize);
 
   return pagedData.map(function (d, i) {
     return _react2.default.createElement(

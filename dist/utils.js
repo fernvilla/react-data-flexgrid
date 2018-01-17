@@ -15,8 +15,8 @@ var _fuse2 = _interopRequireDefault(_fuse);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var getTotalPages = exports.getTotalPages = function getTotalPages(dataLength, rowsPerPage) {
-  return Math.ceil(dataLength / rowsPerPage);
+var getTotalPages = exports.getTotalPages = function getTotalPages(dataLength, defaultPageSize) {
+  return Math.ceil(dataLength / defaultPageSize);
 };
 
 var sortData = exports.sortData = function sortData(data, column, direction) {
