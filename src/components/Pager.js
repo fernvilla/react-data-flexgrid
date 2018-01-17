@@ -24,12 +24,9 @@ const Pager = props => {
     pageDown,
     pageUp,
     setRowsPerPage,
-    rowsPerPage,
-    showPager
+    rowsPerPage
   } = props;
   const rows = [1, 2, 3, 4, 5, 10, 25, 50, 100, 500, 1000, "All"];
-
-  if (!showPager) return null;
 
   return (
     <div className="flexgrid-footer">
@@ -73,7 +70,6 @@ const Pager = props => {
 };
 
 Pager.propType = {
-  showPager: PropTypes.bool.isRequired,
   currentPage: PropTypes.number.isRequired,
   totalPages: PropTypes.number.isRequired,
   setPage: PropTypes.func.isRequirede,

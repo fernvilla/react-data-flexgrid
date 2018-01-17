@@ -1,7 +1,7 @@
 import React from "react";
 
 const GridData = props => {
-  const { columnMetadata, currentPage, rowsPerPage, data } = props;
+  const { columns, currentPage, rowsPerPage, data } = props;
 
   if (!data.length) return null;
 
@@ -12,7 +12,7 @@ const GridData = props => {
 
   return pagedData.map((d, i) => (
     <div className="flexgrid-item-row" key={i}>
-      {columnMetadata.map((column, i) => {
+      {columns.map((column, i) => {
         const style = column.style || null;
 
         return (

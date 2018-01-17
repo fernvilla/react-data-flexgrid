@@ -64,7 +64,7 @@ var Flexflexgrid = function (_Component) {
     _this.state = {
       currentPage: currentPage,
       rowsPerPage: rowsPerPage,
-      totalPages: (0, _utils.getTotalPages)(data.length, rowsPerPage),
+      totalPages: 1,
       sortDirection: null,
       sortColumn: null,
       data: data
@@ -116,7 +116,7 @@ var Flexflexgrid = function (_Component) {
           data = _state2.data;
       var _props = this.props,
           gridClass = _props.gridClass,
-          columnMetadata = _props.columnMetadata,
+          columns = _props.columns,
           filterable = _props.filterable,
           showPager = _props.showPager;
 
@@ -125,19 +125,19 @@ var Flexflexgrid = function (_Component) {
         "div",
         { className: (0, _classnames2.default)("flexgrid", _defineProperty({}, gridClass, gridClass)) },
         _react2.default.createElement(_Header2.default, {
-          columnMetadata: columnMetadata,
+          columns: columns,
           sort: this.sort,
           sortColumn: sortColumn,
           sortDirection: sortDirection
         }),
-        filterable && _react2.default.createElement(_Filter2.default, { columnMetadata: columnMetadata, filter: this.filter }),
+        filterable && _react2.default.createElement(_Filter2.default, { columns: columns, filter: this.filter }),
         _react2.default.createElement(_GridData2.default, {
-          columnMetadata: columnMetadata,
+          columns: columns,
           data: data,
           rowsPerPage: rowsPerPage,
           currentPage: currentPage
         }),
-        _react2.default.createElement(_Pager2.default, {
+        showPager && _react2.default.createElement(_Pager2.default, {
           currentPage: currentPage,
           totalPages: totalPages,
           pageUp: this.pageUp,
@@ -155,7 +155,7 @@ var Flexflexgrid = function (_Component) {
 }(_react.Component);
 
 Flexflexgrid.propTypes = {
-  columnMetadata: _propTypes2.default.array.isRequired,
+  columns: _propTypes2.default.array.isRequired,
   data: _propTypes2.default.array.isRequired,
   rowsPerPage: _propTypes2.default.number,
   currentPage: _propTypes2.default.number,

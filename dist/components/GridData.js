@@ -11,7 +11,7 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var GridData = function GridData(props) {
-  var columnMetadata = props.columnMetadata,
+  var columns = props.columns,
       currentPage = props.currentPage,
       rowsPerPage = props.rowsPerPage,
       data = props.data;
@@ -25,7 +25,7 @@ var GridData = function GridData(props) {
     return _react2.default.createElement(
       "div",
       { className: "flexgrid-item-row", key: i },
-      columnMetadata.map(function (column, i) {
+      columns.map(function (column, i) {
         var style = column.style || null;
 
         return _react2.default.createElement(

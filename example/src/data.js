@@ -3,7 +3,7 @@ import faker from "faker";
 import _times from "lodash/times";
 import moment from "moment";
 
-export const columnMetadata = [
+export const columns = [
   {
     columnName: "id",
     displayName: "ID",

@@ -11,14 +11,14 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Filter = function Filter(props) {
-  var columnMetadata = props.columnMetadata,
+  var columns = props.columns,
       filter = props.filter;
 
 
   return _react2.default.createElement(
     "div",
     { className: "flexgrid-filter-row" },
-    columnMetadata.map(function (column, i) {
+    columns.map(function (column, i) {
       var style = column.style || null;
 
       return _react2.default.createElement(

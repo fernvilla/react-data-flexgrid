@@ -9,7 +9,7 @@ import { getTotalPages, sortData, filterData } from "./../utils";
 
 export default class Flexflexgrid extends Component {
   static propTypes = {
-    columnMetadata: PropTypes.array.isRequired,
+    columns: PropTypes.array.isRequired,
     data: PropTypes.array.isRequired,
     rowsPerPage: PropTypes.number,
     currentPage: PropTypes.number,
@@ -36,7 +36,7 @@ export default class Flexflexgrid extends Component {
     this.state = {
       currentPage,
       rowsPerPage,
-      totalPages: getTotalPages(data.length, rowsPerPage),
+      totalPages: 1,
       sortDirection: null,
       sortColumn: null,
       data
@@ -122,38 +122,38 @@ export default class Flexflexgrid extends Component {
       sortDirection,
       data
     } = this.state;
-    const { gridClass, columnMetadata, filterable, showPager } = this.props;
+    const { gridClass, columns, filterable, showPager } = this.props;
 
     return (
       <div className={classNames("flexgrid", { [gridClass]: gridClass })}>
         <Header
-          columnMetadata={columnMetadata}
+          columns={columns}
           sort={this.sort}
           sortColumn={sortColumn}
           sortDirection={sortDirection}
         />
 
-        {filterable && (
-          <Filter columnMetadata={columnMetadata} filter={this.filter} />
-        )}
+        {filterable && <Filter columns={columns} filter={this.filter} />}
 
         <GridData
-          columnMetadata={columnMetadata}
+          columns={columns}
           data={data}
           rowsPerPage={rowsPerPage}
           currentPage={currentPage}
         />
 
-        <Pager
-          currentPage={currentPage}
-          totalPages={totalPages}
-          pageUp={this.pageUp}
-          pageDown={this.pageDown}
-          setPage={this.setPage}
-          setRowsPerPage={this.setRowsPerPage}
-          rowsPerPage={rowsPerPage}
-          showPager={showPager}
-        />
+        {showPager && (
+          <Pager
+            currentPage={currentPage}
+            totalPages={totalPages}
+            pageUp={this.pageUp}
+            pageDown={this.pageDown}
+            setPage={this.setPage}
+            setRowsPerPage={this.setRowsPerPage}
+            rowsPerPage={rowsPerPage}
+            showPager={showPager}
+          />
+        )}
       </div>
     );
   }

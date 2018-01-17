@@ -9,11 +9,11 @@ import classNames from "classnames";
 fontawesome.library.add(solid, faCaretUp, faCaretDown);
 
 const Row = props => {
-  const { columnMetadata, sortColumn, sortDirection, sort } = props;
+  const { columns, sortColumn, sortDirection, sort } = props;
 
   return (
     <div className="flexgrid-header-row">
-      {columnMetadata.map((column, i) => {
+      {columns.map((column, i) => {
         const style = column.style || null;
         const { columnName, displayName } = column;
 

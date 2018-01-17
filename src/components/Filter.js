@@ -1,11 +1,11 @@
 import React from "react";
 
 const Filter = props => {
-  const { columnMetadata, filter } = props;
+  const { columns, filter } = props;
 
   return (
     <div className="flexgrid-filter-row">
-      {columnMetadata.map((column, i) => {
+      {columns.map((column, i) => {
         const style = column.style || null;
 
         return (

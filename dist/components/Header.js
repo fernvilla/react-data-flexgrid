@@ -37,7 +37,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _fontawesome2.default.library.add(_fontawesomeFreeSolid2.default, _faCaretUp2.default, _faCaretDown2.default);
 
 var Row = function Row(props) {
-  var columnMetadata = props.columnMetadata,
+  var columns = props.columns,
       sortColumn = props.sortColumn,
       sortDirection = props.sortDirection,
       sort = props.sort;
@@ -46,7 +46,7 @@ var Row = function Row(props) {
   return _react2.default.createElement(
     "div",
     { className: "flexgrid-header-row" },
-    columnMetadata.map(function (column, i) {
+    columns.map(function (column, i) {
       var style = column.style || null;
       var columnName = column.columnName,
           displayName = column.displayName;

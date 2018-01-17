@@ -51,12 +51,9 @@ var Pager = function Pager(props) {
       pageDown = props.pageDown,
       pageUp = props.pageUp,
       setRowsPerPage = props.setRowsPerPage,
-      rowsPerPage = props.rowsPerPage,
-      showPager = props.showPager;
+      rowsPerPage = props.rowsPerPage;
 
   var rows = [1, 2, 3, 4, 5, 10, 25, 50, 100, 500, 1000, "All"];
-
-  if (!showPager) return null;
 
   return _react2.default.createElement(
     "div",
@@ -126,7 +123,6 @@ var Pager = function Pager(props) {
 };
 
 Pager.propType = {
-  showPager: _propTypes2.default.bool.isRequired,
   currentPage: _propTypes2.default.number.isRequired,
   totalPages: _propTypes2.default.number.isRequired,
   setPage: _propTypes2.default.func.isRequirede,
