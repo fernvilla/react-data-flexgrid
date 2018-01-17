@@ -8,6 +8,10 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = require("prop-types");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _fontawesome = require("@fortawesome/fontawesome");
 
 var _fontawesome2 = _interopRequireDefault(_fontawesome);
@@ -47,9 +51,12 @@ var Pager = function Pager(props) {
       pageDown = props.pageDown,
       pageUp = props.pageUp,
       setRowsPerPage = props.setRowsPerPage,
-      rowsPerPage = props.rowsPerPage;
+      rowsPerPage = props.rowsPerPage,
+      showPager = props.showPager;
 
   var rows = [1, 2, 3, 4, 5, 10, 25, 50, 100, 500, 1000, "All"];
+
+  if (!showPager) return null;
 
   return _react2.default.createElement(
     "div",
@@ -116,6 +123,17 @@ var Pager = function Pager(props) {
       )
     )
   );
+};
+
+Pager.propType = {
+  showPager: _propTypes2.default.bool.isRequired,
+  currentPage: _propTypes2.default.number.isRequired,
+  totalPages: _propTypes2.default.number.isRequired,
+  setPage: _propTypes2.default.func.isRequirede,
+  pageDown: _propTypes2.default.func.isRequired,
+  pageUp: _propTypes2.default.func.isRequired,
+  setRowsPerPage: _propTypes2.default.func.isRequired,
+  rowsPerPage: _propTypes2.default.number.isRequired
 };
 
 exports.default = Pager;

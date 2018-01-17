@@ -42,7 +42,7 @@ export default class App extends Component {
           </select>
         </p>
 
-        <Flexgrid columnMetadata={columnMetadata} data={data} filterable />
+        <Flexgrid columnMetadata={columnMetadata} data={data} />
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import faker from "faker";
 import _times from "lodash/times";
 import moment from "moment";

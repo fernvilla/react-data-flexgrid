@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes, { number } from "prop-types";
 import fontawesome from "@fortawesome/fontawesome";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import solid from "@fortawesome/fontawesome-free-solid";
@@ -23,9 +24,12 @@ const Pager = props => {
     pageDown,
     pageUp,
     setRowsPerPage,
-    rowsPerPage
+    rowsPerPage,
+    showPager
   } = props;
   const rows = [1, 2, 3, 4, 5, 10, 25, 50, 100, 500, 1000, "All"];
+
+  if (!showPager) return null;
 
   return (
     <div className="flexgrid-footer">
@@ -66,6 +70,17 @@ const Pager = props => {
       </div>
     </div>
   );
+};
+
+Pager.propType = {
+  showPager: PropTypes.bool.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  setPage: PropTypes.func.isRequirede,
+  pageDown: PropTypes.func.isRequired,
+  pageUp: PropTypes.func.isRequired,
+  setRowsPerPage: PropTypes.func.isRequired,
+  rowsPerPage: PropTypes.number.isRequired
 };
 
 export default Pager;

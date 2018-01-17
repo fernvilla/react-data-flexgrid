@@ -15,7 +15,8 @@ export default class Flexflexgrid extends Component {
     currentPage: PropTypes.number,
     sortableCols: PropTypes.array,
     gridClass: PropTypes.string,
-    filterable: PropTypes.bool
+    filterable: PropTypes.bool,
+    showPager: PropTypes.bool
   };
 
   static defaultProps = {
@@ -23,7 +24,8 @@ export default class Flexflexgrid extends Component {
     currentPage: 1,
     sortableCols: [],
     gridClass: null,
-    filterable: false
+    filterable: false,
+    showPager: true
   };
 
   constructor(props) {
@@ -120,7 +122,7 @@ export default class Flexflexgrid extends Component {
       sortDirection,
       data
     } = this.state;
-    const { gridClass, columnMetadata, filterable } = this.props;
+    const { gridClass, columnMetadata, filterable, showPager } = this.props;
 
     return (
       <div className={classNames("flexgrid", { [gridClass]: gridClass })}>
@@ -150,6 +152,7 @@ export default class Flexflexgrid extends Component {
           setPage={this.setPage}
           setRowsPerPage={this.setRowsPerPage}
           rowsPerPage={rowsPerPage}
+          showPager={showPager}
         />
       </div>
     );
