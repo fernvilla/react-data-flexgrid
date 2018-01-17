@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import classNames from "classnames";
 import Pager from "./Pager";
 import Header from "./Header";
 import Filter from "./Filter";
@@ -21,28 +22,23 @@ export default class Flexflexgrid extends Component {
     rowsPerPage: 10,
     currentPage: 1,
     sortableCols: [],
-    gridClass: "",
+    gridClass: null,
     filterable: false
   };
 
   constructor(props) {
     super(props);
 
+    const { currentPage, rowsPerPage, data } = props;
+
     this.state = {
-      page: props.currentPage,
-      rowsPerPage: props.rowsPerPage,
-      totalPages: getTotalPages(props.data.length, props.rowsPerPage),
+      currentPage,
+      rowsPerPage,
+      totalPages: getTotalPages(data.length, rowsPerPage),
       sortDirection: null,
       sortColumn: null,
-      data: props.data
+      data
     };
-
-    this.pageUp = this.pageUp.bind(this);
-    this.pageDown = this.pageDown.bind(this);
-    this.setPage = this.setPage.bind(this);
-    this.setRowsPerPage = this.setRowsPerPage.bind(this);
-    this.sort = this.sort.bind(this);
-    this.filter = this.filter.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -56,19 +52,22 @@ export default class Flexflexgrid extends Component {
         this.sort(sortColumn, sortDirection);
       });
 
-      if (totalPages < this.state.page) {
+      if (totalPages < this.state.currentPage) {
         this.setPage(1);
       }
     }
   }
 
-  filter(column, text) {
+  filter = (column, text) => {
     const data = filterData(this.props.data, column, text);
 
-    this.setState({ page: 1, data: !text.length ? this.props.data : data });
-  }
+    this.setState({
+      currentPage: 1,
+      data: !text.length ? this.props.data : data
+    });
+  };
 
-  sort(column, direction) {
+  sort = (column, direction) => {
     if (!column || !direction || direction === this.state.sortDirection) return;
 
     const data = sortData(this.props.data, column, direction);
@@ -78,33 +77,33 @@ export default class Flexflexgrid extends Component {
       sortColumn: column,
       sortDirection: direction
     });
-  }
+  };
 
-  pageUp() {
-    const { page, totalPages } = this.state;
+  pageUp = () => {
+    const { currentPage, totalPages } = this.state;
 
-    if (page === totalPages) return;
+    if (currentPage === totalPages) return;
 
-    this.setPage(page + 1);
-  }
+    this.setPage(currentPage + 1);
+  };
 
-  pageDown() {
-    const { page } = this.state;
+  pageDown = () => {
+    const { currentPage } = this.state;
 
-    if (page === 1) return;
+    if (currentPage === 1) return;
 
-    this.setPage(page - 1);
-  }
+    this.setPage(currentPage - 1);
+  };
 
-  setPage(page) {
-    this.setState({ page });
-  }
+  setPage = page => {
+    this.setState({ currentPage: page });
+  };
 
-  setRowsPerPage(rows) {
+  setRowsPerPage = rows => {
     const rowsPerPage = rows === "All" ? this.props.data.length : Number(rows);
 
     this.setState({ rowsPerPage }, () => this.setTotalPages());
-  }
+  };
 
   setTotalPages() {
     this.setState({
@@ -114,7 +113,7 @@ export default class Flexflexgrid extends Component {
 
   render() {
     const {
-      page,
+      currentPage,
       totalPages,
       rowsPerPage,
       sortColumn,
@@ -124,7 +123,7 @@ export default class Flexflexgrid extends Component {
     const { gridClass, columnMetadata, filterable } = this.props;
 
     return (
-      <div className={`flexgrid ${gridClass}`}>
+      <div className={classNames("flexgrid", { [gridClass]: gridClass })}>
         <Header
           columnMetadata={columnMetadata}
           sort={this.sort}
@@ -140,11 +139,11 @@ export default class Flexflexgrid extends Component {
           columnMetadata={columnMetadata}
           data={data}
           rowsPerPage={rowsPerPage}
-          page={page}
+          currentPage={currentPage}
         />
 
         <Pager
-          page={page}
+          currentPage={currentPage}
           totalPages={totalPages}
           pageUp={this.pageUp}
           pageDown={this.pageDown}

@@ -14,6 +14,10 @@ var _propTypes = require("prop-types");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+var _classnames = require("classnames");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var _Pager = require("./Pager");
 
 var _Pager2 = _interopRequireDefault(_Pager);
@@ -34,6 +38,8 @@ var _utils = require("./../utils");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -48,21 +54,21 @@ var Flexflexgrid = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Flexflexgrid.__proto__ || Object.getPrototypeOf(Flexflexgrid)).call(this, props));
 
+    _initialiseProps.call(_this);
+
+    var currentPage = props.currentPage,
+        rowsPerPage = props.rowsPerPage,
+        data = props.data;
+
+
     _this.state = {
-      page: props.currentPage,
-      rowsPerPage: props.rowsPerPage,
-      totalPages: (0, _utils.getTotalPages)(props.data.length, props.rowsPerPage),
+      currentPage: currentPage,
+      rowsPerPage: rowsPerPage,
+      totalPages: (0, _utils.getTotalPages)(data.length, rowsPerPage),
       sortDirection: null,
       sortColumn: null,
-      data: props.data
+      data: data
     };
-
-    _this.pageUp = _this.pageUp.bind(_this);
-    _this.pageDown = _this.pageDown.bind(_this);
-    _this.setPage = _this.setPage.bind(_this);
-    _this.setRowsPerPage = _this.setRowsPerPage.bind(_this);
-    _this.sort = _this.sort.bind(_this);
-    _this.filter = _this.filter.bind(_this);
     return _this;
   }
 
@@ -86,68 +92,10 @@ var Flexflexgrid = function (_Component) {
           _this2.sort(sortColumn, sortDirection);
         });
 
-        if (totalPages < this.state.page) {
+        if (totalPages < this.state.currentPage) {
           this.setPage(1);
         }
       }
-    }
-  }, {
-    key: "filter",
-    value: function filter(column, text) {
-      var data = (0, _utils.filterData)(this.props.data, column, text);
-
-      this.setState({ page: 1, data: !text.length ? this.props.data : data });
-    }
-  }, {
-    key: "sort",
-    value: function sort(column, direction) {
-      if (!column || !direction || direction === this.state.sortDirection) return;
-
-      var data = (0, _utils.sortData)(this.props.data, column, direction);
-
-      this.setState({
-        data: data,
-        sortColumn: column,
-        sortDirection: direction
-      });
-    }
-  }, {
-    key: "pageUp",
-    value: function pageUp() {
-      var _state2 = this.state,
-          page = _state2.page,
-          totalPages = _state2.totalPages;
-
-
-      if (page === totalPages) return;
-
-      this.setPage(page + 1);
-    }
-  }, {
-    key: "pageDown",
-    value: function pageDown() {
-      var page = this.state.page;
-
-
-      if (page === 1) return;
-
-      this.setPage(page - 1);
-    }
-  }, {
-    key: "setPage",
-    value: function setPage(page) {
-      this.setState({ page: page });
-    }
-  }, {
-    key: "setRowsPerPage",
-    value: function setRowsPerPage(rows) {
-      var _this3 = this;
-
-      var rowsPerPage = rows === "All" ? this.props.data.length : Number(rows);
-
-      this.setState({ rowsPerPage: rowsPerPage }, function () {
-        return _this3.setTotalPages();
-      });
     }
   }, {
     key: "setTotalPages",
@@ -159,13 +107,13 @@ var Flexflexgrid = function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _state3 = this.state,
-          page = _state3.page,
-          totalPages = _state3.totalPages,
-          rowsPerPage = _state3.rowsPerPage,
-          sortColumn = _state3.sortColumn,
-          sortDirection = _state3.sortDirection,
-          data = _state3.data;
+      var _state2 = this.state,
+          currentPage = _state2.currentPage,
+          totalPages = _state2.totalPages,
+          rowsPerPage = _state2.rowsPerPage,
+          sortColumn = _state2.sortColumn,
+          sortDirection = _state2.sortDirection,
+          data = _state2.data;
       var _props = this.props,
           gridClass = _props.gridClass,
           columnMetadata = _props.columnMetadata,
@@ -174,7 +122,7 @@ var Flexflexgrid = function (_Component) {
 
       return _react2.default.createElement(
         "div",
-        { className: "flexgrid " + gridClass },
+        { className: (0, _classnames2.default)("flexgrid", _defineProperty({}, gridClass, gridClass)) },
         _react2.default.createElement(_Header2.default, {
           columnMetadata: columnMetadata,
           sort: this.sort,
@@ -186,10 +134,10 @@ var Flexflexgrid = function (_Component) {
           columnMetadata: columnMetadata,
           data: data,
           rowsPerPage: rowsPerPage,
-          page: page
+          currentPage: currentPage
         }),
         _react2.default.createElement(_Pager2.default, {
-          page: page,
+          currentPage: currentPage,
           totalPages: totalPages,
           pageUp: this.pageUp,
           pageDown: this.pageDown,
@@ -217,7 +165,65 @@ Flexflexgrid.defaultProps = {
   rowsPerPage: 10,
   currentPage: 1,
   sortableCols: [],
-  gridClass: "",
+  gridClass: null,
   filterable: false
 };
+
+var _initialiseProps = function _initialiseProps() {
+  var _this3 = this;
+
+  this.filter = function (column, text) {
+    var data = (0, _utils.filterData)(_this3.props.data, column, text);
+
+    _this3.setState({
+      currentPage: 1,
+      data: !text.length ? _this3.props.data : data
+    });
+  };
+
+  this.sort = function (column, direction) {
+    if (!column || !direction || direction === _this3.state.sortDirection) return;
+
+    var data = (0, _utils.sortData)(_this3.props.data, column, direction);
+
+    _this3.setState({
+      data: data,
+      sortColumn: column,
+      sortDirection: direction
+    });
+  };
+
+  this.pageUp = function () {
+    var _state3 = _this3.state,
+        currentPage = _state3.currentPage,
+        totalPages = _state3.totalPages;
+
+
+    if (currentPage === totalPages) return;
+
+    _this3.setPage(currentPage + 1);
+  };
+
+  this.pageDown = function () {
+    var currentPage = _this3.state.currentPage;
+
+
+    if (currentPage === 1) return;
+
+    _this3.setPage(currentPage - 1);
+  };
+
+  this.setPage = function (page) {
+    _this3.setState({ currentPage: page });
+  };
+
+  this.setRowsPerPage = function (rows) {
+    var rowsPerPage = rows === "All" ? _this3.props.data.length : Number(rows);
+
+    _this3.setState({ rowsPerPage: rowsPerPage }, function () {
+      return _this3.setTotalPages();
+    });
+  };
+};
+
 exports.default = Flexflexgrid;

@@ -4,15 +4,14 @@
   "description": "data grid",
   "main": "dist/index.js",
   "style": "dist/grid.css",
-  "files": [
-    "*.md",
-    "dist"
-  ],
-  "author": "Fernando Villasenor <fvilla18@gmail.com> (http://fernvillasenor.com)",
-  "license": "ISC",
+  "files": ["*.md", "dist"],
+  "author":
+    "Fernando Villasenor <fvilla18@gmail.com> (http://fernvillasenor.com)",
+  "license": "MIT",
   "scripts": {
     "build": "npm-run-all -p build:*",
-    "build:autoprefixer": "postcss dist/css/*.css --use autoprefixer --no-map -d dist/css",
+    "build:autoprefixer":
+      "postcss dist/css/*.css --use autoprefixer --no-map -d dist/css",
     "build:css": "node-sass src/styles -o dist/css --output-style compressed",
     "build:js": "babel src -d dist",
     "css:watch": "node-sass -w src/styles -o dist/css",
@@ -20,8 +19,8 @@
     "lint": "eslint src/**; exit 0",
     "lint:watch": "esw -w src/**",
     "prepublish": "yarn run build",
-    "start": "npm-run-all -p js:watch css:watch",
-    "start:all": "npm-run-all -p js:watch css:watch example",
+    "start": "npm-run-all -p js:watch css:watch lint:watch",
+    "start:all": "npm-run-all -p js:watch css:watch lint:watch example",
     "example": "cd example && yarn start"
   },
   "peerDependencies": {
@@ -42,7 +41,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "classnames": "^2.2.5",
     "eslint": "^4.15.0",
-    "eslint-config-react-app": "^2.0.1",
+    "eslint-config-react-app": "^2.1.0",
     "eslint-plugin-flowtype": "^2.41.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
@@ -56,5 +55,9 @@
     "postcss": "^6.0.16",
     "postcss-cli": "^4.1.1",
     "prop-types": "^15.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fernvilla/react-data-flexgrid.git"
   }
 }

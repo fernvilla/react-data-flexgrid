@@ -17,7 +17,7 @@ fontawesome.library.add(
 
 const Pager = props => {
   const {
-    page,
+    currentPage,
     totalPages,
     setPage,
     pageDown,
@@ -39,7 +39,7 @@ const Pager = props => {
         </span>
 
         <span className="page-count">
-          Page {page} of {totalPages}
+          Page {currentPage} of {totalPages}
         </span>
 
         <span className="page-toggle" onClick={() => pageUp()}>

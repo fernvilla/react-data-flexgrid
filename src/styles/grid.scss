@@ -14,6 +14,7 @@
     flex-direction: row;
     background-color: $grid-header-color;
     border-bottom: 1px solid $gray-medium;
+    font-weight: bold;
 
     .flexgrid-header-col {
       padding: $padding;

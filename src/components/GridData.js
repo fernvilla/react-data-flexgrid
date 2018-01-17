@@ -1,11 +1,14 @@
 import React from "react";
 
 const GridData = props => {
-  const { columnMetadata, page, rowsPerPage, data } = props;
+  const { columnMetadata, currentPage, rowsPerPage, data } = props;
 
   if (!data.length) return null;
 
-  const pagedData = data.slice((page - 1) * rowsPerPage, page * rowsPerPage);
+  const pagedData = data.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
 
   return pagedData.map((d, i) => (
     <div className="flexgrid-item-row" key={i}>

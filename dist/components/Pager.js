@@ -41,7 +41,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _fontawesome2.default.library.add(_fontawesomeFreeSolid2.default, _faAngleRight2.default, _faAngleLeft2.default, _faAngleDoubleRight2.default, _faAngleDoubleLeft2.default);
 
 var Pager = function Pager(props) {
-  var page = props.page,
+  var currentPage = props.currentPage,
       totalPages = props.totalPages,
       setPage = props.setPage,
       pageDown = props.pageDown,
@@ -75,7 +75,7 @@ var Pager = function Pager(props) {
         "span",
         { className: "page-count" },
         "Page ",
-        page,
+        currentPage,
         " of ",
         totalPages
       ),
