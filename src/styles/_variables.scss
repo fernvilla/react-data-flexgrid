@@ -10,8 +10,10 @@ $gray-medium: #cccccc !default;
 $gray-medium-alt: #ececee !default;
 $gray-dark: #666666 !default;
 $gray-darkest: #333333 !default;
+$blue: #508abb;
+$blue-light: rgba(80, 138, 187, 0.25) !default;
 
-$grid-header-color: $gray-medium-alt !default;
+$grid-header-color: $blue !default;
 $grid-footer-color: $gray-medium-alt !default;
 
-$padding: 0.5em 0.7em !default;
+$padding: 0.7em 1em !default;

@@ -44,14 +44,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _fontawesome2.default.library.add(_fontawesomeFreeSolid2.default, _faAngleRight2.default, _faAngleLeft2.default, _faAngleDoubleRight2.default, _faAngleDoubleLeft2.default);
 
-var Pager = function Pager(props) {
-  var currentPage = props.currentPage,
-      totalPages = props.totalPages,
-      setPage = props.setPage,
-      pageDown = props.pageDown,
-      pageUp = props.pageUp,
-      setdefaultPageSize = props.setdefaultPageSize,
-      defaultPageSize = props.defaultPageSize;
+var Pager = function Pager(_ref) {
+  var currentPage = _ref.currentPage,
+      totalPages = _ref.totalPages,
+      setPage = _ref.setPage,
+      pageDown = _ref.pageDown,
+      pageUp = _ref.pageUp,
+      setdefaultPageSize = _ref.setdefaultPageSize,
+      defaultPageSize = _ref.defaultPageSize,
+      showPager = _ref.showPager;
+
+  if (!showPager) return null;
 
   var rows = [1, 2, 3, 4, 5, 10, 25, 50, 100, 500, 1000, "All"];
 
@@ -129,7 +132,8 @@ Pager.propType = {
   pageDown: _propTypes2.default.func.isRequired,
   pageUp: _propTypes2.default.func.isRequired,
   setdefaultPageSize: _propTypes2.default.func.isRequired,
-  defaultPageSize: _propTypes2.default.number.isRequired
+  defaultPageSize: _propTypes2.default.number.isRequired,
+  showPager: _propTypes2.default.bool.isRequired
 };
 
 exports.default = Pager;

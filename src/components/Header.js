@@ -2,11 +2,11 @@ import React from "react";
 import fontawesome from "@fortawesome/fontawesome";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import solid from "@fortawesome/fontawesome-free-solid";
-import faCaretUp from "@fortawesome/fontawesome-free-solid/faCaretUp";
-import faCaretDown from "@fortawesome/fontawesome-free-solid/faCaretDown";
+import faSortUp from "@fortawesome/fontawesome-free-solid/faSortUp";
+import faSortDown from "@fortawesome/fontawesome-free-solid/faSortDown";
 import classNames from "classnames";
 
-fontawesome.library.add(solid, faCaretUp, faCaretDown);
+fontawesome.library.add(solid, faSortUp, faSortDown);
 
 const Row = props => {
   const { columns, sortColumn, sortDirection, sort } = props;
@@ -29,7 +29,7 @@ const Row = props => {
                   })}
                   onClick={() => sort(columnName, "ASC")}
                 >
-                  <FontAwesomeIcon icon="caret-up" />
+                  <FontAwesomeIcon icon="sort-up" />
                 </div>
 
                 <div
@@ -39,7 +39,7 @@ const Row = props => {
                   })}
                   onClick={() => sort(columnName, "DESC")}
                 >
-                  <FontAwesomeIcon icon="caret-down" />
+                  <FontAwesomeIcon icon="sort-down" />
                 </div>
               </span>
             )}

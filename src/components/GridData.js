@@ -10,19 +10,23 @@ const GridData = props => {
     currentPage * defaultPageSize
   );
 
-  return pagedData.map((d, i) => (
-    <div className="flexgrid-item-row" key={i}>
-      {columns.map((column, i) => {
-        const style = column.style || null;
+  return (
+    <div className="flexgrid-data-container">
+      {pagedData.map((d, i) => (
+        <div className="flexgrid-item-row" key={i}>
+          {columns.map((column, i) => {
+            const style = column.style || null;
 
-        return (
-          <span className="flexgrid-item-col" key={i} style={style}>
-            {d[column.columnName]}
-          </span>
-        );
-      })}
+            return (
+              <span className="flexgrid-item-col" key={i} style={style}>
+                {d[column.columnName]}
+              </span>
+            );
+          })}
+        </div>
+      ))}
     </div>
-  ));
+  );
 };
 
 export default GridData;

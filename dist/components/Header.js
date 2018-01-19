@@ -20,13 +20,13 @@ var _fontawesomeFreeSolid = require("@fortawesome/fontawesome-free-solid");
 
 var _fontawesomeFreeSolid2 = _interopRequireDefault(_fontawesomeFreeSolid);
 
-var _faCaretUp = require("@fortawesome/fontawesome-free-solid/faCaretUp");
+var _faSortUp = require("@fortawesome/fontawesome-free-solid/faSortUp");
 
-var _faCaretUp2 = _interopRequireDefault(_faCaretUp);
+var _faSortUp2 = _interopRequireDefault(_faSortUp);
 
-var _faCaretDown = require("@fortawesome/fontawesome-free-solid/faCaretDown");
+var _faSortDown = require("@fortawesome/fontawesome-free-solid/faSortDown");
 
-var _faCaretDown2 = _interopRequireDefault(_faCaretDown);
+var _faSortDown2 = _interopRequireDefault(_faSortDown);
 
 var _classnames = require("classnames");
 
@@ -34,7 +34,7 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_fontawesome2.default.library.add(_fontawesomeFreeSolid2.default, _faCaretUp2.default, _faCaretDown2.default);
+_fontawesome2.default.library.add(_fontawesomeFreeSolid2.default, _faSortUp2.default, _faSortDown2.default);
 
 var Row = function Row(props) {
   var columns = props.columns,
@@ -69,7 +69,7 @@ var Row = function Row(props) {
                 return sort(columnName, "ASC");
               }
             },
-            _react2.default.createElement(_reactFontawesome2.default, { icon: "caret-up" })
+            _react2.default.createElement(_reactFontawesome2.default, { icon: "sort-up" })
           ),
           _react2.default.createElement(
             "div",
@@ -81,7 +81,7 @@ var Row = function Row(props) {
                 return sort(columnName, "DESC");
               }
             },
-            _react2.default.createElement(_reactFontawesome2.default, { icon: "caret-down" })
+            _react2.default.createElement(_reactFontawesome2.default, { icon: "sort-down" })
           )
         )
       );

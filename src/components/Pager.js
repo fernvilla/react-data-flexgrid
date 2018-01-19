@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes, { number } from "prop-types";
+import PropTypes from "prop-types";
 import fontawesome from "@fortawesome/fontawesome";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import solid from "@fortawesome/fontawesome-free-solid";
@@ -16,16 +16,18 @@ fontawesome.library.add(
   faAngleDoubleLeft
 );
 
-const Pager = props => {
-  const {
-    currentPage,
-    totalPages,
-    setPage,
-    pageDown,
-    pageUp,
-    setdefaultPageSize,
-    defaultPageSize
-  } = props;
+const Pager = ({
+  currentPage,
+  totalPages,
+  setPage,
+  pageDown,
+  pageUp,
+  setdefaultPageSize,
+  defaultPageSize,
+  showPager
+}) => {
+  if (!showPager) return null;
+
   const rows = [1, 2, 3, 4, 5, 10, 25, 50, 100, 500, 1000, "All"];
 
   return (
@@ -76,7 +78,8 @@ Pager.propType = {
   pageDown: PropTypes.func.isRequired,
   pageUp: PropTypes.func.isRequired,
   setdefaultPageSize: PropTypes.func.isRequired,
-  defaultPageSize: PropTypes.number.isRequired
+  defaultPageSize: PropTypes.number.isRequired,
+  showPager: PropTypes.bool.isRequired
 };
 
 export default Pager;

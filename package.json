@@ -4,14 +4,15 @@
   "description": "data grid",
   "main": "dist/index.js",
   "style": "dist/grid.css",
-  "files": ["*.md", "dist"],
-  "author":
-    "Fernando Villasenor <fvilla18@gmail.com> (http://fernvillasenor.com)",
+  "files": [
+    "*.md",
+    "dist"
+  ],
+  "author": "Fernando Villasenor <fvilla18@gmail.com> (http://fernvillasenor.com)",
   "license": "MIT",
   "scripts": {
     "build": "npm-run-all -p build:*",
-    "build:autoprefixer":
-      "postcss dist/css/*.css --use autoprefixer --no-map -d dist/css",
+    "build:autoprefixer": "postcss dist/css/*.css --use autoprefixer --no-map -d dist/css",
     "build:css": "node-sass src/styles -o dist/css --output-style compressed",
     "build:js": "babel src -d dist",
     "css:watch": "node-sass -w src/styles -o dist/css",
@@ -29,7 +30,6 @@
   },
   "devDependencies": {
     "@fortawesome/fontawesome": "^1.1.2",
-    "@fortawesome/fontawesome-free-brands": "^5.0.4",
     "@fortawesome/fontawesome-free-solid": "^5.0.4",
     "@fortawesome/react-fontawesome": "^0.0.17",
     "autoprefixer": "^7.2.5",

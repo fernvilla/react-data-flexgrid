@@ -3,19 +3,41 @@
 .flexgrid {
   display: flex;
   flex-direction: column;
-  border: 1px solid $gray-medium;
   box-sizing: border-box;
   line-height: $line-height;
   font-size: $font-size;
   font-family: $font-family;
-  box-shadow: $box-shadow;
+
+  .flexgrid-search-row {
+    display: flex;
+    padding: $padding;
+    padding-left: 0;
+    align-items: center;
+
+    .flexgrid-search-icon {
+      color: $blue;
+      margin-right: 0.5em;
+    }
+
+    .flexgrid-search-input {
+      font-size: inherit;
+      margin: 0;
+      padding: 0.5em 0.7em;
+      outline: 0;
+      text-align: left;
+      background: #fff;
+      border: 1px solid rgba(34, 36, 38, 0.15);
+      border-radius: 0.3em;
+      box-shadow: none;
+    }
+  }
 
   .flexgrid-header-row {
     display: flex;
     flex-direction: row;
     background-color: $grid-header-color;
-    border-bottom: 1px solid $gray-medium;
     font-weight: bold;
+    color: #fff;
 
     .flexgrid-header-col {
       padding: $padding;
@@ -26,13 +48,13 @@
     .flexgrid-header-sort-icon {
       font-size: 0.8em;
       margin-left: 0.5em;
-      color: $gray-dark;
+      color: $gray-light;
       line-height: 0;
       cursor: pointer;
 
       &:hover,
       &.active {
-        color: $gray-darkest;
+        color: $gray-dark;
       }
     }
   }
@@ -44,48 +66,45 @@
     .flexgrid-filter-col {
       padding: $padding;
     }
-
-    input {
-      font-size: inherit;
-      margin: 0;
-      width: 100%;
-      max-width: 100%;
-      flex: 1 0 auto;
-      outline: 0;
-      text-align: left;
-      background: #fff;
-      border: 1px solid rgba(34, 36, 38, 0.15);
-      border-radius: 0.3em;
-      box-shadow: none;
-    }
   }
 
-  .flexgrid-item-row {
-    display: flex;
-    flex-direction: row;
+  .flexgrid-data-container {
+    border: 1px solid $gray-medium;
+    border-top: none;
 
-    .flexgrid-item-col {
-      padding: $padding;
-    }
+    .flexgrid-item-row {
+      display: flex;
+      flex-direction: row;
 
-    &:nth-child(odd) {
-      background-color: $gray-light;
-    }
+      .flexgrid-item-col {
+        padding: $padding;
+      }
 
-    &:hover {
-      background-color: rgba(176, 223, 184, 0.5);
+      &:nth-child(odd) {
+        background-color: $gray-light;
+      }
+
+      &:hover {
+        background-color: $blue-light;
+        color: $gray-darkest;
+      }
     }
   }
 
   .flexgrid-footer {
-    display: inline-flex;
-    padding: 0.5em 1em;
-    font-size: 0.9em;
-    border-top: 1px solid $gray-medium;
+    display: flex;
+    padding: $padding;
     background-color: $grid-footer-color;
+    border: 1px solid $gray-medium;
+    border-top: none;
 
     select {
       margin-left: 0.5em;
+    }
+
+    .flexgrid-footer-left,
+    .flexgrid-footer-right {
+      align-self: center;
     }
 
     .flexgrid-footer-right {

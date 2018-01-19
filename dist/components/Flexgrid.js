@@ -18,21 +18,7 @@ var _classnames = require("classnames");
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _Pager = require("./Pager");
-
-var _Pager2 = _interopRequireDefault(_Pager);
-
-var _Header = require("./Header");
-
-var _Header2 = _interopRequireDefault(_Header);
-
-var _Filter = require("./Filter");
-
-var _Filter2 = _interopRequireDefault(_Filter);
-
-var _GridData = require("./GridData");
-
-var _GridData2 = _interopRequireDefault(_GridData);
+var _ = require(".");
 
 var _utils = require("./../utils");
 
@@ -46,13 +32,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Flexflexgrid = function (_Component) {
-  _inherits(Flexflexgrid, _Component);
+var FlexGrid = function (_Component) {
+  _inherits(FlexGrid, _Component);
 
-  function Flexflexgrid(props) {
-    _classCallCheck(this, Flexflexgrid);
+  function FlexGrid(props) {
+    _classCallCheck(this, FlexGrid);
 
-    var _this = _possibleConstructorReturn(this, (Flexflexgrid.__proto__ || Object.getPrototypeOf(Flexflexgrid)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (FlexGrid.__proto__ || Object.getPrototypeOf(FlexGrid)).call(this, props));
 
     _initialiseProps.call(_this);
 
@@ -72,7 +58,7 @@ var Flexflexgrid = function (_Component) {
     return _this;
   }
 
-  _createClass(Flexflexgrid, [{
+  _createClass(FlexGrid, [{
     key: "componentWillReceiveProps",
     value: function componentWillReceiveProps(nextProps) {
       var _this2 = this;
@@ -124,20 +110,20 @@ var Flexflexgrid = function (_Component) {
       return _react2.default.createElement(
         "div",
         { className: (0, _classnames2.default)("flexgrid", _defineProperty({}, gridClass, gridClass)) },
-        _react2.default.createElement(_Header2.default, {
+        _react2.default.createElement(_.Search, { filter: this.filter, filterable: filterable }),
+        _react2.default.createElement(_.Header, {
           columns: columns,
           sort: this.sort,
           sortColumn: sortColumn,
           sortDirection: sortDirection
         }),
-        filterable && _react2.default.createElement(_Filter2.default, { columns: columns, filter: this.filter }),
-        _react2.default.createElement(_GridData2.default, {
+        _react2.default.createElement(_.GridData, {
           columns: columns,
           data: data,
           defaultPageSize: defaultPageSize,
           currentPage: currentPage
         }),
-        showPager && _react2.default.createElement(_Pager2.default, {
+        _react2.default.createElement(_.Pager, {
           currentPage: currentPage,
           totalPages: totalPages,
           pageUp: this.pageUp,
@@ -151,10 +137,10 @@ var Flexflexgrid = function (_Component) {
     }
   }]);
 
-  return Flexflexgrid;
+  return FlexGrid;
 }(_react.Component);
 
-Flexflexgrid.propTypes = {
+FlexGrid.propTypes = {
   columns: _propTypes2.default.array.isRequired,
   data: _propTypes2.default.array.isRequired,
   defaultPageSize: _propTypes2.default.number,
@@ -162,45 +148,58 @@ Flexflexgrid.propTypes = {
   sortableCols: _propTypes2.default.array,
   gridClass: _propTypes2.default.string,
   filterable: _propTypes2.default.bool,
-  showPager: _propTypes2.default.bool
+  showPager: _propTypes2.default.bool,
+  columnFilters: function columnFilters(props, propName) {
+    if (props["filterable"] === true && !props[propName].length) {
+      return new Error("[columnFilters] array prop required when [filterable] prop is set to true.");
+    }
+  }
 };
-Flexflexgrid.defaultProps = {
+FlexGrid.defaultProps = {
   defaultPageSize: 10,
   currentPage: 1,
   sortableCols: [],
   gridClass: null,
   filterable: false,
-  showPager: true
+  showPager: true,
+  columnFilters: []
 };
 
 var _initialiseProps = function _initialiseProps() {
   var _this3 = this;
 
-  this.filter = function (column, text) {
-    var data = (0, _utils.filterData)(_this3.props.data, column, text);
+  this.filter = function (text) {
+    var _props2 = _this3.props,
+        data = _props2.data,
+        columnFilters = _props2.columnFilters;
+
+    var filteredData = (0, _utils.filterData)(data, columnFilters, text);
 
     _this3.setState({
       currentPage: 1,
-      data: !text.length ? _this3.props.data : data
+      data: !text.length ? _this3.props.data : filteredData
     });
   };
 
   this.sort = function (column, direction) {
-    if (!column || !direction || direction === _this3.state.sortDirection) return;
+    var _state3 = _this3.state,
+        sortDirection = _state3.sortDirection,
+        sortColumn = _state3.sortColumn;
 
-    var data = (0, _utils.sortData)(_this3.props.data, column, direction);
+
+    if (direction === sortDirection && column === sortColumn) return;
 
     _this3.setState({
-      data: data,
+      data: (0, _utils.sortData)(_this3.props.data, column, direction),
       sortColumn: column,
       sortDirection: direction
     });
   };
 
   this.pageUp = function () {
-    var _state3 = _this3.state,
-        currentPage = _state3.currentPage,
-        totalPages = _state3.totalPages;
+    var _state4 = _this3.state,
+        currentPage = _state4.currentPage,
+        totalPages = _state4.totalPages;
 
 
     if (currentPage === totalPages) return;
@@ -230,4 +229,4 @@ var _initialiseProps = function _initialiseProps() {
   };
 };
 
-exports.default = Flexflexgrid;
+exports.default = FlexGrid;

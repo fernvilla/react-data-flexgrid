@@ -21,21 +21,25 @@ var GridData = function GridData(props) {
 
   var pagedData = data.slice((currentPage - 1) * defaultPageSize, currentPage * defaultPageSize);
 
-  return pagedData.map(function (d, i) {
-    return _react2.default.createElement(
-      "div",
-      { className: "flexgrid-item-row", key: i },
-      columns.map(function (column, i) {
-        var style = column.style || null;
+  return _react2.default.createElement(
+    "div",
+    { className: "flexgrid-data-container" },
+    pagedData.map(function (d, i) {
+      return _react2.default.createElement(
+        "div",
+        { className: "flexgrid-item-row", key: i },
+        columns.map(function (column, i) {
+          var style = column.style || null;
 
-        return _react2.default.createElement(
-          "span",
-          { className: "flexgrid-item-col", key: i, style: style },
-          d[column.columnName]
-        );
-      })
-    );
-  });
+          return _react2.default.createElement(
+            "span",
+            { className: "flexgrid-item-col", key: i, style: style },
+            d[column.columnName]
+          );
+        })
+      );
+    })
+  );
 };
 
 exports.default = GridData;

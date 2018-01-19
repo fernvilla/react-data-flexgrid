@@ -28,8 +28,8 @@ var sortData = exports.sortData = function sortData(data, column, direction) {
   return results;
 };
 
-var filterData = exports.filterData = function filterData(data, column, text) {
-  var fuse = new _fuse2.default(data, { keys: [column] });
+var filterData = exports.filterData = function filterData(data, keys, text) {
+  var fuse = new _fuse2.default(data, { keys: keys });
   var results = fuse.search(text);
 
   return results;

@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import Pager from "./Pager";
-import Header from "./Header";
-import Filter from "./Filter";
-import GridData from "./GridData";
+import { Pager, GridData, Search, Header } from ".";
 import { getTotalPages, sortData, filterData } from "./../utils";
 
-export default class Flexflexgrid extends Component {
+export default class FlexGrid extends Component {
   static propTypes = {
     columns: PropTypes.array.isRequired,
     data: PropTypes.array.isRequired,
@@ -16,7 +13,14 @@ export default class Flexflexgrid extends Component {
     sortableCols: PropTypes.array,
     gridClass: PropTypes.string,
     filterable: PropTypes.bool,
-    showPager: PropTypes.bool
+    showPager: PropTypes.bool,
+    columnFilters: (props, propName) => {
+      if (props["filterable"] === true && !props[propName].length) {
+        return new Error(
+          "[columnFilters] array prop required when [filterable] prop is set to true."
+        );
+      }
+    }
   };
 
   static defaultProps = {
@@ -25,7 +29,8 @@ export default class Flexflexgrid extends Component {
     sortableCols: [],
     gridClass: null,
     filterable: false,
-    showPager: true
+    showPager: true,
+    columnFilters: []
   };
 
   constructor(props) {
@@ -60,22 +65,23 @@ export default class Flexflexgrid extends Component {
     }
   }
 
-  filter = (column, text) => {
-    const data = filterData(this.props.data, column, text);
+  filter = text => {
+    const { data, columnFilters } = this.props;
+    const filteredData = filterData(data, columnFilters, text);
 
     this.setState({
       currentPage: 1,
-      data: !text.length ? this.props.data : data
+      data: !text.length ? this.props.data : filteredData
     });
   };
 
   sort = (column, direction) => {
-    if (!column || !direction || direction === this.state.sortDirection) return;
+    const { sortDirection, sortColumn } = this.state;
 
-    const data = sortData(this.props.data, column, direction);
+    if (direction === sortDirection && column === sortColumn) return;
 
     this.setState({
-      data,
+      data: sortData(this.props.data, column, direction),
       sortColumn: column,
       sortDirection: direction
     });
@@ -126,18 +132,19 @@ export default class Flexflexgrid extends Component {
       sortDirection,
       data
     } = this.state;
+
     const { gridClass, columns, filterable, showPager } = this.props;
 
     return (
       <div className={classNames("flexgrid", { [gridClass]: gridClass })}>
+        <Search filter={this.filter} filterable={filterable} />
+
         <Header
           columns={columns}
           sort={this.sort}
           sortColumn={sortColumn}
           sortDirection={sortDirection}
         />
-
-        {filterable && <Filter columns={columns} filter={this.filter} />}
 
         <GridData
           columns={columns}
@@ -146,18 +153,16 @@ export default class Flexflexgrid extends Component {
           currentPage={currentPage}
         />
 
-        {showPager && (
-          <Pager
-            currentPage={currentPage}
-            totalPages={totalPages}
-            pageUp={this.pageUp}
-            pageDown={this.pageDown}
-            setPage={this.setPage}
-            setdefaultPageSize={this.setdefaultPageSize}
-            defaultPageSize={defaultPageSize}
-            showPager={showPager}
-          />
-        )}
+        <Pager
+          currentPage={currentPage}
+          totalPages={totalPages}
+          pageUp={this.pageUp}
+          pageDown={this.pageDown}
+          setPage={this.setPage}
+          setdefaultPageSize={this.setdefaultPageSize}
+          defaultPageSize={defaultPageSize}
+          showPager={showPager}
+        />
       </div>
     );
   }
