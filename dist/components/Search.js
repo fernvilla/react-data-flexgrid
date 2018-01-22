@@ -30,10 +30,6 @@ var _faSearch = require("@fortawesome/fontawesome-free-solid/faSearch");
 
 var _faSearch2 = _interopRequireDefault(_faSearch);
 
-var _classnames = require("classnames");
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }

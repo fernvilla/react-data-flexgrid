@@ -32,6 +32,10 @@ var _faAngleLeft = require("@fortawesome/fontawesome-free-solid/faAngleLeft");
 
 var _faAngleLeft2 = _interopRequireDefault(_faAngleLeft);
 
+var _faAngleDown = require("@fortawesome/fontawesome-free-solid/faAngleDown");
+
+var _faAngleDown2 = _interopRequireDefault(_faAngleDown);
+
 var _faAngleDoubleLeft = require("@fortawesome/fontawesome-free-solid/faAngleDoubleLeft");
 
 var _faAngleDoubleLeft2 = _interopRequireDefault(_faAngleDoubleLeft);
@@ -42,7 +46,7 @@ var _faAngleDoubleRight2 = _interopRequireDefault(_faAngleDoubleRight);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_fontawesome2.default.library.add(_fontawesomeFreeSolid2.default, _faAngleRight2.default, _faAngleLeft2.default, _faAngleDoubleRight2.default, _faAngleDoubleLeft2.default);
+_fontawesome2.default.library.add(_fontawesomeFreeSolid2.default, _faAngleRight2.default, _faAngleLeft2.default, _faAngleDown2.default, _faAngleDoubleRight2.default, _faAngleDoubleLeft2.default);
 
 var Pager = function Pager(_ref) {
   var currentPage = _ref.currentPage,
@@ -106,20 +110,25 @@ var Pager = function Pager(_ref) {
       { className: "flexgrid-footer-right" },
       "Rows per page:",
       _react2.default.createElement(
-        "select",
-        {
-          onChange: function onChange(e) {
-            return setdefaultPageSize(e.target.value);
+        "span",
+        { className: "flexgrid-select-wrapper" },
+        _react2.default.createElement(
+          "select",
+          {
+            onChange: function onChange(e) {
+              return setdefaultPageSize(e.target.value);
+            },
+            defaultValue: defaultPageSize
           },
-          defaultValue: defaultPageSize
-        },
-        rows.map(function (row, i) {
-          return _react2.default.createElement(
-            "option",
-            { value: row, key: i },
-            row
-          );
-        })
+          rows.map(function (row, i) {
+            return _react2.default.createElement(
+              "option",
+              { value: row, key: i },
+              row
+            );
+          })
+        ),
+        _react2.default.createElement(_reactFontawesome2.default, { className: "select-icon", icon: "angle-down" })
       )
     )
   );

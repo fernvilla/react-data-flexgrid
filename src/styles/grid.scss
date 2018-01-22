@@ -98,16 +98,27 @@
     border: 1px solid $gray-medium;
     border-top: none;
 
+    .flexgrid-select-wrapper {
+      position: relative;
+      display: inline-block;
+      z-index: 1;
+      background-color: $gray-light;
+    }
+
+    .select-icon {
+      position: absolute;
+      right: 7px;
+      top: 7px;
+      z-index: -1;
+    }
+
     select {
       margin-left: 0.5em;
-      padding: 0.5em 0.7em;
+      padding: 0.5em 1em 0.5em 0.7em;
       width: 75px;
       border-radius: 5px;
-      // padding-left: 10px;
       appearance: none;
-      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAh0lEQVQ4T93TMQrCUAzG8V9x8QziiYSuXdzFC7h4AcELOPQAdXYovZCHEATlgQV5GFTe1ozJlz/kS1IpjKqw3wQBVyy++JI0y1GTe7DCBbMAckeNIQKk/BanALBB+16LtnDELoMcsM/BESDlz2heDR3WePwKSLo5eoxz3z6NNcFD+vu3ij14Aqz/DxGbKB7CAAAAAElFTkSuQmCC");
-      background-repeat: no-repeat;
-      background-position: 50px center;
+      background-color: transparent;
       outline: none;
     }
 

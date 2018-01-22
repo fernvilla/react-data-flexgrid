@@ -4,7 +4,6 @@ import fontawesome from "@fortawesome/fontawesome";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import solid from "@fortawesome/fontawesome-free-solid";
 import faSearch from "@fortawesome/fontawesome-free-solid/faSearch";
-import classNames from "classnames";
 
 fontawesome.library.add(solid, faSearch);
 

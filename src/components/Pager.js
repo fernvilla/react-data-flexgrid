@@ -5,6 +5,7 @@ import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import solid from "@fortawesome/fontawesome-free-solid";
 import faAngleRight from "@fortawesome/fontawesome-free-solid/faAngleRight";
 import faAngleLeft from "@fortawesome/fontawesome-free-solid/faAngleLeft";
+import faAngleDown from "@fortawesome/fontawesome-free-solid/faAngleDown";
 import faAngleDoubleLeft from "@fortawesome/fontawesome-free-solid/faAngleDoubleLeft";
 import faAngleDoubleRight from "@fortawesome/fontawesome-free-solid/faAngleDoubleRight";
 
@@ -12,6 +13,7 @@ fontawesome.library.add(
   solid,
   faAngleRight,
   faAngleLeft,
+  faAngleDown,
   faAngleDoubleRight,
   faAngleDoubleLeft
 );
@@ -56,16 +58,20 @@ const Pager = ({
 
       <div className="flexgrid-footer-right">
         Rows per page:
-        <select
-          onChange={e => setdefaultPageSize(e.target.value)}
-          defaultValue={defaultPageSize}
-        >
-          {rows.map((row, i) => (
-            <option value={row} key={i}>
-              {row}
-            </option>
-          ))}
-        </select>
+        <span className="flexgrid-select-wrapper">
+          <select
+            onChange={e => setdefaultPageSize(e.target.value)}
+            defaultValue={defaultPageSize}
+          >
+            {rows.map((row, i) => (
+              <option value={row} key={i}>
+                {row}
+              </option>
+            ))}
+          </select>
+
+          <FontAwesomeIcon className="select-icon" icon="angle-down" />
+        </span>
       </div>
     </div>
   );
