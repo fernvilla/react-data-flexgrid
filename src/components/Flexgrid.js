@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import { Pager, GridData, Search, Header } from ".";
 import { getTotalPages, sortData, filterData } from "./../utils";
+import _intersection from "lodash/intersection";
 
 export default class FlexGrid extends Component {
   static propTypes = {
@@ -20,6 +21,21 @@ export default class FlexGrid extends Component {
           "[columnFilters] array prop required when [filterable] prop is set to true."
         );
       }
+    },
+    allowRowSelection: PropTypes.bool,
+    onRowSelect: (props, propName) => {
+      if (props["allowRowSelection"] === true && !props[propName].length) {
+        return new Error(
+          "[allowRowSelection] needs to be set to true to use [onRowSelect]"
+        );
+      }
+    },
+    onRowDeselect: (props, propName) => {
+      if (props["allowRowSelection"] === true && !props[propName].length) {
+        return new Error(
+          "[allowRowSelection] needs to be set to true to use [onRowDeselect]"
+        );
+      }
     }
   };
 
@@ -30,7 +46,10 @@ export default class FlexGrid extends Component {
     gridClass: null,
     filterable: false,
     showPager: true,
-    columnFilters: []
+    columnFilters: [],
+    allowRowSelection: false,
+    onRowSelect: null,
+    onRowDeselect: null
   };
 
   constructor(props) {
@@ -44,7 +63,8 @@ export default class FlexGrid extends Component {
       totalPages: 1,
       sortDirection: null,
       sortColumn: null,
-      data
+      data,
+      selectedRows: []
     };
   }
 
@@ -54,8 +74,13 @@ export default class FlexGrid extends Component {
     if (this.props.data !== data) {
       const { defaultPageSize, sortColumn, sortDirection } = this.state;
       const totalPages = getTotalPages(data.length, defaultPageSize);
+      const indexedData = data.map((d, i) => {
+        d.rowIndex = i;
 
-      this.setState({ totalPages: totalPages, data }, () => {
+        return d;
+      });
+
+      this.setState({ totalPages: totalPages, data: indexedData }, () => {
         this.sort(sortColumn, sortDirection);
       });
 
@@ -123,6 +148,64 @@ export default class FlexGrid extends Component {
     });
   }
 
+  handleCheckboxChange = rowIndex => {
+    const { selectedRows } = this.state;
+
+    if (selectedRows.indexOf(rowIndex) < 0) {
+      this.setState({ selectedRows: [...selectedRows, rowIndex] });
+    } else {
+      this.setState({
+        selectedRows: selectedRows.filter(id => id !== rowIndex)
+      });
+    }
+  };
+
+  getVisibleGridRows() {
+    const { currentPage, defaultPageSize, data } = this.state;
+
+    return data
+      .slice((currentPage - 1) * defaultPageSize, currentPage * defaultPageSize)
+      .map(d => d.rowIndex);
+  }
+
+  checkAllBoxesSelected = () => {
+    const visibleRows = this.getVisibleGridRows();
+
+    if (!visibleRows.length) {
+      return false;
+    }
+
+    return (
+      _intersection(visibleRows, this.state.selectedRows).length ===
+      visibleRows.length
+    );
+  };
+
+  toggleAllCheckboxes = () => {
+    const allChecked = this.checkAllBoxesSelected();
+    const visibleRows = this.getVisibleGridRows();
+    const { selectedRows } = this.state;
+
+    if (!visibleRows.length) {
+      return;
+    }
+
+    if (!allChecked) {
+      const mergedArray = [...selectedRows, ...visibleRows];
+      const uniqueArray = mergedArray.filter(
+        (item, pos) => mergedArray.indexOf(item) === pos
+      );
+
+      this.setState({ selectedRows: uniqueArray });
+    } else {
+      this.setState({
+        selectedRows: selectedRows.filter(
+          rowIndex => visibleRows.indexOf(rowIndex) === -1
+        )
+      });
+    }
+  };
+
   render() {
     const {
       currentPage,
@@ -130,10 +213,19 @@ export default class FlexGrid extends Component {
       defaultPageSize,
       sortColumn,
       sortDirection,
-      data
+      data,
+      selectedRows
     } = this.state;
 
-    const { gridClass, columns, filterable, showPager } = this.props;
+    const {
+      gridClass,
+      columns,
+      filterable,
+      showPager,
+      allowRowSelection,
+      onRowSelect,
+      onRowDeselect
+    } = this.props;
 
     return (
       <div className={classNames("flexgrid", { [gridClass]: gridClass })}>
@@ -144,6 +236,9 @@ export default class FlexGrid extends Component {
           sort={this.sort}
           sortColumn={sortColumn}
           sortDirection={sortDirection}
+          allowRowSelection={allowRowSelection}
+          toggleAllCheckboxes={this.toggleAllCheckboxes}
+          checkAllBoxesSelected={this.checkAllBoxesSelected}
         />
 
         <GridData
@@ -151,6 +246,11 @@ export default class FlexGrid extends Component {
           data={data}
           defaultPageSize={defaultPageSize}
           currentPage={currentPage}
+          allowRowSelection={allowRowSelection}
+          onRowSelect={onRowSelect}
+          onRowDeselect={onRowDeselect}
+          handleCheckboxChange={this.handleCheckboxChange}
+          selectedRows={selectedRows}
         />
 
         <Pager

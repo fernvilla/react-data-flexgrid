@@ -26,6 +26,14 @@ export default class App extends Component {
     this.fetchSampleData(e.target.value);
   };
 
+  onRowSelect = data => {
+    console.log("row selected", data);
+  };
+
+  onRowDeselect = data => {
+    console.log("row deselected", data);
+  };
+
   render() {
     const { data } = this.state;
 
@@ -47,6 +55,9 @@ export default class App extends Component {
           data={data}
           filterable
           columnFilters={["lastName", "firstName"]}
+          allowRowSelection
+          onRowSelect={this.onRowSelect}
+          onRowDeselect={this.onRowDeselect}
         />
       </div>
     );

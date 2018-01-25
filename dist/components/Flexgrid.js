@@ -22,7 +22,13 @@ var _ = require(".");
 
 var _utils = require("./../utils");
 
+var _intersection2 = require("lodash/intersection");
+
+var _intersection3 = _interopRequireDefault(_intersection2);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -53,7 +59,8 @@ var FlexGrid = function (_Component) {
       totalPages: 1,
       sortDirection: null,
       sortColumn: null,
-      data: data
+      data: data,
+      selectedRows: []
     };
     return _this;
   }
@@ -73,8 +80,13 @@ var FlexGrid = function (_Component) {
             sortDirection = _state.sortDirection;
 
         var totalPages = (0, _utils.getTotalPages)(data.length, defaultPageSize);
+        var indexedData = data.map(function (d, i) {
+          d.rowIndex = i;
 
-        this.setState({ totalPages: totalPages, data: data }, function () {
+          return d;
+        });
+
+        this.setState({ totalPages: totalPages, data: indexedData }, function () {
           _this2.sort(sortColumn, sortDirection);
         });
 
@@ -91,20 +103,37 @@ var FlexGrid = function (_Component) {
       });
     }
   }, {
-    key: "render",
-    value: function render() {
+    key: "getVisibleGridRows",
+    value: function getVisibleGridRows() {
       var _state2 = this.state,
           currentPage = _state2.currentPage,
-          totalPages = _state2.totalPages,
           defaultPageSize = _state2.defaultPageSize,
-          sortColumn = _state2.sortColumn,
-          sortDirection = _state2.sortDirection,
           data = _state2.data;
+
+
+      return data.slice((currentPage - 1) * defaultPageSize, currentPage * defaultPageSize).map(function (d) {
+        return d.rowIndex;
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _state3 = this.state,
+          currentPage = _state3.currentPage,
+          totalPages = _state3.totalPages,
+          defaultPageSize = _state3.defaultPageSize,
+          sortColumn = _state3.sortColumn,
+          sortDirection = _state3.sortDirection,
+          data = _state3.data,
+          selectedRows = _state3.selectedRows;
       var _props = this.props,
           gridClass = _props.gridClass,
           columns = _props.columns,
           filterable = _props.filterable,
-          showPager = _props.showPager;
+          showPager = _props.showPager,
+          allowRowSelection = _props.allowRowSelection,
+          onRowSelect = _props.onRowSelect,
+          onRowDeselect = _props.onRowDeselect;
 
 
       return _react2.default.createElement(
@@ -115,13 +144,21 @@ var FlexGrid = function (_Component) {
           columns: columns,
           sort: this.sort,
           sortColumn: sortColumn,
-          sortDirection: sortDirection
+          sortDirection: sortDirection,
+          allowRowSelection: allowRowSelection,
+          toggleAllCheckboxes: this.toggleAllCheckboxes,
+          checkAllBoxesSelected: this.checkAllBoxesSelected
         }),
         _react2.default.createElement(_.GridData, {
           columns: columns,
           data: data,
           defaultPageSize: defaultPageSize,
-          currentPage: currentPage
+          currentPage: currentPage,
+          allowRowSelection: allowRowSelection,
+          onRowSelect: onRowSelect,
+          onRowDeselect: onRowDeselect,
+          handleCheckboxChange: this.handleCheckboxChange,
+          selectedRows: selectedRows
         }),
         _react2.default.createElement(_.Pager, {
           currentPage: currentPage,
@@ -153,6 +190,17 @@ FlexGrid.propTypes = {
     if (props["filterable"] === true && !props[propName].length) {
       return new Error("[columnFilters] array prop required when [filterable] prop is set to true.");
     }
+  },
+  allowRowSelection: _propTypes2.default.bool,
+  onRowSelect: function onRowSelect(props, propName) {
+    if (props["allowRowSelection"] === true && !props[propName].length) {
+      return new Error("[allowRowSelection] needs to be set to true to use [onRowSelect]");
+    }
+  },
+  onRowDeselect: function onRowDeselect(props, propName) {
+    if (props["allowRowSelection"] === true && !props[propName].length) {
+      return new Error("[allowRowSelection] needs to be set to true to use [onRowDeselect]");
+    }
   }
 };
 FlexGrid.defaultProps = {
@@ -162,7 +210,10 @@ FlexGrid.defaultProps = {
   gridClass: null,
   filterable: false,
   showPager: true,
-  columnFilters: []
+  columnFilters: [],
+  allowRowSelection: false,
+  onRowSelect: null,
+  onRowDeselect: null
 };
 
 var _initialiseProps = function _initialiseProps() {
@@ -182,9 +233,9 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.sort = function (column, direction) {
-    var _state3 = _this3.state,
-        sortDirection = _state3.sortDirection,
-        sortColumn = _state3.sortColumn;
+    var _state4 = _this3.state,
+        sortDirection = _state4.sortDirection,
+        sortColumn = _state4.sortColumn;
 
 
     if (direction === sortDirection && column === sortColumn) return;
@@ -197,9 +248,9 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.pageUp = function () {
-    var _state4 = _this3.state,
-        currentPage = _state4.currentPage,
-        totalPages = _state4.totalPages;
+    var _state5 = _this3.state,
+        currentPage = _state5.currentPage,
+        totalPages = _state5.totalPages;
 
 
     if (currentPage === totalPages) return;
@@ -226,6 +277,57 @@ var _initialiseProps = function _initialiseProps() {
     _this3.setState({ defaultPageSize: defaultPageSize }, function () {
       return _this3.setTotalPages();
     });
+  };
+
+  this.handleCheckboxChange = function (rowIndex) {
+    var selectedRows = _this3.state.selectedRows;
+
+
+    if (selectedRows.indexOf(rowIndex) < 0) {
+      _this3.setState({ selectedRows: [].concat(_toConsumableArray(selectedRows), [rowIndex]) });
+    } else {
+      _this3.setState({
+        selectedRows: selectedRows.filter(function (id) {
+          return id !== rowIndex;
+        })
+      });
+    }
+  };
+
+  this.checkAllBoxesSelected = function () {
+    var visibleRows = _this3.getVisibleGridRows();
+
+    if (!visibleRows.length) {
+      return false;
+    }
+
+    return (0, _intersection3.default)(visibleRows, _this3.state.selectedRows).length === visibleRows.length;
+  };
+
+  this.toggleAllCheckboxes = function () {
+    var allChecked = _this3.checkAllBoxesSelected();
+    var visibleRows = _this3.getVisibleGridRows();
+    var selectedRows = _this3.state.selectedRows;
+
+
+    if (!visibleRows.length) {
+      return;
+    }
+
+    if (!allChecked) {
+      var mergedArray = [].concat(_toConsumableArray(selectedRows), _toConsumableArray(visibleRows));
+      var uniqueArray = mergedArray.filter(function (item, pos) {
+        return mergedArray.indexOf(item) === pos;
+      });
+
+      _this3.setState({ selectedRows: uniqueArray });
+    } else {
+      _this3.setState({
+        selectedRows: selectedRows.filter(function (rowIndex) {
+          return visibleRows.indexOf(rowIndex) === -1;
+        })
+      });
+    }
   };
 };
 

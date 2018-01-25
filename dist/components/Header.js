@@ -40,12 +40,30 @@ var Row = function Row(props) {
   var columns = props.columns,
       sortColumn = props.sortColumn,
       sortDirection = props.sortDirection,
-      sort = props.sort;
+      sort = props.sort,
+      allowRowSelection = props.allowRowSelection,
+      toggleAllCheckboxes = props.toggleAllCheckboxes,
+      checkAllBoxesSelected = props.checkAllBoxesSelected;
 
+
+  var onCheckboxClick = function onCheckboxClick() {
+    toggleAllCheckboxes();
+  };
 
   return _react2.default.createElement(
     "div",
     { className: "flexgrid-header-row" },
+    allowRowSelection && _react2.default.createElement(
+      "span",
+      { className: "flexgrid-header-col" },
+      _react2.default.createElement("input", {
+        type: "checkbox",
+        onClick: function onClick() {
+          return onCheckboxClick();
+        },
+        checked: checkAllBoxesSelected()
+      })
+    ),
     columns.map(function (column, i) {
       var style = column.style || null;
       var columnName = column.columnName,

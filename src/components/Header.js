@@ -9,10 +9,32 @@ import classNames from "classnames";
 fontawesome.library.add(solid, faSortUp, faSortDown);
 
 const Row = props => {
-  const { columns, sortColumn, sortDirection, sort } = props;
+  const {
+    columns,
+    sortColumn,
+    sortDirection,
+    sort,
+    allowRowSelection,
+    toggleAllCheckboxes,
+    checkAllBoxesSelected
+  } = props;
+
+  const onCheckboxClick = () => {
+    toggleAllCheckboxes();
+  };
 
   return (
     <div className="flexgrid-header-row">
+      {allowRowSelection && (
+        <span className="flexgrid-header-col">
+          <input
+            type="checkbox"
+            onClick={() => onCheckboxClick()}
+            checked={checkAllBoxesSelected()}
+          />
+        </span>
+      )}
+
       {columns.map((column, i) => {
         const style = column.style || null;
         const { columnName, displayName } = column;
