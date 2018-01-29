@@ -73,16 +73,10 @@ var Search = function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      if (!this.props.filterable) return null;
-
       return _react2.default.createElement(
         "div",
         { className: "flexgrid-search-row" },
-        _react2.default.createElement(_reactFontawesome2.default, {
-          icon: "search",
-          className: "flexgrid-search-icon",
-          onClick: this.toggleSearch
-        }),
+        _react2.default.createElement(_reactFontawesome2.default, { icon: "search", className: "flexgrid-search-icon", onClick: this.toggleSearch }),
         this.renderInput()
       );
     }
@@ -92,7 +86,6 @@ var Search = function (_Component) {
 }(_react.Component);
 
 Search.propTypes = {
-  filter: _propTypes2.default.func.isRequired,
-  filterable: _propTypes2.default.bool.isRequired
+  filter: _propTypes2.default.func.isRequired
 };
 exports.default = Search;

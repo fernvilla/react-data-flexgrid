@@ -72,13 +72,13 @@
     border: 1px solid $gray-medium;
     border-top: none;
 
-    .flexgrid-item-row {
+    .flexgrid-data-wrapper {
       display: flex;
-      flex-direction: row;
+    }
 
-      .flexgrid-item-col {
-        padding: $padding;
-      }
+    .flexgrid-data-row {
+      // display: flex;
+      // flex-direction: row;
 
       &:nth-child(odd) {
         background-color: $gray-light;
@@ -88,6 +88,10 @@
         background-color: $blue-light;
         color: $gray-darkest;
       }
+    }
+
+    .flexgrid-data-col {
+      padding: $padding;
     }
   }
 

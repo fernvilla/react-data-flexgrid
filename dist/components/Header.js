@@ -56,13 +56,9 @@ var Row = function Row(props) {
     allowRowSelection && _react2.default.createElement(
       "span",
       { className: "flexgrid-header-col" },
-      _react2.default.createElement("input", {
-        type: "checkbox",
-        onClick: function onClick() {
+      _react2.default.createElement("input", { type: "checkbox", onClick: function onClick() {
           return onCheckboxClick();
-        },
-        checked: checkAllBoxesSelected()
-      })
+        }, checked: checkAllBoxesSelected() })
     ),
     columns.map(function (column, i) {
       var style = column.style || null;

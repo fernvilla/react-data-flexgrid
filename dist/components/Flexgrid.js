@@ -133,13 +133,14 @@ var FlexGrid = function (_Component) {
           showPager = _props.showPager,
           allowRowSelection = _props.allowRowSelection,
           onRowSelect = _props.onRowSelect,
-          onRowDeselect = _props.onRowDeselect;
+          onRowDeselect = _props.onRowDeselect,
+          subComponent = _props.subComponent;
 
 
       return _react2.default.createElement(
         "div",
         { className: (0, _classnames2.default)("flexgrid", _defineProperty({}, gridClass, gridClass)) },
-        _react2.default.createElement(_.Search, { filter: this.filter, filterable: filterable }),
+        filterable && _react2.default.createElement(_.Search, { filter: this.filter }),
         _react2.default.createElement(_.Header, {
           columns: columns,
           sort: this.sort,
@@ -149,7 +150,7 @@ var FlexGrid = function (_Component) {
           toggleAllCheckboxes: this.toggleAllCheckboxes,
           checkAllBoxesSelected: this.checkAllBoxesSelected
         }),
-        _react2.default.createElement(_.GridData, {
+        data.length > 0 && _react2.default.createElement(_.GridData, {
           columns: columns,
           data: data,
           defaultPageSize: defaultPageSize,
@@ -158,17 +159,17 @@ var FlexGrid = function (_Component) {
           onRowSelect: onRowSelect,
           onRowDeselect: onRowDeselect,
           handleCheckboxChange: this.handleCheckboxChange,
-          selectedRows: selectedRows
+          selectedRows: selectedRows,
+          subComponent: subComponent
         }),
-        _react2.default.createElement(_.Pager, {
+        showPager && _react2.default.createElement(_.Pager, {
           currentPage: currentPage,
           totalPages: totalPages,
           pageUp: this.pageUp,
           pageDown: this.pageDown,
           setPage: this.setPage,
           setdefaultPageSize: this.setdefaultPageSize,
-          defaultPageSize: defaultPageSize,
-          showPager: showPager
+          defaultPageSize: defaultPageSize
         })
       );
     }
@@ -186,6 +187,7 @@ FlexGrid.propTypes = {
   gridClass: _propTypes2.default.string,
   filterable: _propTypes2.default.bool,
   showPager: _propTypes2.default.bool,
+  subComponent: _propTypes2.default.func,
   columnFilters: function columnFilters(props, propName) {
     if (props["filterable"] === true && !props[propName].length) {
       return new Error("[columnFilters] array prop required when [filterable] prop is set to true.");
@@ -213,7 +215,8 @@ FlexGrid.defaultProps = {
   columnFilters: [],
   allowRowSelection: false,
   onRowSelect: null,
-  onRowDeselect: null
+  onRowDeselect: null,
+  subComponent: null
 };
 
 var _initialiseProps = function _initialiseProps() {

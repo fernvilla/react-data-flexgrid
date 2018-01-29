@@ -9,27 +9,9 @@ import faAngleDown from "@fortawesome/fontawesome-free-solid/faAngleDown";
 import faAngleDoubleLeft from "@fortawesome/fontawesome-free-solid/faAngleDoubleLeft";
 import faAngleDoubleRight from "@fortawesome/fontawesome-free-solid/faAngleDoubleRight";
 
-fontawesome.library.add(
-  solid,
-  faAngleRight,
-  faAngleLeft,
-  faAngleDown,
-  faAngleDoubleRight,
-  faAngleDoubleLeft
-);
+fontawesome.library.add(solid, faAngleRight, faAngleLeft, faAngleDown, faAngleDoubleRight, faAngleDoubleLeft);
 
-const Pager = ({
-  currentPage,
-  totalPages,
-  setPage,
-  pageDown,
-  pageUp,
-  setdefaultPageSize,
-  defaultPageSize,
-  showPager
-}) => {
-  if (!showPager) return null;
-
+const Pager = ({ currentPage, totalPages, setPage, pageDown, pageUp, setdefaultPageSize, defaultPageSize }) => {
   const rows = [1, 2, 3, 4, 5, 10, 25, 50, 100, 500, 1000, "All"];
 
   return (
@@ -59,10 +41,7 @@ const Pager = ({
       <div className="flexgrid-footer-right">
         Rows per page:
         <span className="flexgrid-select-wrapper">
-          <select
-            onChange={e => setdefaultPageSize(e.target.value)}
-            defaultValue={defaultPageSize}
-          >
+          <select onChange={e => setdefaultPageSize(e.target.value)} defaultValue={defaultPageSize}>
             {rows.map((row, i) => (
               <option value={row} key={i}>
                 {row}
@@ -84,8 +63,7 @@ Pager.propType = {
   pageDown: PropTypes.func.isRequired,
   pageUp: PropTypes.func.isRequired,
   setdefaultPageSize: PropTypes.func.isRequired,
-  defaultPageSize: PropTypes.number.isRequired,
-  showPager: PropTypes.bool.isRequired
+  defaultPageSize: PropTypes.number.isRequired
 };
 
 export default Pager;

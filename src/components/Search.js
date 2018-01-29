@@ -9,8 +9,7 @@ fontawesome.library.add(solid, faSearch);
 
 export default class Search extends Component {
   static propTypes = {
-    filter: PropTypes.func.isRequired,
-    filterable: PropTypes.bool.isRequired
+    filter: PropTypes.func.isRequired
   };
 
   constructor() {
@@ -35,15 +34,9 @@ export default class Search extends Component {
   }
 
   render() {
-    if (!this.props.filterable) return null;
-
     return (
       <div className="flexgrid-search-row">
-        <FontAwesomeIcon
-          icon="search"
-          className="flexgrid-search-icon"
-          onClick={this.toggleSearch}
-        />
+        <FontAwesomeIcon icon="search" className="flexgrid-search-icon" onClick={this.toggleSearch} />
 
         {this.renderInput()}
       </div>

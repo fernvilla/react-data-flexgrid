@@ -27,11 +27,7 @@ const Row = props => {
     <div className="flexgrid-header-row">
       {allowRowSelection && (
         <span className="flexgrid-header-col">
-          <input
-            type="checkbox"
-            onClick={() => onCheckboxClick()}
-            checked={checkAllBoxesSelected()}
-          />
+          <input type="checkbox" onClick={() => onCheckboxClick()} checked={checkAllBoxesSelected()} />
         </span>
       )}
 
@@ -56,8 +52,7 @@ const Row = props => {
 
                 <div
                   className={classNames("flexgrid-header-sort-icon", {
-                    active:
-                      sortColumn === columnName && sortDirection === "DESC"
+                    active: sortColumn === columnName && sortDirection === "DESC"
                   })}
                   onClick={() => sort(columnName, "DESC")}
                 >

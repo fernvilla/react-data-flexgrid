@@ -15,26 +15,21 @@ export default class FlexGrid extends Component {
     gridClass: PropTypes.string,
     filterable: PropTypes.bool,
     showPager: PropTypes.bool,
+    subComponent: PropTypes.func,
     columnFilters: (props, propName) => {
       if (props["filterable"] === true && !props[propName].length) {
-        return new Error(
-          "[columnFilters] array prop required when [filterable] prop is set to true."
-        );
+        return new Error("[columnFilters] array prop required when [filterable] prop is set to true.");
       }
     },
     allowRowSelection: PropTypes.bool,
     onRowSelect: (props, propName) => {
       if (props["allowRowSelection"] === true && !props[propName].length) {
-        return new Error(
-          "[allowRowSelection] needs to be set to true to use [onRowSelect]"
-        );
+        return new Error("[allowRowSelection] needs to be set to true to use [onRowSelect]");
       }
     },
     onRowDeselect: (props, propName) => {
       if (props["allowRowSelection"] === true && !props[propName].length) {
-        return new Error(
-          "[allowRowSelection] needs to be set to true to use [onRowDeselect]"
-        );
+        return new Error("[allowRowSelection] needs to be set to true to use [onRowDeselect]");
       }
     }
   };
@@ -49,7 +44,8 @@ export default class FlexGrid extends Component {
     columnFilters: [],
     allowRowSelection: false,
     onRowSelect: null,
-    onRowDeselect: null
+    onRowDeselect: null,
+    subComponent: null
   };
 
   constructor(props) {
@@ -133,18 +129,14 @@ export default class FlexGrid extends Component {
   };
 
   setdefaultPageSize = rows => {
-    const defaultPageSize =
-      rows === "All" ? this.props.data.length : Number(rows);
+    const defaultPageSize = rows === "All" ? this.props.data.length : Number(rows);
 
     this.setState({ defaultPageSize }, () => this.setTotalPages());
   };
 
   setTotalPages() {
     this.setState({
-      totalPages: getTotalPages(
-        this.props.data.length,
-        this.state.defaultPageSize
-      )
+      totalPages: getTotalPages(this.props.data.length, this.state.defaultPageSize)
     });
   }
 
@@ -163,9 +155,7 @@ export default class FlexGrid extends Component {
   getVisibleGridRows() {
     const { currentPage, defaultPageSize, data } = this.state;
 
-    return data
-      .slice((currentPage - 1) * defaultPageSize, currentPage * defaultPageSize)
-      .map(d => d.rowIndex);
+    return data.slice((currentPage - 1) * defaultPageSize, currentPage * defaultPageSize).map(d => d.rowIndex);
   }
 
   checkAllBoxesSelected = () => {
@@ -175,10 +165,7 @@ export default class FlexGrid extends Component {
       return false;
     }
 
-    return (
-      _intersection(visibleRows, this.state.selectedRows).length ===
-      visibleRows.length
-    );
+    return _intersection(visibleRows, this.state.selectedRows).length === visibleRows.length;
   };
 
   toggleAllCheckboxes = () => {
@@ -192,31 +179,18 @@ export default class FlexGrid extends Component {
 
     if (!allChecked) {
       const mergedArray = [...selectedRows, ...visibleRows];
-      const uniqueArray = mergedArray.filter(
-        (item, pos) => mergedArray.indexOf(item) === pos
-      );
+      const uniqueArray = mergedArray.filter((item, pos) => mergedArray.indexOf(item) === pos);
 
       this.setState({ selectedRows: uniqueArray });
     } else {
       this.setState({
-        selectedRows: selectedRows.filter(
-          rowIndex => visibleRows.indexOf(rowIndex) === -1
-        )
+        selectedRows: selectedRows.filter(rowIndex => visibleRows.indexOf(rowIndex) === -1)
       });
     }
   };
 
   render() {
-    const {
-      currentPage,
-      totalPages,
-      defaultPageSize,
-      sortColumn,
-      sortDirection,
-      data,
-      selectedRows
-    } = this.state;
-
+    const { currentPage, totalPages, defaultPageSize, sortColumn, sortDirection, data, selectedRows } = this.state;
     const {
       gridClass,
       columns,
@@ -224,12 +198,13 @@ export default class FlexGrid extends Component {
       showPager,
       allowRowSelection,
       onRowSelect,
-      onRowDeselect
+      onRowDeselect,
+      subComponent
     } = this.props;
 
     return (
       <div className={classNames("flexgrid", { [gridClass]: gridClass })}>
-        <Search filter={this.filter} filterable={filterable} />
+        {filterable && <Search filter={this.filter} />}
 
         <Header
           columns={columns}
@@ -241,28 +216,32 @@ export default class FlexGrid extends Component {
           checkAllBoxesSelected={this.checkAllBoxesSelected}
         />
 
-        <GridData
-          columns={columns}
-          data={data}
-          defaultPageSize={defaultPageSize}
-          currentPage={currentPage}
-          allowRowSelection={allowRowSelection}
-          onRowSelect={onRowSelect}
-          onRowDeselect={onRowDeselect}
-          handleCheckboxChange={this.handleCheckboxChange}
-          selectedRows={selectedRows}
-        />
+        {data.length > 0 && (
+          <GridData
+            columns={columns}
+            data={data}
+            defaultPageSize={defaultPageSize}
+            currentPage={currentPage}
+            allowRowSelection={allowRowSelection}
+            onRowSelect={onRowSelect}
+            onRowDeselect={onRowDeselect}
+            handleCheckboxChange={this.handleCheckboxChange}
+            selectedRows={selectedRows}
+            subComponent={subComponent}
+          />
+        )}
 
-        <Pager
-          currentPage={currentPage}
-          totalPages={totalPages}
-          pageUp={this.pageUp}
-          pageDown={this.pageDown}
-          setPage={this.setPage}
-          setdefaultPageSize={this.setdefaultPageSize}
-          defaultPageSize={defaultPageSize}
-          showPager={showPager}
-        />
+        {showPager && (
+          <Pager
+            currentPage={currentPage}
+            totalPages={totalPages}
+            pageUp={this.pageUp}
+            pageDown={this.pageDown}
+            setPage={this.setPage}
+            setdefaultPageSize={this.setdefaultPageSize}
+            defaultPageSize={defaultPageSize}
+          />
+        )}
       </div>
     );
   }

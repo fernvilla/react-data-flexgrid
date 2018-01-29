@@ -22,6 +22,15 @@ Object.defineProperty(exports, "GridData", {
   }
 });
 
+var _GridRow = require("./GridRow");
+
+Object.defineProperty(exports, "GridRow", {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_GridRow).default;
+  }
+});
+
 var _Header = require("./Header");
 
 Object.defineProperty(exports, "Header", {

@@ -55,10 +55,7 @@ var Pager = function Pager(_ref) {
       pageDown = _ref.pageDown,
       pageUp = _ref.pageUp,
       setdefaultPageSize = _ref.setdefaultPageSize,
-      defaultPageSize = _ref.defaultPageSize,
-      showPager = _ref.showPager;
-
-  if (!showPager) return null;
+      defaultPageSize = _ref.defaultPageSize;
 
   var rows = [1, 2, 3, 4, 5, 10, 25, 50, 100, 500, 1000, "All"];
 
@@ -114,12 +111,9 @@ var Pager = function Pager(_ref) {
         { className: "flexgrid-select-wrapper" },
         _react2.default.createElement(
           "select",
-          {
-            onChange: function onChange(e) {
+          { onChange: function onChange(e) {
               return setdefaultPageSize(e.target.value);
-            },
-            defaultValue: defaultPageSize
-          },
+            }, defaultValue: defaultPageSize },
           rows.map(function (row, i) {
             return _react2.default.createElement(
               "option",
@@ -141,8 +135,7 @@ Pager.propType = {
   pageDown: _propTypes2.default.func.isRequired,
   pageUp: _propTypes2.default.func.isRequired,
   setdefaultPageSize: _propTypes2.default.func.isRequired,
-  defaultPageSize: _propTypes2.default.number.isRequired,
-  showPager: _propTypes2.default.bool.isRequired
+  defaultPageSize: _propTypes2.default.number.isRequired
 };
 
 exports.default = Pager;

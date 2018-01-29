@@ -36,6 +36,11 @@ export default class App extends Component {
 
   render() {
     const { data } = this.state;
+    const subComponent = props => (
+      <div style={{ padding: 10, backgroundColor: "#fff", borderBottom: "1px solid #ccc" }}>
+        {JSON.stringify(props)}
+      </div>
+    );
 
     return (
       <div className="example-container">
@@ -58,6 +63,7 @@ export default class App extends Component {
           allowRowSelection
           onRowSelect={this.onRowSelect}
           onRowDeselect={this.onRowDeselect}
+          subComponent={subComponent}
         />
       </div>
     );
