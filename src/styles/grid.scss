@@ -1,4 +1,4 @@
-@import "_variables.scss";
+@import '_variables.scss';
 
 .flexgrid {
   display: flex;
@@ -43,6 +43,7 @@
       padding: $padding;
       display: flex;
       align-items: center;
+      justify-content: space-between;
     }
 
     .flexgrid-header-sort-icon {

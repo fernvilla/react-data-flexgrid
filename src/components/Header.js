@@ -1,10 +1,10 @@
-import React from "react";
-import fontawesome from "@fortawesome/fontawesome";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import solid from "@fortawesome/fontawesome-free-solid";
-import faSortUp from "@fortawesome/fontawesome-free-solid/faSortUp";
-import faSortDown from "@fortawesome/fontawesome-free-solid/faSortDown";
-import classNames from "classnames";
+import React from 'react';
+import fontawesome from '@fortawesome/fontawesome';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import solid from '@fortawesome/fontawesome-free-solid';
+import faSortUp from '@fortawesome/fontawesome-free-solid/faSortUp';
+import faSortDown from '@fortawesome/fontawesome-free-solid/faSortDown';
+import classNames from 'classnames';
 
 fontawesome.library.add(solid, faSortUp, faSortDown);
 
@@ -19,15 +19,17 @@ const Row = props => {
     checkAllBoxesSelected
   } = props;
 
-  const onCheckboxClick = () => {
-    toggleAllCheckboxes();
-  };
+  const onCheckboxClick = () => toggleAllCheckboxes();
 
   return (
     <div className="flexgrid-header-row">
       {allowRowSelection && (
         <span className="flexgrid-header-col">
-          <input type="checkbox" onClick={() => onCheckboxClick()} checked={checkAllBoxesSelected()} />
+          <input
+            type="checkbox"
+            onClick={() => onCheckboxClick()}
+            checked={checkAllBoxesSelected()}
+          />
         </span>
       )}
 
@@ -42,20 +44,18 @@ const Row = props => {
             {column.sortable && (
               <span>
                 <div
-                  className={classNames("flexgrid-header-sort-icon", {
-                    active: sortColumn === columnName && sortDirection === "ASC"
+                  className={classNames('flexgrid-header-sort-icon', {
+                    active: sortColumn === columnName && sortDirection === 'ASC'
                   })}
-                  onClick={() => sort(columnName, "ASC")}
-                >
+                  onClick={() => sort(columnName, 'ASC')}>
                   <FontAwesomeIcon icon="sort-up" />
                 </div>
 
                 <div
-                  className={classNames("flexgrid-header-sort-icon", {
-                    active: sortColumn === columnName && sortDirection === "DESC"
+                  className={classNames('flexgrid-header-sort-icon', {
+                    active: sortColumn === columnName && sortDirection === 'DESC'
                   })}
-                  onClick={() => sort(columnName, "DESC")}
-                >
+                  onClick={() => sort(columnName, 'DESC')}>
                   <FontAwesomeIcon icon="sort-down" />
                 </div>
               </span>

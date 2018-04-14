@@ -1,11 +1,7 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 export default class GridRow extends Component {
-  constructor() {
-    super();
-
-    this.state = { showSubcomponent: false };
-  }
+  state = { showSubcomponent: false };
 
   onCheckboxClick = (e, data) => {
     e.stopPropagation();
@@ -26,7 +22,11 @@ export default class GridRow extends Component {
   }
 
   toggleSubComponent() {
-    this.setState({ showSubComponent: !this.state.showSubComponent });
+    const { subComponent } = this.props;
+
+    if (!subComponent) return null;
+
+    this.setState(prevState => ({ showSubComponent: !prevState.showSubComponent }));
   }
 
   render() {

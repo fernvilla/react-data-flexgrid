@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-var _Flexgrid = require("./components/Flexgrid");
+var _Flexgrid = require('./components/Flexgrid');
 
 var _Flexgrid2 = _interopRequireDefault(_Flexgrid);
 

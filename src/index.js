@@ -1,4 +1,4 @@
-import Flexgrid from "./components/Flexgrid";
+import Flexgrid from './components/Flexgrid';
 
 module.exports = {
   Flexgrid

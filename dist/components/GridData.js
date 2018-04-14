@@ -1,14 +1,14 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _ = require(".");
+var _ = require('.');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27,8 +27,8 @@ var GridData = function GridData(props) {
   var pagedData = data.slice((currentPage - 1) * defaultPageSize, currentPage * defaultPageSize);
 
   return _react2.default.createElement(
-    "div",
-    { className: "flexgrid-data-container" },
+    'div',
+    { className: 'flexgrid-data-container' },
     pagedData.map(function (data, i) {
       return _react2.default.createElement(_.GridRow, {
         key: i,

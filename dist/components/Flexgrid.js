@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -6,25 +6,29 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = require("prop-types");
+var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _classnames = require("classnames");
+var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _ = require(".");
+var _ = require('.');
 
-var _utils = require("./../utils");
+var _utils = require('./../utils');
 
-var _intersection2 = require("lodash/intersection");
+var _intersection2 = require('lodash/intersection');
 
 var _intersection3 = _interopRequireDefault(_intersection2);
+
+var _isEqual2 = require('lodash/isEqual');
+
+var _isEqual3 = _interopRequireDefault(_isEqual2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -66,14 +70,14 @@ var FlexGrid = function (_Component) {
   }
 
   _createClass(FlexGrid, [{
-    key: "componentWillReceiveProps",
+    key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       var _this2 = this;
 
       var data = nextProps.data;
 
 
-      if (this.props.data !== data) {
+      if (!(0, _isEqual3.default)(this.props.data, data)) {
         var _state = this.state,
             defaultPageSize = _state.defaultPageSize,
             sortColumn = _state.sortColumn,
@@ -96,14 +100,14 @@ var FlexGrid = function (_Component) {
       }
     }
   }, {
-    key: "setTotalPages",
+    key: 'setTotalPages',
     value: function setTotalPages() {
       this.setState({
         totalPages: (0, _utils.getTotalPages)(this.props.data.length, this.state.defaultPageSize)
       });
     }
   }, {
-    key: "getVisibleGridRows",
+    key: 'getVisibleGridRows',
     value: function getVisibleGridRows() {
       var _state2 = this.state,
           currentPage = _state2.currentPage,
@@ -116,7 +120,7 @@ var FlexGrid = function (_Component) {
       });
     }
   }, {
-    key: "render",
+    key: 'render',
     value: function render() {
       var _state3 = this.state,
           currentPage = _state3.currentPage,
@@ -138,8 +142,8 @@ var FlexGrid = function (_Component) {
 
 
       return _react2.default.createElement(
-        "div",
-        { className: (0, _classnames2.default)("flexgrid", _defineProperty({}, gridClass, gridClass)) },
+        'div',
+        { className: (0, _classnames2.default)('flexgrid', _defineProperty({}, gridClass, gridClass)) },
         filterable && _react2.default.createElement(_.Search, { filter: this.filter }),
         _react2.default.createElement(_.Header, {
           columns: columns,
@@ -179,43 +183,43 @@ var FlexGrid = function (_Component) {
 }(_react.Component);
 
 FlexGrid.propTypes = {
+  allowRowSelection: _propTypes2.default.bool,
+  columnFilters: function columnFilters(props, propName) {
+    if (props['filterable'] === true && !props[propName].length) {
+      return new Error('[columnFilters] array prop required when [filterable] prop is set to true.');
+    }
+  },
   columns: _propTypes2.default.array.isRequired,
+  currentPage: _propTypes2.default.number,
   data: _propTypes2.default.array.isRequired,
   defaultPageSize: _propTypes2.default.number,
-  currentPage: _propTypes2.default.number,
-  sortableCols: _propTypes2.default.array,
-  gridClass: _propTypes2.default.string,
   filterable: _propTypes2.default.bool,
-  showPager: _propTypes2.default.bool,
-  subComponent: _propTypes2.default.func,
-  columnFilters: function columnFilters(props, propName) {
-    if (props["filterable"] === true && !props[propName].length) {
-      return new Error("[columnFilters] array prop required when [filterable] prop is set to true.");
-    }
-  },
-  allowRowSelection: _propTypes2.default.bool,
-  onRowSelect: function onRowSelect(props, propName) {
-    if (props["allowRowSelection"] === true && !props[propName].length) {
-      return new Error("[allowRowSelection] needs to be set to true to use [onRowSelect]");
-    }
-  },
+  gridClass: _propTypes2.default.string,
   onRowDeselect: function onRowDeselect(props, propName) {
-    if (props["allowRowSelection"] === true && !props[propName].length) {
-      return new Error("[allowRowSelection] needs to be set to true to use [onRowDeselect]");
+    if (props['allowRowSelection'] === true && !props[propName].length) {
+      return new Error('[allowRowSelection] needs to be set to true to use [onRowDeselect]');
     }
-  }
+  },
+  onRowSelect: function onRowSelect(props, propName) {
+    if (props['allowRowSelection'] === true && !props[propName].length) {
+      return new Error('[allowRowSelection] needs to be set to true to use [onRowSelect]');
+    }
+  },
+  showPager: _propTypes2.default.bool,
+  sortableCols: _propTypes2.default.array,
+  subComponent: _propTypes2.default.func
 };
 FlexGrid.defaultProps = {
-  defaultPageSize: 10,
-  currentPage: 1,
-  sortableCols: [],
-  gridClass: null,
-  filterable: false,
-  showPager: true,
-  columnFilters: [],
   allowRowSelection: false,
-  onRowSelect: null,
+  columnFilters: [],
+  currentPage: 1,
+  defaultPageSize: 10,
+  filterable: false,
+  gridClass: null,
   onRowDeselect: null,
+  onRowSelect: null,
+  showPager: true,
+  sortableCols: [],
   subComponent: null
 };
 
@@ -275,7 +279,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.setdefaultPageSize = function (rows) {
-    var defaultPageSize = rows === "All" ? _this3.props.data.length : Number(rows);
+    var defaultPageSize = rows === 'All' ? _this3.props.data.length : Number(rows);
 
     _this3.setState({ defaultPageSize: defaultPageSize }, function () {
       return _this3.setTotalPages();

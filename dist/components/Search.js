@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -6,27 +6,27 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = require("prop-types");
+var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _fontawesome = require("@fortawesome/fontawesome");
+var _fontawesome = require('@fortawesome/fontawesome');
 
 var _fontawesome2 = _interopRequireDefault(_fontawesome);
 
-var _reactFontawesome = require("@fortawesome/react-fontawesome");
+var _reactFontawesome = require('@fortawesome/react-fontawesome');
 
 var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
 
-var _fontawesomeFreeSolid = require("@fortawesome/fontawesome-free-solid");
+var _fontawesomeFreeSolid = require('@fortawesome/fontawesome-free-solid');
 
 var _fontawesomeFreeSolid2 = _interopRequireDefault(_fontawesomeFreeSolid);
 
-var _faSearch = require("@fortawesome/fontawesome-free-solid/faSearch");
+var _faSearch = require('@fortawesome/fontawesome-free-solid/faSearch');
 
 var _faSearch2 = _interopRequireDefault(_faSearch);
 
@@ -44,39 +44,46 @@ var Search = function (_Component) {
   _inherits(Search, _Component);
 
   function Search() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     _classCallCheck(this, Search);
 
-    var _this = _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-    _this.toggleSearch = function () {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Search.__proto__ || Object.getPrototypeOf(Search)).call.apply(_ref, [this].concat(args))), _this), _this.state = { showSearchInput: false }, _this.toggleSearch = function () {
       _this.setState({ showSearchInput: !_this.state.showSearchInput });
-    };
-
-    _this.state = { showSearchInput: false };
-    return _this;
+    }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Search, [{
-    key: "renderInput",
+    key: 'renderInput',
     value: function renderInput() {
       var _this2 = this;
 
-      return _react2.default.createElement("input", {
-        type: "search",
-        placeholder: "Search",
+      return _react2.default.createElement('input', {
+        type: 'search',
+        placeholder: 'Search',
         onChange: function onChange(e) {
           return _this2.props.filter(e.target.value);
         },
-        className: "flexgrid-search-input"
+        className: 'flexgrid-search-input'
       });
     }
   }, {
-    key: "render",
+    key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        "div",
-        { className: "flexgrid-search-row" },
-        _react2.default.createElement(_reactFontawesome2.default, { icon: "search", className: "flexgrid-search-icon", onClick: this.toggleSearch }),
+        'div',
+        { className: 'flexgrid-search-row' },
+        _react2.default.createElement(_reactFontawesome2.default, {
+          icon: 'search',
+          className: 'flexgrid-search-icon',
+          onClick: this.toggleSearch
+        }),
         this.renderInput()
       );
     }

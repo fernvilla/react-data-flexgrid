@@ -1,22 +1,18 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import fontawesome from "@fortawesome/fontawesome";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import solid from "@fortawesome/fontawesome-free-solid";
-import faSearch from "@fortawesome/fontawesome-free-solid/faSearch";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import fontawesome from '@fortawesome/fontawesome';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import solid from '@fortawesome/fontawesome-free-solid';
+import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
 
 fontawesome.library.add(solid, faSearch);
 
 export default class Search extends Component {
+  state = { showSearchInput: false };
+
   static propTypes = {
     filter: PropTypes.func.isRequired
   };
-
-  constructor() {
-    super();
-
-    this.state = { showSearchInput: false };
-  }
 
   toggleSearch = () => {
     this.setState({ showSearchInput: !this.state.showSearchInput });
@@ -36,7 +32,11 @@ export default class Search extends Component {
   render() {
     return (
       <div className="flexgrid-search-row">
-        <FontAwesomeIcon icon="search" className="flexgrid-search-icon" onClick={this.toggleSearch} />
+        <FontAwesomeIcon
+          icon="search"
+          className="flexgrid-search-icon"
+          onClick={this.toggleSearch}
+        />
 
         {this.renderInput()}
       </div>

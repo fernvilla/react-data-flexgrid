@@ -22,11 +22,17 @@ var GridRow = function (_Component) {
   _inherits(GridRow, _Component);
 
   function GridRow() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     _classCallCheck(this, GridRow);
 
-    var _this = _possibleConstructorReturn(this, (GridRow.__proto__ || Object.getPrototypeOf(GridRow)).call(this));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-    _this.onCheckboxClick = function (e, data) {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = GridRow.__proto__ || Object.getPrototypeOf(GridRow)).call.apply(_ref, [this].concat(args))), _this), _this.state = { showSubcomponent: false }, _this.onCheckboxClick = function (e, data) {
       e.stopPropagation();
       var _this$props = _this.props,
           onRowSelect = _this$props.onRowSelect,
@@ -37,10 +43,7 @@ var GridRow = function (_Component) {
 
       action(data);
       handleCheckboxChange(data.rowIndex);
-    };
-
-    _this.state = { showSubcomponent: false };
-    return _this;
+    }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(GridRow, [{
@@ -57,7 +60,14 @@ var GridRow = function (_Component) {
   }, {
     key: "toggleSubComponent",
     value: function toggleSubComponent() {
-      this.setState({ showSubComponent: !this.state.showSubComponent });
+      var subComponent = this.props.subComponent;
+
+
+      if (!subComponent) return null;
+
+      this.setState(function (prevState) {
+        return { showSubComponent: !prevState.showSubComponent };
+      });
     }
   }, {
     key: "render",

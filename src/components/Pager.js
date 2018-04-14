@@ -1,18 +1,33 @@
-import React from "react";
-import PropTypes from "prop-types";
-import fontawesome from "@fortawesome/fontawesome";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import solid from "@fortawesome/fontawesome-free-solid";
-import faAngleRight from "@fortawesome/fontawesome-free-solid/faAngleRight";
-import faAngleLeft from "@fortawesome/fontawesome-free-solid/faAngleLeft";
-import faAngleDown from "@fortawesome/fontawesome-free-solid/faAngleDown";
-import faAngleDoubleLeft from "@fortawesome/fontawesome-free-solid/faAngleDoubleLeft";
-import faAngleDoubleRight from "@fortawesome/fontawesome-free-solid/faAngleDoubleRight";
+import React from 'react';
+import PropTypes from 'prop-types';
+import fontawesome from '@fortawesome/fontawesome';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import solid from '@fortawesome/fontawesome-free-solid';
+import faAngleRight from '@fortawesome/fontawesome-free-solid/faAngleRight';
+import faAngleLeft from '@fortawesome/fontawesome-free-solid/faAngleLeft';
+import faAngleDown from '@fortawesome/fontawesome-free-solid/faAngleDown';
+import faAngleDoubleLeft from '@fortawesome/fontawesome-free-solid/faAngleDoubleLeft';
+import faAngleDoubleRight from '@fortawesome/fontawesome-free-solid/faAngleDoubleRight';
 
-fontawesome.library.add(solid, faAngleRight, faAngleLeft, faAngleDown, faAngleDoubleRight, faAngleDoubleLeft);
+fontawesome.library.add(
+  solid,
+  faAngleRight,
+  faAngleLeft,
+  faAngleDown,
+  faAngleDoubleRight,
+  faAngleDoubleLeft
+);
 
-const Pager = ({ currentPage, totalPages, setPage, pageDown, pageUp, setdefaultPageSize, defaultPageSize }) => {
-  const rows = [1, 2, 3, 4, 5, 10, 25, 50, 100, 500, 1000, "All"];
+const Pager = ({
+  currentPage,
+  totalPages,
+  setPage,
+  pageDown,
+  pageUp,
+  setdefaultPageSize,
+  defaultPageSize
+}) => {
+  const rows = [1, 2, 3, 4, 5, 10, 25, 50, 100, 500, 1000, 'All'];
 
   return (
     <div className="flexgrid-footer">

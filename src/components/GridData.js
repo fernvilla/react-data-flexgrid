@@ -1,5 +1,5 @@
-import React from "react";
-import { GridRow } from ".";
+import React from 'react';
+import { GridRow } from '.';
 
 const GridData = props => {
   const {

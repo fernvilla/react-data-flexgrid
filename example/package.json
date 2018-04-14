@@ -4,13 +4,13 @@
   "private": true,
   "dependencies": {
     "faker": "^4.1.0",
-    "lodash": "^4.17.4",
-    "moment": "^2.20.1",
+    "lodash": "^4.17.5",
+    "moment": "^2.21.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
   "devDependencies": {
-    "react-scripts": "1.0.17"
+    "react-scripts": "1.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
