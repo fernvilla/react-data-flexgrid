@@ -7,8 +7,7 @@ export const columns = [
   {
     columnName: 'id',
     displayName: 'ID',
-    style: { flex: '0 1 50px', alignSelf: 'center' },
-    sortable: true
+    style: { flex: '0 1 50px', alignSelf: 'center' }
   },
   {
     columnName: 'firstName',
@@ -48,8 +47,7 @@ export const columns = [
   {
     columnName: 'birthdate',
     displayName: 'Birthdate',
-    style: { flex: '1 1 100px', alignSelf: 'center' },
-    sortable: true
+    style: { flex: '1 1 100px', alignSelf: 'center' }
   }
 ];
 

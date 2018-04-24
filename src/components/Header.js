@@ -16,32 +16,28 @@ const Row = props => {
     sort,
     allowRowSelection,
     toggleAllCheckboxes,
-    checkAllBoxesSelected
+    checkAllBoxesSelected,
+    sortableColumns
   } = props;
-
-  const onCheckboxClick = () => toggleAllCheckboxes();
 
   return (
     <div className="flexgrid-header-row">
       {allowRowSelection && (
         <span className="flexgrid-header-col">
-          <input
-            type="checkbox"
-            onClick={() => onCheckboxClick()}
-            checked={checkAllBoxesSelected()}
-          />
+          <input type="checkbox" onClick={toggleAllCheckboxes} checked={checkAllBoxesSelected()} />
         </span>
       )}
 
       {columns.map((column, i) => {
         const style = column.style || null;
         const { columnName, displayName } = column;
+        const isSortable = sortableColumns.includes(columnName);
 
         return (
           <span className="flexgrid-header-col" key={i} style={style}>
             {displayName}
 
-            {column.sortable && (
+            {isSortable && (
               <span>
                 <div
                   className={classNames('flexgrid-header-sort-icon', {

@@ -43,12 +43,9 @@ var Row = function Row(props) {
       sort = props.sort,
       allowRowSelection = props.allowRowSelection,
       toggleAllCheckboxes = props.toggleAllCheckboxes,
-      checkAllBoxesSelected = props.checkAllBoxesSelected;
+      checkAllBoxesSelected = props.checkAllBoxesSelected,
+      sortableColumns = props.sortableColumns;
 
-
-  var onCheckboxClick = function onCheckboxClick() {
-    return toggleAllCheckboxes();
-  };
 
   return _react2.default.createElement(
     'div',
@@ -56,25 +53,20 @@ var Row = function Row(props) {
     allowRowSelection && _react2.default.createElement(
       'span',
       { className: 'flexgrid-header-col' },
-      _react2.default.createElement('input', {
-        type: 'checkbox',
-        onClick: function onClick() {
-          return onCheckboxClick();
-        },
-        checked: checkAllBoxesSelected()
-      })
+      _react2.default.createElement('input', { type: 'checkbox', onClick: toggleAllCheckboxes, checked: checkAllBoxesSelected() })
     ),
     columns.map(function (column, i) {
       var style = column.style || null;
       var columnName = column.columnName,
           displayName = column.displayName;
 
+      var isSortable = sortableColumns.includes(columnName);
 
       return _react2.default.createElement(
         'span',
         { className: 'flexgrid-header-col', key: i, style: style },
         displayName,
-        column.sortable && _react2.default.createElement(
+        isSortable && _react2.default.createElement(
           'span',
           null,
           _react2.default.createElement(

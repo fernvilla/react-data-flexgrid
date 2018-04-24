@@ -138,7 +138,8 @@ var FlexGrid = function (_Component) {
           allowRowSelection = _props.allowRowSelection,
           onRowSelect = _props.onRowSelect,
           onRowDeselect = _props.onRowDeselect,
-          subComponent = _props.subComponent;
+          subComponent = _props.subComponent,
+          sortableColumns = _props.sortableColumns;
 
 
       return _react2.default.createElement(
@@ -152,7 +153,8 @@ var FlexGrid = function (_Component) {
           sortDirection: sortDirection,
           allowRowSelection: allowRowSelection,
           toggleAllCheckboxes: this.toggleAllCheckboxes,
-          checkAllBoxesSelected: this.checkAllBoxesSelected
+          checkAllBoxesSelected: this.checkAllBoxesSelected,
+          sortableColumns: sortableColumns
         }),
         data.length > 0 && _react2.default.createElement(_.GridData, {
           columns: columns,
@@ -206,7 +208,7 @@ FlexGrid.propTypes = {
     }
   },
   showPager: _propTypes2.default.bool,
-  sortableCols: _propTypes2.default.array,
+  sortableColumns: _propTypes2.default.array,
   subComponent: _propTypes2.default.func
 };
 FlexGrid.defaultProps = {
@@ -219,7 +221,7 @@ FlexGrid.defaultProps = {
   onRowDeselect: null,
   onRowSelect: null,
   showPager: true,
-  sortableCols: [],
+  sortableColumns: [],
   subComponent: null
 };
 

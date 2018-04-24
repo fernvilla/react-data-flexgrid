@@ -33,7 +33,7 @@ export default class FlexGrid extends Component {
       }
     },
     showPager: PropTypes.bool,
-    sortableCols: PropTypes.array,
+    sortableColumns: PropTypes.array,
     subComponent: PropTypes.func
   };
 
@@ -47,7 +47,7 @@ export default class FlexGrid extends Component {
     onRowDeselect: null,
     onRowSelect: null,
     showPager: true,
-    sortableCols: [],
+    sortableColumns: [],
     subComponent: null
   };
 
@@ -212,7 +212,8 @@ export default class FlexGrid extends Component {
       allowRowSelection,
       onRowSelect,
       onRowDeselect,
-      subComponent
+      subComponent,
+      sortableColumns
     } = this.props;
 
     return (
@@ -227,6 +228,7 @@ export default class FlexGrid extends Component {
           allowRowSelection={allowRowSelection}
           toggleAllCheckboxes={this.toggleAllCheckboxes}
           checkAllBoxesSelected={this.checkAllBoxesSelected}
+          sortableColumns={sortableColumns}
         />
 
         {data.length > 0 && (

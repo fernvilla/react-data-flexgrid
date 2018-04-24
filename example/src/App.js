@@ -63,6 +63,7 @@ export default class App extends Component {
           allowRowSelection
           onRowSelect={this.onRowSelect}
           onRowDeselect={this.onRowDeselect}
+          sortableColumns={['id', 'birthdate']}
         />
       </div>
     );
