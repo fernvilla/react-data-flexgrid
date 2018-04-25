@@ -8,15 +8,20 @@
   font-size: $font-size;
   font-family: $font-family;
 
-  .flexgrid-search-row {
-    display: flex;
-    padding: $padding;
-    padding-left: 0;
-    align-items: center;
-
+  .flexgrid-search {
     .flexgrid-search-icon {
-      color: $blue;
-      margin-right: 0.5em;
+      &.active {
+        color: $gray-medium;
+      }
+    }
+
+    .flexgrid-search-container {
+      padding: 0.5em;
+      position: absolute;
+      top: 75%;
+      right: 0;
+      border: 1px solid $gray-medium;
+      background-color: $gray-light;
     }
 
     .flexgrid-search-input {
@@ -26,9 +31,10 @@
       outline: 0;
       text-align: left;
       background: #fff;
-      border: 1px solid rgba(34, 36, 38, 0.15);
+      border: 1px solid $gray-medium;
       border-radius: 0.3em;
       box-shadow: none;
+      width: 100%;
     }
   }
 
@@ -44,6 +50,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: relative;
     }
 
     .flexgrid-header-sort-icon {
@@ -78,9 +85,6 @@
     }
 
     .flexgrid-data-row {
-      // display: flex;
-      // flex-direction: row;
-
       &:nth-child(odd) {
         background-color: $gray-light;
       }

@@ -36,11 +36,6 @@ export default class App extends Component {
 
   render() {
     const { data } = this.state;
-    // const subComponent = props => (
-    //   <div style={{ padding: 10, backgroundColor: '#fff', borderBottom: '1px solid #ccc' }}>
-    //     {JSON.stringify(props)}
-    //   </div>
-    // );
 
     return (
       <div className="example-container">
@@ -59,11 +54,11 @@ export default class App extends Component {
           columns={columns}
           data={data}
           filterable
-          columnFilters={['lastName', 'firstName']}
           allowRowSelection
           onRowSelect={this.onRowSelect}
           onRowDeselect={this.onRowDeselect}
-          sortableColumns={['id', 'birthdate']}
+          sortColumns={['id', 'birthdate']}
+          filterColumns={['lastName', 'firstName']}
         />
       </div>
     );

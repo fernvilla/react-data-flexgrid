@@ -32,6 +32,8 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
+var _ = require('.');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _fontawesome2.default.library.add(_fontawesomeFreeSolid2.default, _faSortUp2.default, _faSortDown2.default);
@@ -44,7 +46,9 @@ var Row = function Row(props) {
       allowRowSelection = props.allowRowSelection,
       toggleAllCheckboxes = props.toggleAllCheckboxes,
       checkAllBoxesSelected = props.checkAllBoxesSelected,
-      sortableColumns = props.sortableColumns;
+      sortColumns = props.sortColumns,
+      filterColumns = props.filterColumns,
+      _filter = props.filter;
 
 
   return _react2.default.createElement(
@@ -60,12 +64,16 @@ var Row = function Row(props) {
       var columnName = column.columnName,
           displayName = column.displayName;
 
-      var isSortable = sortableColumns.includes(columnName);
+      var isSortable = sortColumns && sortColumns.length > 0 ? sortColumns.includes(columnName) : false;
+      var isFilterable = filterColumns && filterColumns.length > 0 ? filterColumns.includes(columnName) : false;
 
       return _react2.default.createElement(
         'span',
         { className: 'flexgrid-header-col', key: i, style: style },
         displayName,
+        isFilterable && _react2.default.createElement(_.Search, { filter: function filter(text) {
+            return _filter(text, columnName);
+          } }),
         isSortable && _react2.default.createElement(
           'span',
           null,

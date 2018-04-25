@@ -64,24 +64,31 @@ var Search = function (_Component) {
     value: function renderInput() {
       var _this2 = this;
 
-      return _react2.default.createElement('input', {
-        type: 'search',
-        placeholder: 'Search',
-        onChange: function onChange(e) {
-          return _this2.props.filter(e.target.value);
-        },
-        className: 'flexgrid-search-input'
-      });
+      var containerStyle = { display: this.state.showSearchInput ? 'inline' : 'none' };
+
+      return _react2.default.createElement(
+        'span',
+        { className: 'flexgrid-search-container', style: containerStyle },
+        _react2.default.createElement('input', {
+          type: 'search',
+          placeholder: 'Search',
+          onChange: function onChange(e) {
+            return _this2.props.filter(e.target.value);
+          },
+          className: 'flexgrid-search-input'
+        })
+      );
     }
   }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'flexgrid-search-row' },
+        { className: 'flexgrid-search' },
         _react2.default.createElement(_reactFontawesome2.default, {
           icon: 'search',
           className: 'flexgrid-search-icon',
+          color: this.state.showSearchInput ? '#000' : '',
           onClick: this.toggleSearch
         }),
         this.renderInput()

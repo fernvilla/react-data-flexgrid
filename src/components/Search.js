@@ -19,22 +19,27 @@ export default class Search extends Component {
   };
 
   renderInput() {
+    const containerStyle = { display: this.state.showSearchInput ? 'inline' : 'none' };
+
     return (
-      <input
-        type="search"
-        placeholder="Search"
-        onChange={e => this.props.filter(e.target.value)}
-        className="flexgrid-search-input"
-      />
+      <span className="flexgrid-search-container" style={containerStyle}>
+        <input
+          type="search"
+          placeholder="Search"
+          onChange={e => this.props.filter(e.target.value)}
+          className="flexgrid-search-input"
+        />
+      </span>
     );
   }
 
   render() {
     return (
-      <div className="flexgrid-search-row">
+      <div className="flexgrid-search">
         <FontAwesomeIcon
           icon="search"
           className="flexgrid-search-icon"
+          color={this.state.showSearchInput ? '#000' : ''}
           onClick={this.toggleSearch}
         />
 

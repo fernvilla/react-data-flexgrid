@@ -9,18 +9,11 @@ import _isEqual from 'lodash/isEqual';
 export default class FlexGrid extends Component {
   static propTypes = {
     allowRowSelection: PropTypes.bool,
-    columnFilters: (props, propName) => {
-      if (props['filterable'] === true && !props[propName].length) {
-        return new Error(
-          '[columnFilters] array prop required when [filterable] prop is set to true.'
-        );
-      }
-    },
+    filterColumns: PropTypes.array,
     columns: PropTypes.array.isRequired,
     currentPage: PropTypes.number,
     data: PropTypes.array.isRequired,
     defaultPageSize: PropTypes.number,
-    filterable: PropTypes.bool,
     gridClass: PropTypes.string,
     onRowDeselect: (props, propName) => {
       if (props['allowRowSelection'] === true && !props[propName].length) {
@@ -33,21 +26,20 @@ export default class FlexGrid extends Component {
       }
     },
     showPager: PropTypes.bool,
-    sortableColumns: PropTypes.array,
+    sortColumns: PropTypes.array,
     subComponent: PropTypes.func
   };
 
   static defaultProps = {
     allowRowSelection: false,
-    columnFilters: [],
+    filterColumns: [],
     currentPage: 1,
     defaultPageSize: 10,
-    filterable: false,
     gridClass: null,
     onRowDeselect: null,
     onRowSelect: null,
     showPager: true,
-    sortableColumns: [],
+    sortColumns: [],
     subComponent: null
   };
 
@@ -89,9 +81,9 @@ export default class FlexGrid extends Component {
     }
   }
 
-  filter = text => {
-    const { data, columnFilters } = this.props;
-    const filteredData = filterData(data, columnFilters, text);
+  filter = (text, column) => {
+    const { data } = this.props;
+    const filteredData = filterData(data, column, text);
 
     this.setState({
       currentPage: 1,
@@ -207,19 +199,17 @@ export default class FlexGrid extends Component {
     const {
       gridClass,
       columns,
-      filterable,
       showPager,
       allowRowSelection,
       onRowSelect,
       onRowDeselect,
       subComponent,
-      sortableColumns
+      sortColumns,
+      filterColumns
     } = this.props;
 
     return (
       <div className={classNames('flexgrid', { [gridClass]: gridClass })}>
-        {filterable && <Search filter={this.filter} />}
-
         <Header
           columns={columns}
           sort={this.sort}
@@ -228,7 +218,9 @@ export default class FlexGrid extends Component {
           allowRowSelection={allowRowSelection}
           toggleAllCheckboxes={this.toggleAllCheckboxes}
           checkAllBoxesSelected={this.checkAllBoxesSelected}
-          sortableColumns={sortableColumns}
+          sortColumns={sortColumns}
+          filterColumns={filterColumns}
+          filter={this.filter}
         />
 
         {data.length > 0 && (

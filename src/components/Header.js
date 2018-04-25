@@ -5,6 +5,7 @@ import solid from '@fortawesome/fontawesome-free-solid';
 import faSortUp from '@fortawesome/fontawesome-free-solid/faSortUp';
 import faSortDown from '@fortawesome/fontawesome-free-solid/faSortDown';
 import classNames from 'classnames';
+import { Search } from '.';
 
 fontawesome.library.add(solid, faSortUp, faSortDown);
 
@@ -17,7 +18,9 @@ const Row = props => {
     allowRowSelection,
     toggleAllCheckboxes,
     checkAllBoxesSelected,
-    sortableColumns
+    sortColumns,
+    filterColumns,
+    filter
   } = props;
 
   return (
@@ -31,11 +34,16 @@ const Row = props => {
       {columns.map((column, i) => {
         const style = column.style || null;
         const { columnName, displayName } = column;
-        const isSortable = sortableColumns.includes(columnName);
+        const isSortable =
+          sortColumns && sortColumns.length > 0 ? sortColumns.includes(columnName) : false;
+        const isFilterable =
+          filterColumns && filterColumns.length > 0 ? filterColumns.includes(columnName) : false;
 
         return (
           <span className="flexgrid-header-col" key={i} style={style}>
             {displayName}
+
+            {isFilterable && <Search filter={text => filter(text, columnName)} />}
 
             {isSortable && (
               <span>

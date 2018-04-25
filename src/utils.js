@@ -12,8 +12,8 @@ export const sortData = (data, column, direction) => {
   return results;
 };
 
-export const filterData = (data, keys, text) => {
-  const fuse = new Fuse(data, { keys });
+export const filterData = (data, key, text) => {
+  const fuse = new Fuse(data, { keys: [key] });
   const results = fuse.search(text);
 
   return results;

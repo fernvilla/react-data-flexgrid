@@ -133,19 +133,18 @@ var FlexGrid = function (_Component) {
       var _props = this.props,
           gridClass = _props.gridClass,
           columns = _props.columns,
-          filterable = _props.filterable,
           showPager = _props.showPager,
           allowRowSelection = _props.allowRowSelection,
           onRowSelect = _props.onRowSelect,
           onRowDeselect = _props.onRowDeselect,
           subComponent = _props.subComponent,
-          sortableColumns = _props.sortableColumns;
+          sortColumns = _props.sortColumns,
+          filterColumns = _props.filterColumns;
 
 
       return _react2.default.createElement(
         'div',
         { className: (0, _classnames2.default)('flexgrid', _defineProperty({}, gridClass, gridClass)) },
-        filterable && _react2.default.createElement(_.Search, { filter: this.filter }),
         _react2.default.createElement(_.Header, {
           columns: columns,
           sort: this.sort,
@@ -154,7 +153,9 @@ var FlexGrid = function (_Component) {
           allowRowSelection: allowRowSelection,
           toggleAllCheckboxes: this.toggleAllCheckboxes,
           checkAllBoxesSelected: this.checkAllBoxesSelected,
-          sortableColumns: sortableColumns
+          sortColumns: sortColumns,
+          filterColumns: filterColumns,
+          filter: this.filter
         }),
         data.length > 0 && _react2.default.createElement(_.GridData, {
           columns: columns,
@@ -186,16 +187,11 @@ var FlexGrid = function (_Component) {
 
 FlexGrid.propTypes = {
   allowRowSelection: _propTypes2.default.bool,
-  columnFilters: function columnFilters(props, propName) {
-    if (props['filterable'] === true && !props[propName].length) {
-      return new Error('[columnFilters] array prop required when [filterable] prop is set to true.');
-    }
-  },
+  filterColumns: _propTypes2.default.array,
   columns: _propTypes2.default.array.isRequired,
   currentPage: _propTypes2.default.number,
   data: _propTypes2.default.array.isRequired,
   defaultPageSize: _propTypes2.default.number,
-  filterable: _propTypes2.default.bool,
   gridClass: _propTypes2.default.string,
   onRowDeselect: function onRowDeselect(props, propName) {
     if (props['allowRowSelection'] === true && !props[propName].length) {
@@ -208,32 +204,29 @@ FlexGrid.propTypes = {
     }
   },
   showPager: _propTypes2.default.bool,
-  sortableColumns: _propTypes2.default.array,
+  sortColumns: _propTypes2.default.array,
   subComponent: _propTypes2.default.func
 };
 FlexGrid.defaultProps = {
   allowRowSelection: false,
-  columnFilters: [],
+  filterColumns: [],
   currentPage: 1,
   defaultPageSize: 10,
-  filterable: false,
   gridClass: null,
   onRowDeselect: null,
   onRowSelect: null,
   showPager: true,
-  sortableColumns: [],
+  sortColumns: [],
   subComponent: null
 };
 
 var _initialiseProps = function _initialiseProps() {
   var _this3 = this;
 
-  this.filter = function (text) {
-    var _props2 = _this3.props,
-        data = _props2.data,
-        columnFilters = _props2.columnFilters;
+  this.filter = function (text, column) {
+    var data = _this3.props.data;
 
-    var filteredData = (0, _utils.filterData)(data, columnFilters, text);
+    var filteredData = (0, _utils.filterData)(data, column, text);
 
     _this3.setState({
       currentPage: 1,
