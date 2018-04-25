@@ -1,4 +1,8 @@
-.babelrc
-lib
-.vscode
+src
 example
+.babelrc
+.vscode
+.prettierrc
+.eslintrc
+.DS_Store
+node_modules
