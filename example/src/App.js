@@ -18,21 +18,13 @@ export default class App extends Component {
     this.fetchSampleData(amounts[0]);
   }
 
-  fetchSampleData(amount) {
-    this.setState({ data: data(amount) });
-  }
-
   onChange = e => {
     this.fetchSampleData(e.target.value);
   };
 
-  onRowSelect = data => {
-    console.log('row selected', data);
-  };
-
-  onRowDeselect = data => {
-    console.log('row deselected', data);
-  };
+  fetchSampleData(amount) {
+    this.setState({ data: data(amount) });
+  }
 
   render() {
     const { data } = this.state;
@@ -40,7 +32,7 @@ export default class App extends Component {
     return (
       <div className="example-container">
         <p>
-          Items:{' '}
+          # of Sample Items:{' '}
           <select onChange={this.onChange}>
             {amounts.map(i => (
               <option value={i} key={i}>
@@ -50,16 +42,9 @@ export default class App extends Component {
           </select>
         </p>
 
-        <Flexgrid
-          columns={columns}
-          data={data}
-          filterable
-          allowRowSelection
-          onRowSelect={this.onRowSelect}
-          onRowDeselect={this.onRowDeselect}
-          sortColumns={['id', 'birthdate']}
-          filterColumns={['lastName', 'firstName']}
-        />
+        <hr />
+
+        <Flexgrid columns={columns} data={data} />
       </div>
     );
   }

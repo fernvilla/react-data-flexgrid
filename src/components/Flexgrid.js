@@ -1,254 +1,154 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { Pager, GridData, Search, Header } from '.';
-import { getTotalPages, sortData, filterData } from './../utils';
-import _intersection from 'lodash/intersection';
+import { Header, DataRows, Footer, Search, RowsToggle } from '.';
+import { calcualteTotalPages, sortData } from './../utils';
+import { descendString, ascendString } from './../constants';
 import _isEqual from 'lodash/isEqual';
 
 export default class FlexGrid extends Component {
   static propTypes = {
-    allowRowSelection: PropTypes.bool,
-    filterColumns: PropTypes.array,
     columns: PropTypes.array.isRequired,
-    currentPage: PropTypes.number,
-    data: PropTypes.array.isRequired,
-    defaultPageSize: PropTypes.number,
-    gridClass: PropTypes.string,
-    onRowDeselect: (props, propName) => {
-      if (props['allowRowSelection'] === true && !props[propName].length) {
-        return new Error('[allowRowSelection] needs to be set to true to use [onRowDeselect]');
-      }
-    },
-    onRowSelect: (props, propName) => {
-      if (props['allowRowSelection'] === true && !props[propName].length) {
-        return new Error('[allowRowSelection] needs to be set to true to use [onRowSelect]');
-      }
-    },
-    showPager: PropTypes.bool,
-    sortColumns: PropTypes.array,
-    subComponent: PropTypes.func
+    allowSearch: PropTypes.bool,
+    rowsPerPage: PropTypes.number,
+    searchOptions: PropTypes.object,
+    searchKeys: PropTypes.array
   };
 
   static defaultProps = {
-    allowRowSelection: false,
-    filterColumns: [],
-    currentPage: 1,
-    defaultPageSize: 10,
-    gridClass: null,
-    onRowDeselect: null,
-    onRowSelect: null,
-    showPager: true,
-    sortColumns: [],
-    subComponent: null
+    rowsPerPage: 10,
+    allowSearch: true,
+    searchOptions: {
+      shouldSort: true,
+      threshold: 0.6,
+      location: 0,
+      distance: 100,
+      maxPatternLength: 32,
+      minMatchCharLength: 1
+    },
+    searchKeys: []
   };
 
   constructor(props) {
     super(props);
 
-    const { currentPage, defaultPageSize, data } = props;
+    const { data, rowsPerPage } = props;
+
+    //Keep copy to reset sorting
+    this.initialData = [...data];
 
     this.state = {
-      currentPage,
-      defaultPageSize,
-      totalPages: 1,
+      currentPage: 1,
+      totalPages: calcualteTotalPages(data.length, rowsPerPage),
+      searchText: '',
+      rowsPerPage: Number(rowsPerPage),
       sortDirection: null,
-      sortColumn: null,
-      data,
-      selectedRows: []
+      sortColumn: null
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { data } = nextProps;
 
     if (!_isEqual(this.props.data, data)) {
-      const { defaultPageSize, sortColumn, sortDirection } = this.state;
-      const totalPages = getTotalPages(data.length, defaultPageSize);
-      const indexedData = data.map((d, i) => {
-        d.rowIndex = i;
+      this.initialData = [...data];
+      const { rowsPerPage, currentPage } = this.state;
+      const totalPages = calcualteTotalPages(data.length, rowsPerPage);
 
-        return d;
-      });
+      this.setState({ totalPages, data }, () => this.resetSort());
 
-      this.setState({ totalPages: totalPages, data: indexedData }, () => {
-        this.sort(sortColumn, sortDirection);
-      });
-
-      if (totalPages < this.state.currentPage) {
-        this.setPage(1);
-      }
+      if (totalPages < currentPage) this.setCurrentPage(1);
     }
   }
 
-  filter = (text, column) => {
+  resetSort() {
+    this.setState({ sortColumn: null, sortDirection: null, data: this.initialData });
+  }
+
+  setSearchText = text => {
+    this.setState({ searchText: text });
+  };
+
+  setCurrentPage = page => {
+    this.setState({ currentPage: page });
+  };
+
+  setRowsPerPage = rows => {
     const { data } = this.props;
-    const filteredData = filterData(data, column, text);
+    const rowsPerPage = rows === 'All' ? data.length : Number(rows);
+
+    this.setState({ rowsPerPage }, () => this.setTotalPages());
+  };
+
+  setTotalPages() {
+    const { data } = this.props;
+    const { rowsPerPage } = this.state;
 
     this.setState({
-      currentPage: 1,
-      data: !text.length ? this.props.data : filteredData
+      totalPages: calcualteTotalPages(data.length, rowsPerPage)
+    });
+  }
+
+  sortData = column => {
+    const { data } = this.props;
+
+    this.setState(prevState => {
+      const { sortDirection, sortColumn } = prevState;
+      const direction = () => {
+        //Set initial sort direction when new column selected or changed
+        if (!sortDirection || column !== sortColumn) return ascendString;
+
+        return sortDirection === ascendString ? descendString : null;
+      };
+
+      return {
+        data: !direction() ? this.initialData : sortData(data, column, direction()),
+        sortColumn: column,
+        sortDirection: direction()
+      };
     });
   };
 
-  sort = (column, direction) => {
-    const { sortDirection, sortColumn } = this.state;
-
-    if (direction === sortDirection && column === sortColumn) return;
-
-    this.setState({
-      data: sortData(this.props.data, column, direction),
-      sortColumn: column,
-      sortDirection: direction
-    });
-  };
-
-  pageUp = () => {
+  setPageUp = () => {
     const { currentPage, totalPages } = this.state;
 
     if (currentPage === totalPages) return;
 
-    this.setPage(currentPage + 1);
+    this.setCurrentPage(currentPage + 1);
   };
 
-  pageDown = () => {
+  setPageDown = () => {
     const { currentPage } = this.state;
 
     if (currentPage === 1) return;
 
-    this.setPage(currentPage - 1);
-  };
-
-  setPage = page => {
-    this.setState({ currentPage: page });
-  };
-
-  setdefaultPageSize = rows => {
-    const defaultPageSize = rows === 'All' ? this.props.data.length : Number(rows);
-
-    this.setState({ defaultPageSize }, () => this.setTotalPages());
-  };
-
-  setTotalPages() {
-    this.setState({
-      totalPages: getTotalPages(this.props.data.length, this.state.defaultPageSize)
-    });
-  }
-
-  handleCheckboxChange = rowIndex => {
-    const { selectedRows } = this.state;
-
-    if (selectedRows.indexOf(rowIndex) < 0) {
-      this.setState({ selectedRows: [...selectedRows, rowIndex] });
-    } else {
-      this.setState({
-        selectedRows: selectedRows.filter(id => id !== rowIndex)
-      });
-    }
-  };
-
-  getVisibleGridRows() {
-    const { currentPage, defaultPageSize, data } = this.state;
-
-    return data
-      .slice((currentPage - 1) * defaultPageSize, currentPage * defaultPageSize)
-      .map(d => d.rowIndex);
-  }
-
-  checkAllBoxesSelected = () => {
-    const visibleRows = this.getVisibleGridRows();
-
-    if (!visibleRows.length) {
-      return false;
-    }
-
-    return _intersection(visibleRows, this.state.selectedRows).length === visibleRows.length;
-  };
-
-  toggleAllCheckboxes = () => {
-    const allChecked = this.checkAllBoxesSelected();
-    const visibleRows = this.getVisibleGridRows();
-    const { selectedRows } = this.state;
-
-    if (!visibleRows.length) {
-      return;
-    }
-
-    if (!allChecked) {
-      const mergedArray = [...selectedRows, ...visibleRows];
-      const uniqueArray = mergedArray.filter((item, pos) => mergedArray.indexOf(item) === pos);
-
-      this.setState({ selectedRows: uniqueArray });
-    } else {
-      this.setState({
-        selectedRows: selectedRows.filter(rowIndex => visibleRows.indexOf(rowIndex) === -1)
-      });
-    }
+    this.setCurrentPage(currentPage - 1);
   };
 
   render() {
-    const {
-      currentPage,
-      totalPages,
-      defaultPageSize,
-      sortColumn,
-      sortDirection,
-      data,
-      selectedRows
-    } = this.state;
-    const {
-      gridClass,
-      columns,
-      showPager,
-      allowRowSelection,
-      onRowSelect,
-      onRowDeselect,
-      subComponent,
-      sortColumns,
-      filterColumns
-    } = this.props;
+    const { columns, data, allowSearch } = this.props;
+    const { rowsPerPage, currentPage, totalPages } = this.state;
 
     return (
-      <div className={classNames('flexgrid', { [gridClass]: gridClass })}>
-        <Header
-          columns={columns}
-          sort={this.sort}
-          sortColumn={sortColumn}
-          sortDirection={sortDirection}
-          allowRowSelection={allowRowSelection}
-          toggleAllCheckboxes={this.toggleAllCheckboxes}
-          checkAllBoxesSelected={this.checkAllBoxesSelected}
-          sortColumns={sortColumns}
-          filterColumns={filterColumns}
-          filter={this.filter}
+      <div className="flexgrid">
+        <div className="flexgrid-attached-header">
+          <RowsToggle setRowsPerPage={this.setRowsPerPage} rowsPerPage={rowsPerPage} />
+          {allowSearch && <Search setSearchText={this.setSearchText} />}
+        </div>
+
+        <div className="flexgrid-grid">
+          <Header columns={columns} sortData={this.sortData} />
+          <DataRows {...this.props} {...this.state} />
+        </div>
+
+        <Footer
+          currentPage={currentPage}
+          dataLength={data.length}
+          rowsPerPage={rowsPerPage}
+          totalPages={totalPages}
+          setPageUp={this.setPageUp}
+          setPageDown={this.setPageDown}
+          setCurrentPage={this.setCurrentPage}
         />
-
-        {data.length > 0 && (
-          <GridData
-            columns={columns}
-            data={data}
-            defaultPageSize={defaultPageSize}
-            currentPage={currentPage}
-            allowRowSelection={allowRowSelection}
-            onRowSelect={onRowSelect}
-            onRowDeselect={onRowDeselect}
-            handleCheckboxChange={this.handleCheckboxChange}
-            selectedRows={selectedRows}
-            subComponent={subComponent}
-          />
-        )}
-
-        {showPager && (
-          <Pager
-            currentPage={currentPage}
-            totalPages={totalPages}
-            pageUp={this.pageUp}
-            pageDown={this.pageDown}
-            setPage={this.setPage}
-            setdefaultPageSize={this.setdefaultPageSize}
-            defaultPageSize={defaultPageSize}
-          />
-        )}
       </div>
     );
   }

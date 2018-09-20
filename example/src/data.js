@@ -5,48 +5,48 @@ import moment from 'moment';
 
 export const columns = [
   {
-    columnName: 'id',
-    displayName: 'ID',
+    id: 'id',
+    display: 'ID',
     style: { flex: '0 1 50px', alignSelf: 'center' }
   },
   {
-    columnName: 'firstName',
-    displayName: 'First Name',
+    id: 'firstName',
+    display: 'First Name',
     style: { flex: '1 1 100px', alignSelf: 'center' }
   },
   {
-    columnName: 'lastName',
-    displayName: 'Last Name',
+    id: 'lastName',
+    display: 'Last Name',
     style: { flex: '1 1 100px', alignSelf: 'center' }
   },
   {
-    columnName: 'address',
-    displayName: 'Address',
+    id: 'address',
+    display: 'Address',
     style: { flex: '1 1 100px', alignSelf: 'center' }
   },
   {
-    columnName: 'city',
-    displayName: 'City',
+    id: 'city',
+    display: 'City',
     style: { flex: '1 1 100px', alignSelf: 'center' }
   },
   {
-    columnName: 'state',
-    displayName: 'State',
+    id: 'state',
+    display: 'State',
     style: { flex: '1 1 100px', alignSelf: 'center' }
   },
   {
-    columnName: 'country',
-    displayName: 'Country',
+    id: 'country',
+    display: 'Country',
     style: { flex: '1 1 100px', alignSelf: 'center' }
   },
   {
-    columnName: 'phone',
-    displayName: 'Phone Number',
+    id: 'phone',
+    display: 'Phone Number',
     style: { flex: '1 1 100px', alignSelf: 'center' }
   },
   {
-    columnName: 'birthdate',
-    displayName: 'Birthdate',
+    id: 'birthdate',
+    display: 'Birthdate',
     style: { flex: '1 1 100px', alignSelf: 'center' }
   }
 ];

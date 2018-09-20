@@ -22,10 +22,6 @@ var _utils = require('./../utils');
 
 var _constants = require('./../constants');
 
-var _isEqual2 = require('lodash/isEqual');
-
-var _isEqual3 = _interopRequireDefault(_isEqual2);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -36,13 +32,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var FlexGrid = function (_Component) {
-  _inherits(FlexGrid, _Component);
+var Grid = function (_Component) {
+  _inherits(Grid, _Component);
 
-  function FlexGrid(props) {
-    _classCallCheck(this, FlexGrid);
+  function Grid(props) {
+    _classCallCheck(this, Grid);
 
-    var _this = _possibleConstructorReturn(this, (FlexGrid.__proto__ || Object.getPrototypeOf(FlexGrid)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Grid.__proto__ || Object.getPrototypeOf(Grid)).call(this, props));
 
     _initialiseProps.call(_this);
 
@@ -64,35 +60,7 @@ var FlexGrid = function (_Component) {
     return _this;
   }
 
-  _createClass(FlexGrid, [{
-    key: 'UNSAFE_componentWillReceiveProps',
-    value: function UNSAFE_componentWillReceiveProps(nextProps) {
-      var _this2 = this;
-
-      var data = nextProps.data;
-
-
-      if (!(0, _isEqual3.default)(this.props.data, data)) {
-        this.initialData = [].concat(_toConsumableArray(data));
-        var _state = this.state,
-            rowsPerPage = _state.rowsPerPage,
-            currentPage = _state.currentPage;
-
-        var totalPages = (0, _utils.calcualteTotalPages)(data.length, rowsPerPage);
-
-        this.setState({ totalPages: totalPages, data: data }, function () {
-          return _this2.resetSort();
-        });
-
-        if (totalPages < currentPage) this.setCurrentPage(1);
-      }
-    }
-  }, {
-    key: 'resetSort',
-    value: function resetSort() {
-      this.setState({ sortColumn: null, sortDirection: null, data: this.initialData });
-    }
-  }, {
+  _createClass(Grid, [{
     key: 'setTotalPages',
     value: function setTotalPages() {
       var data = this.props.data;
@@ -110,10 +78,10 @@ var FlexGrid = function (_Component) {
           columns = _props.columns,
           data = _props.data,
           allowSearch = _props.allowSearch;
-      var _state2 = this.state,
-          rowsPerPage = _state2.rowsPerPage,
-          currentPage = _state2.currentPage,
-          totalPages = _state2.totalPages;
+      var _state = this.state,
+          rowsPerPage = _state.rowsPerPage,
+          currentPage = _state.currentPage,
+          totalPages = _state.totalPages;
 
 
       return _react2.default.createElement(
@@ -144,17 +112,17 @@ var FlexGrid = function (_Component) {
     }
   }]);
 
-  return FlexGrid;
+  return Grid;
 }(_react.Component);
 
-FlexGrid.propTypes = {
+Grid.propTypes = {
   columns: _propTypes2.default.array.isRequired,
   allowSearch: _propTypes2.default.bool,
   rowsPerPage: _propTypes2.default.number,
   searchOptions: _propTypes2.default.object,
   searchKeys: _propTypes2.default.array
 };
-FlexGrid.defaultProps = {
+Grid.defaultProps = {
   rowsPerPage: 10,
   allowSearch: true,
   searchOptions: {
@@ -169,31 +137,31 @@ FlexGrid.defaultProps = {
 };
 
 var _initialiseProps = function _initialiseProps() {
-  var _this3 = this;
+  var _this2 = this;
 
   this.setSearchText = function (text) {
-    _this3.setState({ searchText: text });
+    _this2.setState({ searchText: text });
   };
 
   this.setCurrentPage = function (page) {
-    _this3.setState({ currentPage: page });
+    _this2.setState({ currentPage: page });
   };
 
   this.setRowsPerPage = function (rows) {
-    var data = _this3.props.data;
+    var data = _this2.props.data;
 
     var rowsPerPage = rows === 'All' ? data.length : Number(rows);
 
-    _this3.setState({ rowsPerPage: rowsPerPage }, function () {
-      return _this3.setTotalPages();
+    _this2.setState({ rowsPerPage: rowsPerPage }, function () {
+      return _this2.setTotalPages();
     });
   };
 
   this.sortData = function (column) {
-    var data = _this3.props.data;
+    var data = _this2.props.data;
 
 
-    _this3.setState(function (prevState) {
+    _this2.setState(function (prevState) {
       var sortDirection = prevState.sortDirection,
           sortColumn = prevState.sortColumn;
 
@@ -205,7 +173,7 @@ var _initialiseProps = function _initialiseProps() {
       };
 
       return {
-        data: !direction() ? _this3.initialData : (0, _utils.sortData)(data, column, direction()),
+        data: !direction() ? _this2.initialData : (0, _utils.sortData)(data, column, direction()),
         sortColumn: column,
         sortDirection: direction()
       };
@@ -213,24 +181,24 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.setPageUp = function () {
-    var _state3 = _this3.state,
-        currentPage = _state3.currentPage,
-        totalPages = _state3.totalPages;
+    var _state2 = _this2.state,
+        currentPage = _state2.currentPage,
+        totalPages = _state2.totalPages;
 
 
     if (currentPage === totalPages) return;
 
-    _this3.setCurrentPage(currentPage + 1);
+    _this2.setCurrentPage(currentPage + 1);
   };
 
   this.setPageDown = function () {
-    var currentPage = _this3.state.currentPage;
+    var currentPage = _this2.state.currentPage;
 
 
     if (currentPage === 1) return;
 
-    _this3.setCurrentPage(currentPage - 1);
+    _this2.setCurrentPage(currentPage - 1);
   };
 };
 
-exports.default = FlexGrid;
+exports.default = Grid;
