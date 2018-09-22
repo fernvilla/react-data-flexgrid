@@ -41,7 +41,7 @@ const columns = [
   {
     id: 'address',
     displayText: 'Address',
-    style: { flex: '1 1 100px', alignSelf: 'center' }
+    style: { flex: '1 1 150px', alignSelf: 'center' }
   },
   {
     id: 'city',
@@ -54,19 +54,14 @@ const columns = [
     style: { flex: '1 1 100px', alignSelf: 'center' }
   },
   {
-    id: 'country',
-    displayText: 'Country',
-    style: { flex: '1 1 100px', alignSelf: 'center' }
-  },
-  {
     id: 'phone',
     displayText: 'Phone Number',
-    style: { flex: '1 1 100px', alignSelf: 'center' }
+    style: { flex: '1 1 120px', alignSelf: 'center' }
   },
   {
     id: 'birthdate',
     displayText: 'Birthdate',
-    style: { flex: '1 1 100px', alignSelf: 'center' }
+    style: { flex: '1 1 80px', alignSelf: 'center' }
   }
 ];
 
@@ -104,7 +99,7 @@ export default class App extends Component {
         <br />
         <br />
 
-        <Flexgrid columns={columns} cells={mapCellContent} data={data} rowsPerPage={5} />
+        <Flexgrid columns={columns} cells={mapCellContent} data={data} />
       </div>
     );
   }

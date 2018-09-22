@@ -44,7 +44,7 @@ var Header = function Header(_ref) {
           _react2.default.createElement(
             'span',
             {
-              className: (0, _classnames2.default)('flexgrid-sort-icon', {
+              className: (0, _classnames2.default)('flexgrid-sort-icon up-arrow', {
                 active: id === sortColumn && sortDirection === _constants.ascendString
               }) },
             '\u2191'
@@ -52,7 +52,7 @@ var Header = function Header(_ref) {
           _react2.default.createElement(
             'span',
             {
-              className: (0, _classnames2.default)('flexgrid-sort-icon', {
+              className: (0, _classnames2.default)('flexgrid-sort-icon down-arrow', {
                 active: id === sortColumn && sortDirection === _constants.descendString
               }) },
             '\u2193'

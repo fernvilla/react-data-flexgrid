@@ -18,14 +18,14 @@ const Header = ({ sortData, columns, sortColumn, sortDirection }) => {
 
           <div className="flexgrid-header-sort-container">
             <span
-              className={classNames('flexgrid-sort-icon', {
+              className={classNames('flexgrid-sort-icon up-arrow', {
                 active: id === sortColumn && sortDirection === ascendString
               })}>
               &uarr;
             </span>
 
             <span
-              className={classNames('flexgrid-sort-icon', {
+              className={classNames('flexgrid-sort-icon down-arrow', {
                 active: id === sortColumn && sortDirection === descendString
               })}>
               &darr;

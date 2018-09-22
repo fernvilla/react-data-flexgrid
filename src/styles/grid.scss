@@ -1,13 +1,18 @@
+@import '_variables.scss';
+
 .flexgrid {
-  font-family: 'Lucida Sans Unicode', 'Arial Unicode MS';
+  font-family: $font-family;
+  font-size: $font-size;
 }
 
 /* Data Grid */
 .flexgrid-grid {
   display: flex;
   flex-direction: column;
-  border: 1px solid #cccccc;
+  border: 1px solid $primary-color;
   border-bottom: none;
+  border-top-left-radius: 0.25em;
+  border-top-right-radius: 0.25em;
 }
 
 /* Top Attached Header */
@@ -34,7 +39,24 @@
   align-items: center;
 
   input {
+    margin: 0;
+    outline: 0;
+    -webkit-tap-highlight-color: #000000;
+    text-align: left;
+    line-height: 1.2em;
+    padding: 0.7em 1em;
+    background: #fff;
+    border: 1px solid #cccccc;
+    color: rgba(0, 0, 0, 0.8);
+    border-radius: 0.25em;
     margin-left: 7px;
+
+    &:focus {
+      border-color: $primary-color;
+      background: #fff;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+    }
   }
 }
 
@@ -42,28 +64,34 @@
 .flexgrid-header {
   display: flex;
   flex-direction: row;
-  border-bottom: 1px solid #ccc;
+  background-color: $primary-color;
+  color: #fff;
 
   .flexgrid-header-column {
     flex: auto;
-    padding: 0.75em 0.9em;
+    padding: 1em 0.75em;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 
   .flexgrid-header-sort-container {
-    flex: 0 0 30px;
-    text-align: center;
+    text-align: right;
   }
 
   .flexgrid-sort-icon {
-    font-size: 20px;
-    color: #cccccc;
+    font-size: 16px;
+    color: #aaaaaa;
 
     &.active {
-      color: #000000;
+      color: #ffffff;
     }
   }
 }
@@ -72,7 +100,19 @@
 .flexgrid-row {
   display: flex;
   flex-direction: row;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid $primary-color;
+
+  &:hover {
+    background-color: #f2f2f2;
+  }
+
+  &:nth-child(even) {
+    background-color: #f2f2f2;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
 
   .flexgrid-row-column {
     flex: auto;
@@ -101,6 +141,7 @@
     -ms-user-select: none;
     user-select: none;
   }
+
   .page-toggle:hover {
     opacity: 0.5;
     transition: opacity 0.5s ease;
