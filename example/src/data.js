@@ -1,55 +1,59 @@
-// import React from "react";
+import React from 'react';
 import faker from 'faker';
 import _times from 'lodash/times';
-import moment from 'moment';
 
 export const columns = [
   {
     id: 'id',
-    display: 'ID',
+    displayText: 'ID',
     style: { flex: '0 1 50px', alignSelf: 'center' }
   },
   {
     id: 'firstName',
-    display: 'First Name',
+    displayText: 'First Name',
     style: { flex: '1 1 100px', alignSelf: 'center' }
   },
   {
     id: 'lastName',
-    display: 'Last Name',
+    displayText: 'Last Name',
     style: { flex: '1 1 100px', alignSelf: 'center' }
   },
   {
     id: 'address',
-    display: 'Address',
+    displayText: 'Address',
     style: { flex: '1 1 100px', alignSelf: 'center' }
   },
   {
     id: 'city',
-    display: 'City',
+    displayText: 'City',
     style: { flex: '1 1 100px', alignSelf: 'center' }
   },
   {
     id: 'state',
-    display: 'State',
+    displayText: 'State',
     style: { flex: '1 1 100px', alignSelf: 'center' }
   },
   {
     id: 'country',
-    display: 'Country',
+    displayText: 'Country',
     style: { flex: '1 1 100px', alignSelf: 'center' }
   },
   {
     id: 'phone',
-    display: 'Phone Number',
+    displayText: 'Phone Number',
     style: { flex: '1 1 100px', alignSelf: 'center' }
   },
   {
     id: 'birthdate',
-    display: 'Birthdate',
-    style: { flex: '1 1 100px', alignSelf: 'center' }
+    displayText: 'Birthdate',
+    style: { flex: '1 1 100px', alignSelf: 'center' },
+    component: () => <input type="checkbox" />
   }
 ];
+
+function randomDate(start, end) {
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+}
 
 export const data = amount =>
   _times(amount, i => ({
@@ -61,5 +65,5 @@ export const data = amount =>
     state: faker.address.state(),
     country: faker.address.country(),
     phone: faker.phone.phoneNumber(),
-    birthdate: moment(faker.date.future()).format('M/D/YY')
+    birthdate: randomDate(new Date(2012, 0, 1), new Date()).toISOString()
   }));

@@ -9,7 +9,8 @@ const DataRows = ({
   searchText,
   searchOptions,
   searchKeys,
-  allowSearch
+  allowSearch,
+  cells
 }) => {
   //Use column ids as search keys if user doesnt provide any
   const keys = searchKeys.length ? searchKeys : columns.map(c => c.id);
@@ -24,15 +25,17 @@ const DataRows = ({
     currentPage * rowsPerPage
   );
 
-  return paginatedData.map((d, dIndex) => {
+  return paginatedData.map((data, dataIndex) => {
     return (
-      <div className="flexgrid-row" key={`row-${dIndex}`}>
+      <div className="flexgrid-row" key={`row-${dataIndex}`}>
         {columns.map(column => {
-          const styles = column.style || null;
+          const { style, id } = column;
+          const styles = style || null;
+          const cellData = { columnId: id, data: data[id] };
 
           return (
-            <div className="flexgrid-row-column" key={`${column.id}-row-${dIndex}`} style={styles}>
-              {d[column.id]}
+            <div className="flexgrid-row-column" key={`${id}-row-${dataIndex}`} style={styles}>
+              {cells(cellData)}
             </div>
           );
         })}

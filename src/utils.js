@@ -2,8 +2,8 @@ import natsort from 'natsort';
 import Fuse from 'fuse.js';
 import { descendString, ascendString } from './constants';
 
-export const calcualteTotalPages = (dataLength, defaultPageSize) => {
-  return Math.ceil(dataLength / defaultPageSize);
+export const calcualteTotalPages = (dataLength, rowsPerPage) => {
+  return Math.ceil(dataLength / rowsPerPage);
 };
 
 export const sortData = (data, column, direction) => {

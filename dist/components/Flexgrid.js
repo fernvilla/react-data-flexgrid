@@ -59,14 +59,15 @@ var FlexGrid = function (_Component) {
       searchText: '',
       rowsPerPage: Number(rowsPerPage),
       sortDirection: null,
-      sortColumn: null
+      sortColumn: null,
+      data: data
     };
     return _this;
   }
 
   _createClass(FlexGrid, [{
-    key: 'UNSAFE_componentWillReceiveProps',
-    value: function UNSAFE_componentWillReceiveProps(nextProps) {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
       var _this2 = this;
 
       var data = nextProps.data;
@@ -113,7 +114,9 @@ var FlexGrid = function (_Component) {
       var _state2 = this.state,
           rowsPerPage = _state2.rowsPerPage,
           currentPage = _state2.currentPage,
-          totalPages = _state2.totalPages;
+          totalPages = _state2.totalPages,
+          sortColumn = _state2.sortColumn,
+          sortDirection = _state2.sortDirection;
 
 
       return _react2.default.createElement(
@@ -128,7 +131,12 @@ var FlexGrid = function (_Component) {
         _react2.default.createElement(
           'div',
           { className: 'flexgrid-grid' },
-          _react2.default.createElement(_.Header, { columns: columns, sortData: this.sortData }),
+          _react2.default.createElement(_.Header, {
+            columns: columns,
+            sortData: this.sortData,
+            sortColumn: sortColumn,
+            sortDirection: sortDirection
+          }),
           _react2.default.createElement(_.DataRows, _extends({}, this.props, this.state))
         ),
         _react2.default.createElement(_.Footer, {
@@ -152,7 +160,8 @@ FlexGrid.propTypes = {
   allowSearch: _propTypes2.default.bool,
   rowsPerPage: _propTypes2.default.number,
   searchOptions: _propTypes2.default.object,
-  searchKeys: _propTypes2.default.array
+  searchKeys: _propTypes2.default.array,
+  cells: _propTypes2.default.func.isRequired
 };
 FlexGrid.defaultProps = {
   rowsPerPage: 10,

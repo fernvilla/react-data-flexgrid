@@ -20,7 +20,8 @@ var DataRows = function DataRows(_ref) {
       searchText = _ref.searchText,
       searchOptions = _ref.searchOptions,
       searchKeys = _ref.searchKeys,
-      allowSearch = _ref.allowSearch;
+      allowSearch = _ref.allowSearch,
+      cells = _ref.cells;
 
   //Use column ids as search keys if user doesnt provide any
   var keys = searchKeys.length ? searchKeys : columns.map(function (c) {
@@ -33,17 +34,21 @@ var DataRows = function DataRows(_ref) {
   // Paginate filtered data from above
   var paginatedData = filteredData.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
 
-  return paginatedData.map(function (d, dIndex) {
+  return paginatedData.map(function (data, dataIndex) {
     return _react2.default.createElement(
       'div',
-      { className: 'flexgrid-row', key: 'row-' + dIndex },
+      { className: 'flexgrid-row', key: 'row-' + dataIndex },
       columns.map(function (column) {
-        var styles = column.style || null;
+        var style = column.style,
+            id = column.id;
+
+        var styles = style || null;
+        var cellData = { columnId: id, data: data[id] };
 
         return _react2.default.createElement(
           'div',
-          { className: 'flexgrid-row-column', key: column.id + '-row-' + dIndex, style: styles },
-          d[column.id]
+          { className: 'flexgrid-row-column', key: id + '-row-' + dataIndex, style: styles },
+          cells(cellData)
         );
       })
     );

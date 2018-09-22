@@ -19,8 +19,8 @@ var _constants = require('./constants');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var calcualteTotalPages = exports.calcualteTotalPages = function calcualteTotalPages(dataLength, defaultPageSize) {
-  return Math.ceil(dataLength / defaultPageSize);
+var calcualteTotalPages = exports.calcualteTotalPages = function calcualteTotalPages(dataLength, rowsPerPage) {
+  return Math.ceil(dataLength / rowsPerPage);
 };
 
 var sortData = exports.sortData = function sortData(data, column, direction) {

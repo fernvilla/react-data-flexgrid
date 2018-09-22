@@ -1,18 +1,77 @@
 import React, { Component } from 'react';
+import moment from 'moment';
+
 import { Flexgrid } from 'react-data-flexgrid';
 import 'react-data-flexgrid/dist/css/grid.css';
 
-import { columns, data } from './data';
+import { data } from './data';
 import './App.css';
 
 const amounts = [10, 20, 50, 100, 200, 500, 1000, 5000, 10000];
 
-export default class App extends Component {
-  constructor() {
-    super();
+const mapCellContent = ({ columnId, data }) => {
+  switch (columnId) {
+    case 'firstName':
+      return <em>{data}</em>;
 
-    this.state = { data: [] };
+    case 'birthdate':
+      return <span>{moment(data).format('M/D/YY')}</span>;
+
+    default:
+      return data;
   }
+};
+
+const columns = [
+  {
+    id: 'id',
+    displayText: 'ID',
+    style: { flex: '0 1 50px', alignSelf: 'center' }
+  },
+  {
+    id: 'firstName',
+    displayText: 'First Name',
+    style: { flex: '1 1 100px', alignSelf: 'center' }
+  },
+  {
+    id: 'lastName',
+    displayText: 'Last Name',
+    style: { flex: '1 1 100px', alignSelf: 'center' }
+  },
+  {
+    id: 'address',
+    displayText: 'Address',
+    style: { flex: '1 1 100px', alignSelf: 'center' }
+  },
+  {
+    id: 'city',
+    displayText: 'City',
+    style: { flex: '1 1 100px', alignSelf: 'center' }
+  },
+  {
+    id: 'state',
+    displayText: 'State',
+    style: { flex: '1 1 100px', alignSelf: 'center' }
+  },
+  {
+    id: 'country',
+    displayText: 'Country',
+    style: { flex: '1 1 100px', alignSelf: 'center' }
+  },
+  {
+    id: 'phone',
+    displayText: 'Phone Number',
+    style: { flex: '1 1 100px', alignSelf: 'center' }
+  },
+  {
+    id: 'birthdate',
+    displayText: 'Birthdate',
+    style: { flex: '1 1 100px', alignSelf: 'center' }
+  }
+];
+
+export default class App extends Component {
+  state = { data: [] };
 
   componentDidMount() {
     this.fetchSampleData(amounts[0]);
@@ -41,10 +100,11 @@ export default class App extends Component {
             ))}
           </select>
         </p>
-
         <hr />
+        <br />
+        <br />
 
-        <Flexgrid columns={columns} data={data} />
+        <Flexgrid columns={columns} cells={mapCellContent} data={data} rowsPerPage={5} />
       </div>
     );
   }

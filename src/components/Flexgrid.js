@@ -11,7 +11,8 @@ export default class FlexGrid extends Component {
     allowSearch: PropTypes.bool,
     rowsPerPage: PropTypes.number,
     searchOptions: PropTypes.object,
-    searchKeys: PropTypes.array
+    searchKeys: PropTypes.array,
+    cells: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -42,11 +43,12 @@ export default class FlexGrid extends Component {
       searchText: '',
       rowsPerPage: Number(rowsPerPage),
       sortDirection: null,
-      sortColumn: null
+      sortColumn: null,
+      data
     };
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     const { data } = nextProps;
 
     if (!_isEqual(this.props.data, data)) {
@@ -126,7 +128,7 @@ export default class FlexGrid extends Component {
 
   render() {
     const { columns, data, allowSearch } = this.props;
-    const { rowsPerPage, currentPage, totalPages } = this.state;
+    const { rowsPerPage, currentPage, totalPages, sortColumn, sortDirection } = this.state;
 
     return (
       <div className="flexgrid">
@@ -136,7 +138,12 @@ export default class FlexGrid extends Component {
         </div>
 
         <div className="flexgrid-grid">
-          <Header columns={columns} sortData={this.sortData} />
+          <Header
+            columns={columns}
+            sortData={this.sortData}
+            sortColumn={sortColumn}
+            sortDirection={sortDirection}
+          />
           <DataRows {...this.props} {...this.state} />
         </div>
 
