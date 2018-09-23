@@ -31,7 +31,7 @@ var Header = function Header(_ref) {
       return _react2.default.createElement(
         'div',
         {
-          className: 'flexgrid-header-column',
+          className: 'fg-header-column',
           key: id + '-' + i,
           style: styles,
           onClick: function onClick() {
@@ -40,11 +40,11 @@ var Header = function Header(_ref) {
         column.displayText,
         _react2.default.createElement(
           'div',
-          { className: 'flexgrid-header-sort-container' },
+          { className: 'fg-header-sort-container' },
           _react2.default.createElement(
             'span',
             {
-              className: (0, _classnames2.default)('flexgrid-sort-icon up-arrow', {
+              className: (0, _classnames2.default)('fg-sort-icon up-arrow', {
                 active: id === sortColumn && sortDirection === _constants.ascendString
               }) },
             '\u2191'
@@ -52,7 +52,7 @@ var Header = function Header(_ref) {
           _react2.default.createElement(
             'span',
             {
-              className: (0, _classnames2.default)('flexgrid-sort-icon down-arrow', {
+              className: (0, _classnames2.default)('fg-sort-icon down-arrow', {
                 active: id === sortColumn && sortDirection === _constants.descendString
               }) },
             '\u2193'
@@ -64,7 +64,7 @@ var Header = function Header(_ref) {
 
   return _react2.default.createElement(
     'div',
-    { className: 'flexgrid-header' },
+    { className: 'fg-header' },
     renderColumns()
   );
 };

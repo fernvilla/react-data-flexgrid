@@ -37,7 +37,7 @@ var DataRows = function DataRows(_ref) {
   return paginatedData.map(function (data, dataIndex) {
     return _react2.default.createElement(
       'div',
-      { className: 'flexgrid-row', key: 'row-' + dataIndex },
+      { className: 'fg-row', key: 'row-' + dataIndex },
       columns.map(function (column) {
         var style = column.style,
             id = column.id;
@@ -47,7 +47,7 @@ var DataRows = function DataRows(_ref) {
 
         return _react2.default.createElement(
           'div',
-          { className: 'flexgrid-row-column', key: id + '-row-' + dataIndex, style: styles },
+          { className: 'fg-row-column', key: id + '-row-' + dataIndex, style: styles },
           cells(cellData)
         );
       })

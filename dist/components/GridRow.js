@@ -83,15 +83,15 @@ var GridRow = function (_Component) {
 
       return _react2.default.createElement(
         "div",
-        { className: "flexgrid-data-row", onClick: function onClick() {
+        { className: "fg-data-row", onClick: function onClick() {
             return _this2.toggleSubComponent();
           } },
         _react2.default.createElement(
           "div",
-          { className: "flexgrid-data-wrapper" },
+          { className: "fg-data-wrapper" },
           allowRowSelection && _react2.default.createElement(
             "span",
-            { className: "flexgrid-data-col" },
+            { className: "fg-data-col" },
             _react2.default.createElement("input", {
               type: "checkbox",
               onClick: function onClick(e) {
@@ -105,7 +105,7 @@ var GridRow = function (_Component) {
 
             return _react2.default.createElement(
               "span",
-              { className: "flexgrid-data-col", key: i, style: style },
+              { className: "fg-data-col", key: i, style: style },
               data[column.columnName]
             );
           })

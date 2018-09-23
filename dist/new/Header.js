@@ -44,7 +44,7 @@ var Header = function (_Component) {
         return _react2.default.createElement(
           "div",
           {
-            className: "flexgrid-header-column",
+            className: "fg-header-column",
             key: column.id + "-" + i,
             style: styles,
             onClick: function onClick() {
@@ -62,7 +62,7 @@ var Header = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         "div",
-        { className: "flexgrid-header" },
+        { className: "fg-header" },
         this.renderColumns()
       );
     }

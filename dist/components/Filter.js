@@ -17,13 +17,13 @@ var Filter = function Filter(props) {
 
   return _react2.default.createElement(
     "div",
-    { className: "flexgrid-filter-row" },
+    { className: "fg-filter-row" },
     columns.map(function (column, i) {
       var style = column.style || null;
 
       return _react2.default.createElement(
         "span",
-        { className: "flexgrid-filter-col", key: i, style: style },
+        { className: "fg-filter-col", key: i, style: style },
         _react2.default.createElement("input", {
           type: "text",
           onChange: function onChange(e) {

@@ -6,7 +6,7 @@ const Search = ({ setSearchText }) => {
   };
 
   return (
-    <div className="flexgrid-search">
+    <div className="fg-search">
       Search:
       <input type="search" onChange={inputChangeHandler} />
     </div>

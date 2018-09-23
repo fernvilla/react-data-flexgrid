@@ -21,7 +21,7 @@ var RowsToggle = function RowsToggle(_ref) {
     null,
     _react2.default.createElement(
       'span',
-      { className: 'flexgrid-toggle-container' },
+      { className: 'fg-toggle-container' },
       'Show',
       _react2.default.createElement(
         'select',

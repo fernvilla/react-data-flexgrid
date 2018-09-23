@@ -10,22 +10,22 @@ const Header = ({ sortData, columns, sortColumn, sortDirection }) => {
 
       return (
         <div
-          className="flexgrid-header-column"
+          className="fg-header-column"
           key={`${id}-${i}`}
           style={styles}
           onClick={() => sortData(id)}>
           {column.displayText}
 
-          <div className="flexgrid-header-sort-container">
+          <div className="fg-header-sort-container">
             <span
-              className={classNames('flexgrid-sort-icon up-arrow', {
+              className={classNames('fg-sort-icon up-arrow', {
                 active: id === sortColumn && sortDirection === ascendString
               })}>
               &uarr;
             </span>
 
             <span
-              className={classNames('flexgrid-sort-icon down-arrow', {
+              className={classNames('fg-sort-icon down-arrow', {
                 active: id === sortColumn && sortDirection === descendString
               })}>
               &darr;
@@ -36,7 +36,7 @@ const Header = ({ sortData, columns, sortColumn, sortDirection }) => {
     });
   };
 
-  return <div className="flexgrid-header">{renderColumns()}</div>;
+  return <div className="fg-header">{renderColumns()}</div>;
 };
 
 export default Header;

@@ -5,7 +5,7 @@ const rows = [1, 2, 3, 4, 5, 10, 25, 50, 100, 500, 1000, 'All'];
 const RowsToggle = ({ setRowsPerPage, rowsPerPage }) => {
   return (
     <div>
-      <span className="flexgrid-toggle-container">
+      <span className="fg-toggle-container">
         Show
         <select onChange={e => setRowsPerPage(e.target.value)} value={rowsPerPage}>
           {rows.map((row, i) => (

@@ -89,13 +89,13 @@ var Grid = function (_Component) {
         { className: 'flexgrid' },
         _react2.default.createElement(
           'div',
-          { className: 'flexgrid-attached-header' },
+          { className: 'fg-attached-header' },
           _react2.default.createElement(_.RowsToggle, { setRowsPerPage: this.setRowsPerPage, rowsPerPage: rowsPerPage }),
           allowSearch && _react2.default.createElement(_.Search, { setSearchText: this.setSearchText })
         ),
         _react2.default.createElement(
           'div',
-          { className: 'flexgrid-grid' },
+          { className: 'fg-grid' },
           _react2.default.createElement(_.Header, { columns: columns, sortData: this.sortData }),
           _react2.default.createElement(_.DataRows, _extends({}, this.props, this.state))
         ),

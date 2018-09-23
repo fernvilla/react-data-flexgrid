@@ -13,31 +13,19 @@ const Footer = ({
   const pageEndPosition = rowsPerPage * currentPage;
 
   return (
-    <div className="flexgrid-footer">
-      <div className="flexgrid-footer-left">
+    <div className="fg-footer">
+      <div className="fg-footer-left">
         Showing {pageStartPosition} to {pageEndPosition} of {dataLength} entries
       </div>
 
-      <div>
-        <span className="page-toggle" onClick={() => setCurrentPage(1)}>
-          &laquo;
-        </span>
-
-        <span className="page-toggle" onClick={setPageDown}>
-          &lsaquo;
-        </span>
-
+      <div className="fg-footer-toggle-container">
+        <span className="fg-page-toggle left-all" onClick={() => setCurrentPage(1)} />
+        <span className="fg-page-toggle left" onClick={setPageDown} />
         <span className="page-count">
           Page {currentPage} of {totalPages}
         </span>
-
-        <span className="page-toggle" onClick={setPageUp}>
-          &rsaquo;
-        </span>
-
-        <span className="page-toggle" onClick={() => setCurrentPage(totalPages)}>
-          &raquo;
-        </span>
+        <span className="fg-page-toggle right" onClick={setPageUp} />
+        <span className="fg-page-toggle right-all" onClick={() => setCurrentPage(totalPages)} />
       </div>
     </div>
   );

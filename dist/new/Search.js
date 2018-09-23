@@ -42,7 +42,7 @@ var Search = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         "div",
-        { className: "flexgrid-search" },
+        { className: "fg-search" },
         "Search:",
         _react2.default.createElement("input", { type: "search", onChange: this.inputChangeHandler })
       );

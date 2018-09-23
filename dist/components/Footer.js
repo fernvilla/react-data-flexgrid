@@ -24,10 +24,10 @@ var Footer = function Footer(_ref) {
 
   return _react2.default.createElement(
     "div",
-    { className: "flexgrid-footer" },
+    { className: "fg-footer" },
     _react2.default.createElement(
       "div",
-      { className: "flexgrid-footer-left" },
+      { className: "fg-footer-left" },
       "Showing ",
       pageStartPosition,
       " to ",
@@ -38,19 +38,11 @@ var Footer = function Footer(_ref) {
     ),
     _react2.default.createElement(
       "div",
-      null,
-      _react2.default.createElement(
-        "span",
-        { className: "page-toggle", onClick: function onClick() {
-            return setCurrentPage(1);
-          } },
-        "\xAB"
-      ),
-      _react2.default.createElement(
-        "span",
-        { className: "page-toggle", onClick: setPageDown },
-        "\u2039"
-      ),
+      { className: "fg-footer-toggle-container" },
+      _react2.default.createElement("span", { className: "fg-page-toggle left-all", onClick: function onClick() {
+          return setCurrentPage(1);
+        } }),
+      _react2.default.createElement("span", { className: "fg-page-toggle left", onClick: setPageDown }),
       _react2.default.createElement(
         "span",
         { className: "page-count" },
@@ -59,18 +51,10 @@ var Footer = function Footer(_ref) {
         " of ",
         totalPages
       ),
-      _react2.default.createElement(
-        "span",
-        { className: "page-toggle", onClick: setPageUp },
-        "\u203A"
-      ),
-      _react2.default.createElement(
-        "span",
-        { className: "page-toggle", onClick: function onClick() {
-            return setCurrentPage(totalPages);
-          } },
-        "\xBB"
-      )
+      _react2.default.createElement("span", { className: "fg-page-toggle right", onClick: setPageUp }),
+      _react2.default.createElement("span", { className: "fg-page-toggle right-all", onClick: function onClick() {
+          return setCurrentPage(totalPages);
+        } })
     )
   );
 };

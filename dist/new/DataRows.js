@@ -57,14 +57,14 @@ var DataRows = function (_Component) {
       return paginatedData.map(function (d, dIndex) {
         return _react2.default.createElement(
           "div",
-          { className: "flexgrid-row", key: "row-" + dIndex },
+          { className: "fg-row", key: "row-" + dIndex },
           columns.map(function (column) {
             var styles = column.style || null;
 
             return _react2.default.createElement(
               "div",
               {
-                className: "flexgrid-row-column",
+                className: "fg-row-column",
                 key: column.id + "-row-" + dIndex,
                 style: styles
               },

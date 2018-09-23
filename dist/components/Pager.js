@@ -1,6 +1,6 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
@@ -44,39 +44,54 @@ var _faAngleDoubleRight = require('@fortawesome/fontawesome-free-solid/faAngleDo
 
 var _faAngleDoubleRight2 = _interopRequireDefault(_faAngleDoubleRight);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
-_fontawesome2.default.library.add(_fontawesomeFreeSolid2.default, _faAngleRight2.default, _faAngleLeft2.default, _faAngleDown2.default, _faAngleDoubleRight2.default, _faAngleDoubleLeft2.default);
+_fontawesome2.default.library.add(
+  _fontawesomeFreeSolid2.default,
+  _faAngleRight2.default,
+  _faAngleLeft2.default,
+  _faAngleDown2.default,
+  _faAngleDoubleRight2.default,
+  _faAngleDoubleLeft2.default
+);
 
 var Pager = function Pager(_ref) {
   var currentPage = _ref.currentPage,
-      totalPages = _ref.totalPages,
-      setPage = _ref.setPage,
-      pageDown = _ref.pageDown,
-      pageUp = _ref.pageUp,
-      setdefaultPageSize = _ref.setdefaultPageSize,
-      defaultPageSize = _ref.defaultPageSize;
+    totalPages = _ref.totalPages,
+    setPage = _ref.setPage,
+    pageDown = _ref.pageDown,
+    pageUp = _ref.pageUp,
+    setdefaultPageSize = _ref.setdefaultPageSize,
+    defaultPageSize = _ref.defaultPageSize;
 
   var rows = [1, 2, 3, 4, 5, 10, 25, 50, 100, 500, 1000, 'All'];
 
   return _react2.default.createElement(
     'div',
-    { className: 'flexgrid-footer' },
+    { className: 'fg-footer' },
     _react2.default.createElement(
       'div',
-      { className: 'flexgrid-footer-left' },
+      { className: 'fg-footer-left' },
       _react2.default.createElement(
         'span',
-        { className: 'page-toggle', onClick: function onClick() {
+        {
+          className: 'fg-page-toggle',
+          onClick: function onClick() {
             return setPage(1);
-          } },
+          }
+        },
         _react2.default.createElement(_reactFontawesome2.default, { icon: 'angle-double-left' })
       ),
       _react2.default.createElement(
         'span',
-        { className: 'page-toggle', onClick: function onClick() {
+        {
+          className: 'fg-page-toggle',
+          onClick: function onClick() {
             return pageDown();
-          } },
+          }
+        },
         _react2.default.createElement(_reactFontawesome2.default, { icon: 'angle-left' })
       ),
       _react2.default.createElement(
@@ -89,40 +104,48 @@ var Pager = function Pager(_ref) {
       ),
       _react2.default.createElement(
         'span',
-        { className: 'page-toggle', onClick: function onClick() {
+        {
+          className: 'fg-page-toggle',
+          onClick: function onClick() {
             return pageUp();
-          } },
+          }
+        },
         _react2.default.createElement(_reactFontawesome2.default, { icon: 'angle-right' })
       ),
       _react2.default.createElement(
         'span',
-        { className: 'page-toggle', onClick: function onClick() {
+        {
+          className: 'fg-page-toggle',
+          onClick: function onClick() {
             return setPage(totalPages);
-          } },
+          }
+        },
         _react2.default.createElement(_reactFontawesome2.default, { icon: 'angle-double-right' })
       )
     ),
     _react2.default.createElement(
       'div',
-      { className: 'flexgrid-footer-right' },
+      { className: 'fg-footer-right' },
       'Rows per page:',
       _react2.default.createElement(
         'span',
-        { className: 'flexgrid-select-wrapper' },
+        { className: 'fg-select-wrapper' },
         _react2.default.createElement(
           'select',
-          { onChange: function onChange(e) {
+          {
+            onChange: function onChange(e) {
               return setdefaultPageSize(e.target.value);
-            }, defaultValue: defaultPageSize },
-          rows.map(function (row, i) {
-            return _react2.default.createElement(
-              'option',
-              { value: row, key: i },
-              row
-            );
+            },
+            defaultValue: defaultPageSize
+          },
+          rows.map(function(row, i) {
+            return _react2.default.createElement('option', { value: row, key: i }, row);
           })
         ),
-        _react2.default.createElement(_reactFontawesome2.default, { className: 'select-icon', icon: 'angle-down' })
+        _react2.default.createElement(_reactFontawesome2.default, {
+          className: 'select-icon',
+          icon: 'angle-down'
+        })
       )
     )
   );

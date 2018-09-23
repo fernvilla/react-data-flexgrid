@@ -28,7 +28,7 @@ var GridData = function GridData(props) {
 
   return _react2.default.createElement(
     'div',
-    { className: 'flexgrid-data-container' },
+    { className: 'fg-data-container' },
     pagedData.map(function (data, i) {
       return _react2.default.createElement(_.GridRow, {
         key: i,

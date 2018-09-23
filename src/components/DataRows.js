@@ -27,14 +27,14 @@ const DataRows = ({
 
   return paginatedData.map((data, dataIndex) => {
     return (
-      <div className="flexgrid-row" key={`row-${dataIndex}`}>
+      <div className="fg-row" key={`row-${dataIndex}`}>
         {columns.map(column => {
           const { style, id } = column;
           const styles = style || null;
           const cellData = { columnId: id, data: data[id] };
 
           return (
-            <div className="flexgrid-row-column" key={`${id}-row-${dataIndex}`} style={styles}>
+            <div className="fg-row-column" key={`${id}-row-${dataIndex}`} style={styles}>
               {cells(cellData)}
             </div>
           );

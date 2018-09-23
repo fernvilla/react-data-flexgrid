@@ -131,13 +131,13 @@ export default class FlexGrid extends Component {
     const { rowsPerPage, currentPage, totalPages, sortColumn, sortDirection } = this.state;
 
     return (
-      <div className="flexgrid">
-        <div className="flexgrid-attached-header">
+      <div className="fg">
+        <div className="fg-attached-header">
           <RowsToggle setRowsPerPage={this.setRowsPerPage} rowsPerPage={rowsPerPage} />
           {allowSearch && <Search setSearchText={this.setSearchText} />}
         </div>
 
-        <div className="flexgrid-grid">
+        <div className="fg-grid">
           <Header
             columns={columns}
             sortData={this.sortData}
