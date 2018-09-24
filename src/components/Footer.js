@@ -1,4 +1,17 @@
 import React from 'react';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faAngleLeft,
+  faAngleRight,
+  faAngleDoubleLeft,
+  faAngleDoubleRight
+} from '@fortawesome/free-solid-svg-icons';
+
+library.add(faAngleDoubleLeft);
+library.add(faAngleLeft);
+library.add(faAngleRight);
+library.add(faAngleDoubleRight);
 
 const Footer = ({
   dataLength,
@@ -19,13 +32,25 @@ const Footer = ({
       </div>
 
       <div className="fg-footer-toggle-container">
-        <span className="fg-page-toggle left-all" onClick={() => setCurrentPage(1)} />
-        <span className="fg-page-toggle left" onClick={setPageDown} />
+        <span className="fg-page-toggle" onClick={() => setCurrentPage(1)}>
+          <FontAwesomeIcon icon="angle-double-left" />
+        </span>
+
+        <span className="fg-page-toggle" onClick={setPageDown}>
+          <FontAwesomeIcon icon="angle-left" />
+        </span>
+
         <span className="page-count">
           Page {currentPage} of {totalPages}
         </span>
-        <span className="fg-page-toggle right" onClick={setPageUp} />
-        <span className="fg-page-toggle right-all" onClick={() => setCurrentPage(totalPages)} />
+
+        <span className="fg-page-toggle" onClick={setPageUp}>
+          <FontAwesomeIcon icon="angle-right" />
+        </span>
+
+        <span className="fg-page-toggle" onClick={() => setCurrentPage(totalPages)}>
+          <FontAwesomeIcon icon="angle-double-right" />
+        </span>
       </div>
     </div>
   );

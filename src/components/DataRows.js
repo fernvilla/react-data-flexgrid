@@ -13,7 +13,7 @@ const DataRows = ({
   cells
 }) => {
   //Use column ids as search keys if user doesnt provide any
-  const keys = searchKeys.length ? searchKeys : columns.map(c => c.id);
+  const keys = searchKeys.length ? searchKeys : columns.map(c => c.name);
 
   // Filter text if prop set to true and there is search text - or use all data
   const filteredData =
@@ -28,13 +28,13 @@ const DataRows = ({
   return paginatedData.map((data, dataIndex) => {
     return (
       <div className="fg-row" key={`row-${dataIndex}`}>
-        {columns.map(column => {
-          const { style, id } = column;
+        {columns.map((column, columnIndex) => {
+          const { style, name } = column;
           const styles = style || null;
-          const cellData = { columnId: id, data: data[id] };
+          const cellData = { columnName: name, data: data[name], columnIndex };
 
           return (
-            <div className="fg-row-column" key={`${id}-row-${dataIndex}`} style={styles}>
+            <div className="fg-row-column" key={`${name}-row-${dataIndex}`} style={styles}>
               {cells(cellData)}
             </div>
           );

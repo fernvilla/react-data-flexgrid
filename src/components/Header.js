@@ -1,35 +1,42 @@
 import React from 'react';
 import classNames from 'classnames';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+
 import { descendString, ascendString } from './../constants';
+
+library.add(faChevronUp);
+library.add(faChevronDown);
 
 const Header = ({ sortData, columns, sortColumn, sortDirection }) => {
   const renderColumns = () => {
     return columns.map((column, i) => {
-      const { id } = column;
+      const { name } = column;
       const styles = column.style || null;
 
       return (
         <div
           className="fg-header-column"
-          key={`${id}-${i}`}
+          key={`${name}-${i}`}
           style={styles}
-          onClick={() => sortData(id)}>
+          onClick={() => sortData(name)}>
           {column.displayText}
 
           <div className="fg-header-sort-container">
-            <span
+            <FontAwesomeIcon
+              icon="chevron-up"
               className={classNames('fg-sort-icon up-arrow', {
-                active: id === sortColumn && sortDirection === ascendString
-              })}>
-              &uarr;
-            </span>
+                active: name === sortColumn && sortDirection === ascendString
+              })}
+            />
 
-            <span
+            <FontAwesomeIcon
+              icon="chevron-down"
               className={classNames('fg-sort-icon down-arrow', {
-                active: id === sortColumn && sortDirection === descendString
-              })}>
-              &darr;
-            </span>
+                active: name === sortColumn && sortDirection === descendString
+              })}
+            />
           </div>
         </div>
       );

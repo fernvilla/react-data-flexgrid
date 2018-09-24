@@ -25,7 +25,7 @@ var DataRows = function DataRows(_ref) {
 
   //Use column ids as search keys if user doesnt provide any
   var keys = searchKeys.length ? searchKeys : columns.map(function (c) {
-    return c.id;
+    return c.name;
   });
 
   // Filter text if prop set to true and there is search text - or use all data
@@ -38,16 +38,16 @@ var DataRows = function DataRows(_ref) {
     return _react2.default.createElement(
       'div',
       { className: 'fg-row', key: 'row-' + dataIndex },
-      columns.map(function (column) {
+      columns.map(function (column, columnIndex) {
         var style = column.style,
-            id = column.id;
+            name = column.name;
 
         var styles = style || null;
-        var cellData = { columnId: id, data: data[id] };
+        var cellData = { columnName: name, data: data[name], columnIndex: columnIndex };
 
         return _react2.default.createElement(
           'div',
-          { className: 'fg-row-column', key: id + '-row-' + dataIndex, style: styles },
+          { className: 'fg-row-column', key: name + '-row-' + dataIndex, style: styles },
           cells(cellData)
         );
       })
