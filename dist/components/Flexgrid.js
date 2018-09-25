@@ -26,6 +26,10 @@ var _isEqual2 = require('lodash/isEqual');
 
 var _isEqual3 = _interopRequireDefault(_isEqual2);
 
+var _debounce2 = require('lodash/debounce');
+
+var _debounce3 = _interopRequireDefault(_debounce2);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -62,6 +66,8 @@ var FlexGrid = function (_Component) {
       sortColumn: null,
       data: data
     };
+
+    _this.setSearchText = (0, _debounce3.default)(_this.setSearchText, 250);
     return _this;
   }
 

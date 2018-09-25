@@ -69,7 +69,7 @@ export default class App extends Component {
   state = { data: [] };
 
   componentDidMount() {
-    this.fetchSampleData(amounts[0]);
+    this.fetchSampleData(amounts[8]);
   }
 
   onChange = e => {

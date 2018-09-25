@@ -26,14 +26,14 @@ const Header = ({ sortData, columns, sortColumn, sortDirection }) => {
           <div className="fg-header-sort-container">
             <FontAwesomeIcon
               icon="chevron-up"
-              className={classNames('fg-sort-icon up-arrow', {
+              className={classNames('fg-sort-icon', {
                 active: name === sortColumn && sortDirection === ascendString
               })}
             />
 
             <FontAwesomeIcon
               icon="chevron-down"
-              className={classNames('fg-sort-icon down-arrow', {
+              className={classNames('fg-sort-icon', {
                 active: name === sortColumn && sortDirection === descendString
               })}
             />

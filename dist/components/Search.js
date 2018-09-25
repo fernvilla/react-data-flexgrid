@@ -21,7 +21,7 @@ var Search = function Search(_ref) {
     "div",
     { className: "fg-search" },
     "Search:",
-    _react2.default.createElement("input", { type: "search", placeholder: "Filter entries", onChange: inputChangeHandler })
+    _react2.default.createElement("input", { type: "text", onChange: inputChangeHandler })
   );
 };
 

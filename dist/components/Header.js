@@ -52,13 +52,13 @@ var Header = function Header(_ref) {
           { className: 'fg-header-sort-container' },
           _react2.default.createElement(_reactFontawesome.FontAwesomeIcon, {
             icon: 'chevron-up',
-            className: (0, _classnames2.default)('fg-sort-icon up-arrow', {
+            className: (0, _classnames2.default)('fg-sort-icon', {
               active: name === sortColumn && sortDirection === _constants.ascendString
             })
           }),
           _react2.default.createElement(_reactFontawesome.FontAwesomeIcon, {
             icon: 'chevron-down',
-            className: (0, _classnames2.default)('fg-sort-icon down-arrow', {
+            className: (0, _classnames2.default)('fg-sort-icon', {
               active: name === sortColumn && sortDirection === _constants.descendString
             })
           })

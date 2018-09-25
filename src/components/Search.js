@@ -8,7 +8,7 @@ const Search = ({ setSearchText }) => {
   return (
     <div className="fg-search">
       Search:
-      <input type="search" placeholder="Filter entries" onChange={inputChangeHandler} />
+      <input type="text" onChange={inputChangeHandler} />
     </div>
   );
 };

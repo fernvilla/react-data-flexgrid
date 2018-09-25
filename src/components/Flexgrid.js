@@ -4,6 +4,7 @@ import { Header, DataRows, Footer, Search, RowsToggle } from '.';
 import { calcualteTotalPages, sortData } from './../utils';
 import { descendString, ascendString } from './../constants';
 import _isEqual from 'lodash/isEqual';
+import _debounce from 'lodash/debounce';
 
 export default class FlexGrid extends Component {
   static propTypes = {
@@ -46,6 +47,8 @@ export default class FlexGrid extends Component {
       sortColumn: null,
       data
     };
+
+    this.setSearchText = _debounce(this.setSearchText, 250);
   }
 
   componentWillReceiveProps(nextProps) {
