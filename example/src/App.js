@@ -31,9 +31,10 @@ const cells = ({ columnName, data }) => {
 };
 
 const sort = {
-  sortColumns: ['id', 'firstName', 'lastName', 'address'],
+  sortColumns: ['id', 'firstName', 'lastName', 'address', 'birthdate'],
   sortKeys: {
-    address: data => data.address1
+    address: data => data.address1,
+    birthdate: data => moment(data).format('M/D/YY')
   }
 };
 
