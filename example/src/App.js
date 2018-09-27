@@ -115,7 +115,15 @@ export default class App extends Component {
         <br />
         <br />
 
-        <Flexgrid data={data} columns={columns} cells={cells} sort={sort} />
+        <Flexgrid
+          data={data}
+          columns={columns}
+          cells={cells}
+          sort={sort}
+          subComponent={({ data }) => {
+            return <div style={{ padding: 20 }}>{JSON.stringify(data)}</div>;
+          }}
+        />
       </div>
     );
   }

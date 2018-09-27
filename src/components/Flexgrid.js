@@ -9,12 +9,13 @@ import _debounce from 'lodash/debounce';
 export default class FlexGrid extends Component {
   static propTypes = {
     columns: PropTypes.array.isRequired,
-    sort: PropTypes.object.isRequired,
+    cells: PropTypes.func.isRequired,
+    sort: PropTypes.object,
     allowSearch: PropTypes.bool,
     rowsPerPage: PropTypes.number,
     searchOptions: PropTypes.object,
     searchKeys: PropTypes.array,
-    cells: PropTypes.func.isRequired
+    subComponent: PropTypes.func
   };
 
   static defaultProps = {
@@ -28,7 +29,9 @@ export default class FlexGrid extends Component {
       maxPatternLength: 32,
       minMatchCharLength: 1
     },
-    searchKeys: []
+    searchKeys: [],
+    sort: null,
+    subComponent: null
   };
 
   constructor(props) {
@@ -59,8 +62,9 @@ export default class FlexGrid extends Component {
       this.initialData = [...data];
       const { rowsPerPage, currentPage } = this.state;
       const totalPages = calcualteTotalPages(data.length, rowsPerPage);
+      const indexedData = data.map((d, i) => (d.rowIndex = i));
 
-      this.setState({ totalPages, data }, () => this.resetSort());
+      this.setState({ totalPages, indexedData }, () => this.resetSort());
 
       if (totalPages < currentPage) this.setCurrentPage(1);
     }

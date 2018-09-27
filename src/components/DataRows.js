@@ -1,47 +1,78 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { searchData } from './../utils';
 
-const DataRows = ({
-  columns,
-  data,
-  currentPage,
-  rowsPerPage,
-  searchText,
-  searchOptions,
-  searchKeys,
-  allowSearch,
-  cells
-}) => {
-  //Use column ids as search keys if user doesnt provide any
-  const keys = searchKeys.length ? searchKeys : columns.map(c => c.name);
+class DataRows extends Component {
+  state = {
+    visibleRowId: null
+  };
 
-  // Filter text if prop set to true and there is search text - or use all data
-  const filteredData =
-    allowSearch && searchText.length ? searchData(data, searchText, searchOptions, keys) : data;
+  setVisibileRow = rowIndex => {
+    if (rowIndex === this.state.visibleRowId) {
+      return this.setState({ visibleRowId: null });
+    }
 
-  // Paginate filtered data from above
-  const paginatedData = filteredData.slice(
-    (currentPage - 1) * rowsPerPage,
-    currentPage * rowsPerPage
-  );
+    this.setState({ visibleRowId: rowIndex });
+  };
 
-  return paginatedData.map((data, dataIndex) => {
-    return (
-      <div className="fg-row" key={`row-${dataIndex}`}>
-        {columns.map((column, columnIndex) => {
-          const { style, name } = column;
-          const styles = style || null;
-          const cellData = { columnName: name, data: data[name], columnIndex };
+  renderSubcomponent = data => {
+    const { visibleRowId } = this.state;
+    const { subComponent } = this.props;
 
-          return (
-            <div className="fg-row-column" key={`${name}-row-${dataIndex}`} style={styles}>
-              {cells(cellData)}
-            </div>
-          );
-        })}
-      </div>
+    if (subComponent && visibleRowId !== null && data.rowIndex === visibleRowId) {
+      return subComponent({ data });
+    }
+
+    return null;
+  };
+
+  render() {
+    const {
+      columns,
+      data,
+      currentPage,
+      rowsPerPage,
+      searchText,
+      searchOptions,
+      searchKeys,
+      allowSearch,
+      cells
+    } = this.props;
+
+    //Use column ids as search keys if user doesnt provide any
+    const keys = searchKeys.length ? searchKeys : columns.map(c => c.name);
+
+    // Filter text if prop set to true and there is search text - or use all data
+    const filteredData =
+      allowSearch && searchText.length ? searchData(data, searchText, searchOptions, keys) : data;
+
+    // Paginate filtered data from above
+    const paginatedData = filteredData.slice(
+      (currentPage - 1) * rowsPerPage,
+      currentPage * rowsPerPage
     );
-  });
-};
+
+    return paginatedData.map((data, dataIndex) => {
+      return (
+        <div className="fg-row" key={`row-${dataIndex}`}>
+          <div className="fg-row-data" onClick={() => this.setVisibileRow(data.rowIndex)}>
+            {columns.map((column, columnIndex) => {
+              const { style, name } = column;
+              const styles = style || null;
+              const cellData = { columnName: name, data: data[name], columnIndex };
+
+              return (
+                <div className="fg-row-column" key={`${name}-row-${dataIndex}`} style={styles}>
+                  {cells(cellData)}
+                </div>
+              );
+            })}
+          </div>
+
+          {this.renderSubcomponent(data)}
+        </div>
+      );
+    });
+  }
+}
 
 export default DataRows;

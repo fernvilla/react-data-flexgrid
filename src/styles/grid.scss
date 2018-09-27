@@ -124,9 +124,14 @@
 
 /* Data Rows */
 .fg-row {
-  display: flex;
-  flex-direction: row;
   border-bottom: 1px solid $primary-color;
+
+  .fg-row-data {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+    flex-direction: row;
+  }
 
   &:hover {
     background-color: #f2f2f2;

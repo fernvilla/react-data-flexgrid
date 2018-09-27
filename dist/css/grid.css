@@ -98,9 +98,12 @@
 
 /* Data Rows */
 .fg-row {
-  display: flex;
-  flex-direction: row;
   border-bottom: 1px solid #1e3348; }
+  .fg-row .fg-row-data {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+    flex-direction: row; }
   .fg-row:hover {
     background-color: #f2f2f2; }
   .fg-row:nth-child(even) {

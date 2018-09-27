@@ -86,8 +86,11 @@ var FlexGrid = function (_Component) {
             currentPage = _state.currentPage;
 
         var totalPages = (0, _utils.calcualteTotalPages)(data.length, rowsPerPage);
+        var indexedData = data.map(function (d, i) {
+          return d.rowIndex = i;
+        });
 
-        this.setState({ totalPages: totalPages, data: data }, function () {
+        this.setState({ totalPages: totalPages, indexedData: indexedData }, function () {
           return _this2.resetSort();
         });
 
@@ -165,12 +168,13 @@ var FlexGrid = function (_Component) {
 
 FlexGrid.propTypes = {
   columns: _propTypes2.default.array.isRequired,
-  sort: _propTypes2.default.object.isRequired,
+  cells: _propTypes2.default.func.isRequired,
+  sort: _propTypes2.default.object,
   allowSearch: _propTypes2.default.bool,
   rowsPerPage: _propTypes2.default.number,
   searchOptions: _propTypes2.default.object,
   searchKeys: _propTypes2.default.array,
-  cells: _propTypes2.default.func.isRequired
+  subComponent: _propTypes2.default.func
 };
 FlexGrid.defaultProps = {
   rowsPerPage: 10,
@@ -183,7 +187,9 @@ FlexGrid.defaultProps = {
     maxPatternLength: 32,
     minMatchCharLength: 1
   },
-  searchKeys: []
+  searchKeys: [],
+  sort: null,
+  subComponent: null
 };
 
 var _initialiseProps = function _initialiseProps() {
