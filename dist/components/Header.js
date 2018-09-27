@@ -28,14 +28,27 @@ _fontawesomeSvgCore.library.add(_freeSolidSvgIcons.faChevronDown);
 var Header = function Header(_ref) {
   var sortData = _ref.sortData,
       columns = _ref.columns,
-      sortColumn = _ref.sortColumn,
-      sortDirection = _ref.sortDirection;
+      sortedColumn = _ref.sortedColumn,
+      sortDirection = _ref.sortDirection,
+      sort = _ref.sort;
 
   var renderColumns = function renderColumns() {
+    var sortColumns = sort.sortColumns;
+
+
     return columns.map(function (column, i) {
       var name = column.name;
 
       var styles = column.style || null;
+      var sortable = sortColumns.indexOf(name) > -1;
+
+      if (!sortable) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'fg-header-column', key: name + '-' + i, style: styles },
+          column.displayText
+        );
+      }
 
       return _react2.default.createElement(
         'div',
@@ -53,13 +66,13 @@ var Header = function Header(_ref) {
           _react2.default.createElement(_reactFontawesome.FontAwesomeIcon, {
             icon: 'chevron-up',
             className: (0, _classnames2.default)('fg-sort-icon', {
-              active: name === sortColumn && sortDirection === _constants.ascendString
+              active: name === sortedColumn && sortDirection === _constants.ascendString
             })
           }),
           _react2.default.createElement(_reactFontawesome.FontAwesomeIcon, {
             icon: 'chevron-down',
             className: (0, _classnames2.default)('fg-sort-icon', {
-              active: name === sortColumn && sortDirection === _constants.descendString
+              active: name === sortedColumn && sortDirection === _constants.descendString
             })
           })
         )

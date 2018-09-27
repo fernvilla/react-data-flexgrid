@@ -23,13 +23,18 @@ var calcualteTotalPages = exports.calcualteTotalPages = function calcualteTotalP
   return Math.ceil(dataLength / rowsPerPage);
 };
 
-var sortData = exports.sortData = function sortData(data, column, direction) {
+var sortData = exports.sortData = function sortData(data, column, direction, sort) {
   var sorter = (0, _natsort2.default)({
     insensitive: true,
     desc: direction === _constants.descendString || direction !== _constants.ascendString
   });
+  var sortByColumnKey = sort.sortKeys[column];
 
   return data.sort(function (a, b) {
+    if (sortByColumnKey) {
+      return sorter(sortByColumnKey(a[column]), sortByColumnKey(b[column]));
+    }
+
     return sorter(a[column], b[column]);
   });
 };

@@ -9,6 +9,7 @@ import _debounce from 'lodash/debounce';
 export default class FlexGrid extends Component {
   static propTypes = {
     columns: PropTypes.array.isRequired,
+    sort: PropTypes.object.isRequired,
     allowSearch: PropTypes.bool,
     rowsPerPage: PropTypes.number,
     searchOptions: PropTypes.object,
@@ -44,7 +45,7 @@ export default class FlexGrid extends Component {
       searchText: '',
       rowsPerPage: Number(rowsPerPage),
       sortDirection: null,
-      sortColumn: null,
+      sortedColumn: null,
       data
     };
 
@@ -66,7 +67,7 @@ export default class FlexGrid extends Component {
   }
 
   resetSort() {
-    this.setState({ sortColumn: null, sortDirection: null, data: this.initialData });
+    this.setState({ sortedColumn: null, sortDirection: null, data: this.initialData });
   }
 
   setSearchText = text => {
@@ -94,20 +95,20 @@ export default class FlexGrid extends Component {
   }
 
   sortData = column => {
-    const { data } = this.props;
+    const { data, sort } = this.props;
 
     this.setState(prevState => {
-      const { sortDirection, sortColumn } = prevState;
+      const { sortDirection, sortedColumn } = prevState;
       const direction = () => {
         //Set initial sort direction when new column selected or changed
-        if (!sortDirection || column !== sortColumn) return ascendString;
+        if (!sortDirection || column !== sortedColumn) return ascendString;
 
         return sortDirection === ascendString ? descendString : null;
       };
 
       return {
-        data: !direction() ? this.initialData : sortData(data, column, direction()),
-        sortColumn: column,
+        data: !direction() ? this.initialData : sortData(data, column, direction(), sort),
+        sortedColumn: column,
         sortDirection: direction()
       };
     });
@@ -130,13 +131,14 @@ export default class FlexGrid extends Component {
   };
 
   render() {
-    const { columns, data, allowSearch } = this.props;
-    const { rowsPerPage, currentPage, totalPages, sortColumn, sortDirection } = this.state;
+    const { columns, data, allowSearch, sort } = this.props;
+    const { rowsPerPage, currentPage, totalPages, sortedColumn, sortDirection } = this.state;
 
     return (
       <div className="fg">
         <div className="fg-attached-header">
           <RowsToggle setRowsPerPage={this.setRowsPerPage} rowsPerPage={rowsPerPage} />
+
           {allowSearch && <Search setSearchText={this.setSearchText} />}
         </div>
 
@@ -144,9 +146,11 @@ export default class FlexGrid extends Component {
           <Header
             columns={columns}
             sortData={this.sortData}
-            sortColumn={sortColumn}
+            sortedColumn={sortedColumn}
             sortDirection={sortDirection}
+            sort={sort}
           />
+
           <DataRows {...this.props} {...this.state} />
         </div>
 

@@ -9,11 +9,22 @@ import { descendString, ascendString } from './../constants';
 library.add(faChevronUp);
 library.add(faChevronDown);
 
-const Header = ({ sortData, columns, sortColumn, sortDirection }) => {
+const Header = ({ sortData, columns, sortedColumn, sortDirection, sort }) => {
   const renderColumns = () => {
+    const { sortColumns } = sort;
+
     return columns.map((column, i) => {
       const { name } = column;
       const styles = column.style || null;
+      const sortable = sortColumns.indexOf(name) > -1;
+
+      if (!sortable) {
+        return (
+          <div className="fg-header-column" key={`${name}-${i}`} style={styles}>
+            {column.displayText}
+          </div>
+        );
+      }
 
       return (
         <div
@@ -27,14 +38,14 @@ const Header = ({ sortData, columns, sortColumn, sortDirection }) => {
             <FontAwesomeIcon
               icon="chevron-up"
               className={classNames('fg-sort-icon', {
-                active: name === sortColumn && sortDirection === ascendString
+                active: name === sortedColumn && sortDirection === ascendString
               })}
             />
 
             <FontAwesomeIcon
               icon="chevron-down"
               className={classNames('fg-sort-icon', {
-                active: name === sortColumn && sortDirection === descendString
+                active: name === sortedColumn && sortDirection === descendString
               })}
             />
           </div>

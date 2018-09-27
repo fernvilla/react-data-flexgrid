@@ -63,7 +63,7 @@ var FlexGrid = function (_Component) {
       searchText: '',
       rowsPerPage: Number(rowsPerPage),
       sortDirection: null,
-      sortColumn: null,
+      sortedColumn: null,
       data: data
     };
 
@@ -97,7 +97,7 @@ var FlexGrid = function (_Component) {
   }, {
     key: 'resetSort',
     value: function resetSort() {
-      this.setState({ sortColumn: null, sortDirection: null, data: this.initialData });
+      this.setState({ sortedColumn: null, sortDirection: null, data: this.initialData });
     }
   }, {
     key: 'setTotalPages',
@@ -116,12 +116,13 @@ var FlexGrid = function (_Component) {
       var _props = this.props,
           columns = _props.columns,
           data = _props.data,
-          allowSearch = _props.allowSearch;
+          allowSearch = _props.allowSearch,
+          sort = _props.sort;
       var _state2 = this.state,
           rowsPerPage = _state2.rowsPerPage,
           currentPage = _state2.currentPage,
           totalPages = _state2.totalPages,
-          sortColumn = _state2.sortColumn,
+          sortedColumn = _state2.sortedColumn,
           sortDirection = _state2.sortDirection;
 
 
@@ -140,8 +141,9 @@ var FlexGrid = function (_Component) {
           _react2.default.createElement(_.Header, {
             columns: columns,
             sortData: this.sortData,
-            sortColumn: sortColumn,
-            sortDirection: sortDirection
+            sortedColumn: sortedColumn,
+            sortDirection: sortDirection,
+            sort: sort
           }),
           _react2.default.createElement(_.DataRows, _extends({}, this.props, this.state))
         ),
@@ -163,6 +165,7 @@ var FlexGrid = function (_Component) {
 
 FlexGrid.propTypes = {
   columns: _propTypes2.default.array.isRequired,
+  sort: _propTypes2.default.object.isRequired,
   allowSearch: _propTypes2.default.bool,
   rowsPerPage: _propTypes2.default.number,
   searchOptions: _propTypes2.default.object,
@@ -205,23 +208,25 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.sortData = function (column) {
-    var data = _this3.props.data;
+    var _props2 = _this3.props,
+        data = _props2.data,
+        sort = _props2.sort;
 
 
     _this3.setState(function (prevState) {
       var sortDirection = prevState.sortDirection,
-          sortColumn = prevState.sortColumn;
+          sortedColumn = prevState.sortedColumn;
 
       var direction = function direction() {
         //Set initial sort direction when new column selected or changed
-        if (!sortDirection || column !== sortColumn) return _constants.ascendString;
+        if (!sortDirection || column !== sortedColumn) return _constants.ascendString;
 
         return sortDirection === _constants.ascendString ? _constants.descendString : null;
       };
 
       return {
-        data: !direction() ? _this3.initialData : (0, _utils.sortData)(data, column, direction()),
-        sortColumn: column,
+        data: !direction() ? _this3.initialData : (0, _utils.sortData)(data, column, direction(), sort),
+        sortedColumn: column,
         sortDirection: direction()
       };
     });

@@ -10,7 +10,10 @@ export const data = amount =>
     id: i,
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
-    address: faker.address.streetAddress(),
+    address: {
+      address1: faker.address.streetAddress(),
+      address2: faker.address.streetAddress()
+    },
     city: faker.address.city(),
     state: faker.address.state(),
     phone: faker.phone.phoneNumber(),

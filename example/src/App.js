@@ -9,16 +9,31 @@ import './App.css';
 
 const amounts = [10, 20, 50, 100, 200, 500, 1000, 5000, 10000];
 
-const mapCellContent = ({ columnName, data }) => {
+const cells = ({ columnName, data }) => {
   switch (columnName) {
-    case 'firstName':
+    case 'phone':
       return <em>{data}</em>;
 
     case 'birthdate':
       return <span>{moment(data).format('M/D/YY')}</span>;
 
+    case 'address':
+      return (
+        <div>
+          <div>{data.address1}</div>
+          <div>{data.address2}</div>
+        </div>
+      );
+
     default:
       return data;
+  }
+};
+
+const sort = {
+  sortColumns: ['id', 'firstName', 'lastName', 'address'],
+  sortKeys: {
+    address: data => data.address1
   }
 };
 
@@ -69,7 +84,7 @@ export default class App extends Component {
   state = { data: [] };
 
   componentDidMount() {
-    this.fetchSampleData(amounts[8]);
+    this.fetchSampleData(amounts[2]);
   }
 
   onChange = e => {
@@ -99,7 +114,7 @@ export default class App extends Component {
         <br />
         <br />
 
-        <Flexgrid columns={columns} cells={mapCellContent} data={data} />
+        <Flexgrid data={data} columns={columns} cells={cells} sort={sort} />
       </div>
     );
   }

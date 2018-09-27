@@ -1,12 +1,39 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _extends =
+  Object.assign ||
+  function(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+    return target;
+  };
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = (function() {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ('value' in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+  return function(Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+})();
 
 var _react = require('react');
 
@@ -22,28 +49,64 @@ var _utils = require('./../utils');
 
 var _constants = require('./../constants');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+function _toConsumableArray(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+    return arr2;
+  } else {
+    return Array.from(arr);
+  }
+}
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError('Cannot call a class as a function');
+  }
+}
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+function _possibleConstructorReturn(self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+  return call && (typeof call === 'object' || typeof call === 'function') ? call : self;
+}
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== 'function' && superClass !== null) {
+    throw new TypeError(
+      'Super expression must either be null or a function, not ' + typeof superClass
+    );
+  }
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: { value: subClass, enumerable: false, writable: true, configurable: true }
+  });
+  if (superClass)
+    Object.setPrototypeOf
+      ? Object.setPrototypeOf(subClass, superClass)
+      : (subClass.__proto__ = superClass);
+}
 
-var Grid = function (_Component) {
+var Grid = (function(_Component) {
   _inherits(Grid, _Component);
 
   function Grid(props) {
     _classCallCheck(this, Grid);
 
-    var _this = _possibleConstructorReturn(this, (Grid.__proto__ || Object.getPrototypeOf(Grid)).call(this, props));
+    var _this = _possibleConstructorReturn(
+      this,
+      (Grid.__proto__ || Object.getPrototypeOf(Grid)).call(this, props)
+    );
 
     _initialiseProps.call(_this);
 
     var data = props.data,
-        rowsPerPage = props.rowsPerPage;
+      rowsPerPage = props.rowsPerPage;
 
     //Keep copy to reset sorting
 
@@ -55,65 +118,70 @@ var Grid = function (_Component) {
       searchText: '',
       rowsPerPage: Number(rowsPerPage),
       sortDirection: null,
-      sortColumn: null
+      sortedColumn: null
     };
     return _this;
   }
 
-  _createClass(Grid, [{
-    key: 'setTotalPages',
-    value: function setTotalPages() {
-      var data = this.props.data;
-      var rowsPerPage = this.state.rowsPerPage;
+  _createClass(Grid, [
+    {
+      key: 'setTotalPages',
+      value: function setTotalPages() {
+        var data = this.props.data;
+        var rowsPerPage = this.state.rowsPerPage;
 
-
-      this.setState({
-        totalPages: (0, _utils.calcualteTotalPages)(data.length, rowsPerPage)
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
+        this.setState({
+          totalPages: (0, _utils.calcualteTotalPages)(data.length, rowsPerPage)
+        });
+      }
+    },
+    {
+      key: 'render',
+      value: function render() {
+        var _props = this.props,
           columns = _props.columns,
           data = _props.data,
           allowSearch = _props.allowSearch;
-      var _state = this.state,
+        var _state = this.state,
           rowsPerPage = _state.rowsPerPage,
           currentPage = _state.currentPage,
           totalPages = _state.totalPages;
 
-
-      return _react2.default.createElement(
-        'div',
-        { className: 'flexgrid' },
-        _react2.default.createElement(
+        return _react2.default.createElement(
           'div',
-          { className: 'fg-attached-header' },
-          _react2.default.createElement(_.RowsToggle, { setRowsPerPage: this.setRowsPerPage, rowsPerPage: rowsPerPage }),
-          allowSearch && _react2.default.createElement(_.Search, { setSearchText: this.setSearchText })
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'fg-grid' },
-          _react2.default.createElement(_.Header, { columns: columns, sortData: this.sortData }),
-          _react2.default.createElement(_.DataRows, _extends({}, this.props, this.state))
-        ),
-        _react2.default.createElement(_.Footer, {
-          currentPage: currentPage,
-          dataLength: data.length,
-          rowsPerPage: rowsPerPage,
-          totalPages: totalPages,
-          setPageUp: this.setPageUp,
-          setPageDown: this.setPageDown,
-          setCurrentPage: this.setCurrentPage
-        })
-      );
+          { className: 'flexgrid' },
+          _react2.default.createElement(
+            'div',
+            { className: 'fg-attached-header' },
+            _react2.default.createElement(_.RowsToggle, {
+              setRowsPerPage: this.setRowsPerPage,
+              rowsPerPage: rowsPerPage
+            }),
+            allowSearch &&
+              _react2.default.createElement(_.Search, { setSearchText: this.setSearchText })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'fg-grid' },
+            _react2.default.createElement(_.Header, { columns: columns, sortData: this.sortData }),
+            _react2.default.createElement(_.DataRows, _extends({}, this.props, this.state))
+          ),
+          _react2.default.createElement(_.Footer, {
+            currentPage: currentPage,
+            dataLength: data.length,
+            rowsPerPage: rowsPerPage,
+            totalPages: totalPages,
+            setPageUp: this.setPageUp,
+            setPageDown: this.setPageDown,
+            setCurrentPage: this.setCurrentPage
+          })
+        );
+      }
     }
-  }]);
+  ]);
 
   return Grid;
-}(_react.Component);
+})(_react.Component);
 
 Grid.propTypes = {
   columns: _propTypes2.default.array.isRequired,
@@ -139,61 +207,58 @@ Grid.defaultProps = {
 var _initialiseProps = function _initialiseProps() {
   var _this2 = this;
 
-  this.setSearchText = function (text) {
+  this.setSearchText = function(text) {
     _this2.setState({ searchText: text });
   };
 
-  this.setCurrentPage = function (page) {
+  this.setCurrentPage = function(page) {
     _this2.setState({ currentPage: page });
   };
 
-  this.setRowsPerPage = function (rows) {
+  this.setRowsPerPage = function(rows) {
     var data = _this2.props.data;
 
     var rowsPerPage = rows === 'All' ? data.length : Number(rows);
 
-    _this2.setState({ rowsPerPage: rowsPerPage }, function () {
+    _this2.setState({ rowsPerPage: rowsPerPage }, function() {
       return _this2.setTotalPages();
     });
   };
 
-  this.sortData = function (column) {
+  this.sortData = function(column) {
     var data = _this2.props.data;
 
-
-    _this2.setState(function (prevState) {
+    _this2.setState(function(prevState) {
       var sortDirection = prevState.sortDirection,
-          sortColumn = prevState.sortColumn;
+        sortedColumn = prevState.sortedColumn;
 
       var direction = function direction() {
         //Set initial sort direction when new column selected or changed
-        if (!sortDirection || column !== sortColumn) return _constants.ascendString;
+        if (!sortDirection || column !== sortedColumn) return _constants.ascendString;
 
         return sortDirection === _constants.ascendString ? _constants.descendString : null;
       };
 
       return {
         data: !direction() ? _this2.initialData : (0, _utils.sortData)(data, column, direction()),
-        sortColumn: column,
+        sortedColumn: column,
         sortDirection: direction()
       };
     });
   };
 
-  this.setPageUp = function () {
+  this.setPageUp = function() {
     var _state2 = _this2.state,
-        currentPage = _state2.currentPage,
-        totalPages = _state2.totalPages;
-
+      currentPage = _state2.currentPage,
+      totalPages = _state2.totalPages;
 
     if (currentPage === totalPages) return;
 
     _this2.setCurrentPage(currentPage + 1);
   };
 
-  this.setPageDown = function () {
+  this.setPageDown = function() {
     var currentPage = _this2.state.currentPage;
-
 
     if (currentPage === 1) return;
 
