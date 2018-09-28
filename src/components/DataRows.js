@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
 import { searchData } from './../utils';
 
 class DataRows extends Component {
@@ -35,7 +36,8 @@ class DataRows extends Component {
       searchOptions,
       searchKeys,
       allowSearch,
-      cells
+      cells,
+      subComponent
     } = this.props;
 
     //Use column ids as search keys if user doesnt provide any
@@ -51,10 +53,18 @@ class DataRows extends Component {
       currentPage * rowsPerPage
     );
 
+    const clickable = typeof subComponent !== 'undefined';
+
     return paginatedData.map((data, dataIndex) => {
       return (
         <div className="fg-row" key={`row-${dataIndex}`}>
-          <div className="fg-row-data" onClick={() => this.setVisibileRow(data.rowIndex)}>
+          <div
+            className={classNames('fg-row-data', { clickable })}
+            onClick={() => {
+              if (!subComponent) return;
+
+              this.setVisibileRow(data.rowIndex);
+            }}>
             {columns.map((column, columnIndex) => {
               const { style, name } = column;
               const styles = style || null;

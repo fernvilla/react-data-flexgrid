@@ -131,6 +131,10 @@
     display: flex;
     -ms-flex-direction: row;
     flex-direction: row;
+
+    &.clickable {
+      cursor: pointer;
+    }
   }
 
   &:hover {

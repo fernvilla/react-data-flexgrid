@@ -10,6 +10,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var _utils = require('./../utils');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -69,7 +73,8 @@ var DataRows = function (_Component) {
           searchOptions = _props.searchOptions,
           searchKeys = _props.searchKeys,
           allowSearch = _props.allowSearch,
-          cells = _props.cells;
+          cells = _props.cells,
+          subComponent = _props.subComponent;
 
       //Use column ids as search keys if user doesnt provide any
 
@@ -83,14 +88,20 @@ var DataRows = function (_Component) {
       // Paginate filtered data from above
       var paginatedData = filteredData.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
 
+      var clickable = typeof subComponent !== 'undefined';
+
       return paginatedData.map(function (data, dataIndex) {
         return _react2.default.createElement(
           'div',
           { className: 'fg-row', key: 'row-' + dataIndex },
           _react2.default.createElement(
             'div',
-            { className: 'fg-row-data', onClick: function onClick() {
-                return _this2.setVisibileRow(data.rowIndex);
+            {
+              className: (0, _classnames2.default)('fg-row-data', { clickable: clickable }),
+              onClick: function onClick() {
+                if (!subComponent) return;
+
+                _this2.setVisibileRow(data.rowIndex);
               } },
             columns.map(function (column, columnIndex) {
               var style = column.style,
