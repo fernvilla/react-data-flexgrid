@@ -26,6 +26,15 @@ class DataRows extends Component {
     return null;
   };
 
+  onRowClick = data => {
+    const { subComponent } = this.props;
+    const clickable = typeof subComponent !== 'undefined';
+
+    if (!clickable) return;
+
+    this.setVisibileRow(data.rowIndex);
+  };
+
   render() {
     const {
       columns,
@@ -60,11 +69,7 @@ class DataRows extends Component {
         <div className="fg-row" key={`row-${dataIndex}`}>
           <div
             className={classNames('fg-row-data', { clickable })}
-            onClick={() => {
-              if (!subComponent) return;
-
-              this.setVisibileRow(data.rowIndex);
-            }}>
+            onClick={() => this.onRowClick(data)}>
             {columns.map((column, columnIndex) => {
               const { style, name } = column;
               const styles = style || null;

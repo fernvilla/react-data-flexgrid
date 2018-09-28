@@ -56,6 +56,14 @@ var DataRows = function (_Component) {
       }
 
       return null;
+    }, _this.onRowClick = function (data) {
+      var subComponent = _this.props.subComponent;
+
+      var clickable = typeof subComponent !== 'undefined';
+
+      if (!clickable) return;
+
+      _this.setVisibileRow(data.rowIndex);
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -99,9 +107,7 @@ var DataRows = function (_Component) {
             {
               className: (0, _classnames2.default)('fg-row-data', { clickable: clickable }),
               onClick: function onClick() {
-                if (!subComponent) return;
-
-                _this2.setVisibileRow(data.rowIndex);
+                return _this2.onRowClick(data);
               } },
             columns.map(function (column, columnIndex) {
               var style = column.style,
