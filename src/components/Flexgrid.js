@@ -11,16 +11,17 @@ export default class FlexGrid extends Component {
     columns: PropTypes.array.isRequired,
     cells: PropTypes.func.isRequired,
     sort: PropTypes.object,
-    allowSearch: PropTypes.bool,
+    searchable: PropTypes.bool,
     rowsPerPage: PropTypes.number,
     searchOptions: PropTypes.object,
     searchKeys: PropTypes.array,
-    subComponent: PropTypes.func
+    subComponent: PropTypes.func,
+    rowSelection: PropTypes.object
   };
 
   static defaultProps = {
     rowsPerPage: 10,
-    allowSearch: true,
+    searchable: true,
     searchOptions: {
       shouldSort: true,
       threshold: 0.6,
@@ -31,7 +32,10 @@ export default class FlexGrid extends Component {
     },
     searchKeys: [],
     sort: null,
-    subComponent: null
+    subComponent: null,
+    rowSelection: {
+      showCheckbox: false
+    }
   };
 
   constructor(props) {
@@ -135,7 +139,7 @@ export default class FlexGrid extends Component {
   };
 
   render() {
-    const { columns, data, allowSearch, sort } = this.props;
+    const { columns, data, searchable, sort, rowSelection } = this.props;
     const { rowsPerPage, currentPage, totalPages, sortedColumn, sortDirection } = this.state;
 
     return (
@@ -143,7 +147,7 @@ export default class FlexGrid extends Component {
         <div className="fg-attached-header">
           <RowsToggle setRowsPerPage={this.setRowsPerPage} rowsPerPage={rowsPerPage} />
 
-          {allowSearch && <Search setSearchText={this.setSearchText} />}
+          {searchable && <Search setSearchText={this.setSearchText} />}
         </div>
 
         <div className="fg-grid">
@@ -153,6 +157,7 @@ export default class FlexGrid extends Component {
             sortedColumn={sortedColumn}
             sortDirection={sortDirection}
             sort={sort}
+            rowSelection={rowSelection}
           />
 
           <DataRows {...this.props} {...this.state} />

@@ -9,7 +9,28 @@ import { descendString, ascendString } from './../constants';
 library.add(faChevronUp);
 library.add(faChevronDown);
 
-const Header = ({ sortData, columns, sortedColumn, sortDirection, sort }) => {
+const Header = ({ sortData, columns, sortedColumn, sortDirection, sort, rowSelection }) => {
+  const { showCheckbox } = rowSelection;
+
+  const renderCheckbox = () => {
+    if (!showCheckbox) return null;
+
+    const {
+      onColumnHeaderToggle,
+      selectBy: { values }
+    } = rowSelection;
+
+    return (
+      <span className="fg-header-column fg-checkbox-container">
+        <input
+          type="checkbox"
+          onClick={e => e.stopPropagation()}
+          onChange={e => onColumnHeaderToggle()}
+        />
+      </span>
+    );
+  };
+
   const renderColumns = () => {
     const { sortColumns } = sort;
 
@@ -54,7 +75,12 @@ const Header = ({ sortData, columns, sortedColumn, sortDirection, sort }) => {
     });
   };
 
-  return <div className="fg-header">{renderColumns()}</div>;
+  return (
+    <div className="fg-header">
+      {renderCheckbox()}
+      {renderColumns()}
+    </div>
+  );
 };
 
 export default Header;

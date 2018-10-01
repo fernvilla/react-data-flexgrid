@@ -1,11 +1,12 @@
 @import '_variables.scss';
+@import '_mixins.scss';
 
 .fg {
   font-family: $font-family;
   font-size: $font-size;
 }
 
-/* Data Grid */
+// Data Grid
 .fg-grid {
   display: flex;
   flex-direction: column;
@@ -15,7 +16,7 @@
   border-top-right-radius: 0.25em;
 }
 
-/* Top Attached Header */
+// Top Attached Header
 .fg-attached-header {
   display: flex;
   justify-content: space-between;
@@ -55,7 +56,7 @@
   }
 }
 
-/* Search */
+// Search
 .fg-search {
   display: flex;
   justify-content: flex-end;
@@ -84,7 +85,7 @@
   }
 }
 
-/* Header */
+// Header
 .fg-header {
   display: flex;
   flex-direction: row;
@@ -104,6 +105,10 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+    &.fg-checkbox-container {
+      @include column-checkbox-style();
+    }
   }
 
   .fg-header-sort-container {
@@ -122,7 +127,7 @@
   }
 }
 
-/* Data Rows */
+// Data Rows
 .fg-row {
   border-bottom: 1px solid $primary-color;
 
@@ -152,10 +157,14 @@
   .fg-row-column {
     flex: auto;
     padding: 0.75em 0.9em;
+
+    &.fg-checkbox-container {
+      @include column-checkbox-style();
+    }
   }
 }
 
-/* Footer */
+// Footer
 .fg-footer {
   display: flex;
   margin-top: 8px;

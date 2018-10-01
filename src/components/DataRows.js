@@ -35,6 +35,37 @@ class DataRows extends Component {
     this.setVisibileRow(data.rowIndex);
   };
 
+  onCheckboxChange = (e, data) => {
+    const {
+      rowSelection: { onRowSelected, onRowDeselected }
+    } = this.props;
+    const action = e.target.checked ? onRowSelected : onRowDeselected;
+
+    action(data);
+  };
+
+  renderCheckbox(data) {
+    const { rowSelection } = this.props;
+    const { showCheckbox } = rowSelection;
+
+    if (!showCheckbox) return null;
+
+    const {
+      selectBy: { rowKey, values }
+    } = rowSelection;
+
+    return (
+      <span className="fg-row-column fg-checkbox-container">
+        <input
+          type="checkbox"
+          onClick={e => e.stopPropagation()}
+          onChange={e => this.onCheckboxChange(e, data)}
+          checked={values.indexOf(data[rowKey]) > -1}
+        />
+      </span>
+    );
+  }
+
   render() {
     const {
       columns,
@@ -44,17 +75,19 @@ class DataRows extends Component {
       searchText,
       searchOptions,
       searchKeys,
-      allowSearch,
+      searchable,
       cells,
       subComponent
     } = this.props;
 
     //Use column ids as search keys if user doesnt provide any
-    const keys = searchKeys.length ? searchKeys : columns.map(c => c.name);
+    const dataSeachKeys = searchKeys.length ? searchKeys : columns.map(c => c.name);
 
     // Filter text if prop set to true and there is search text - or use all data
     const filteredData =
-      allowSearch && searchText.length ? searchData(data, searchText, searchOptions, keys) : data;
+      searchable && searchText.length
+        ? searchData(data, searchText, searchOptions, dataSeachKeys)
+        : data;
 
     // Paginate filtered data from above
     const paginatedData = filteredData.slice(
@@ -70,6 +103,8 @@ class DataRows extends Component {
           <div
             className={classNames('fg-row-data', { clickable })}
             onClick={() => this.onRowClick(data)}>
+            {this.renderCheckbox(data)}
+
             {columns.map((column, columnIndex) => {
               const { style, name } = column;
               const styles = style || null;

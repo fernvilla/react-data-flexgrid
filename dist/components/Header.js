@@ -30,7 +30,32 @@ var Header = function Header(_ref) {
       columns = _ref.columns,
       sortedColumn = _ref.sortedColumn,
       sortDirection = _ref.sortDirection,
-      sort = _ref.sort;
+      sort = _ref.sort,
+      rowSelection = _ref.rowSelection;
+  var showCheckbox = rowSelection.showCheckbox;
+
+
+  var renderCheckbox = function renderCheckbox() {
+    if (!showCheckbox) return null;
+
+    var onColumnHeaderToggle = rowSelection.onColumnHeaderToggle,
+        values = rowSelection.selectBy.values;
+
+
+    return _react2.default.createElement(
+      'span',
+      { className: 'fg-header-column fg-checkbox-container' },
+      _react2.default.createElement('input', {
+        type: 'checkbox',
+        onClick: function onClick(e) {
+          return e.stopPropagation();
+        },
+        onChange: function onChange(e) {
+          return onColumnHeaderToggle();
+        }
+      })
+    );
+  };
 
   var renderColumns = function renderColumns() {
     var sortColumns = sort.sortColumns;
@@ -83,6 +108,7 @@ var Header = function Header(_ref) {
   return _react2.default.createElement(
     'div',
     { className: 'fg-header' },
+    renderCheckbox(),
     renderColumns()
   );
 };

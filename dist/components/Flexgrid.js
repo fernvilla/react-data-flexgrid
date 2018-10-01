@@ -119,8 +119,9 @@ var FlexGrid = function (_Component) {
       var _props = this.props,
           columns = _props.columns,
           data = _props.data,
-          allowSearch = _props.allowSearch,
-          sort = _props.sort;
+          searchable = _props.searchable,
+          sort = _props.sort,
+          rowSelection = _props.rowSelection;
       var _state2 = this.state,
           rowsPerPage = _state2.rowsPerPage,
           currentPage = _state2.currentPage,
@@ -136,7 +137,7 @@ var FlexGrid = function (_Component) {
           'div',
           { className: 'fg-attached-header' },
           _react2.default.createElement(_.RowsToggle, { setRowsPerPage: this.setRowsPerPage, rowsPerPage: rowsPerPage }),
-          allowSearch && _react2.default.createElement(_.Search, { setSearchText: this.setSearchText })
+          searchable && _react2.default.createElement(_.Search, { setSearchText: this.setSearchText })
         ),
         _react2.default.createElement(
           'div',
@@ -146,7 +147,8 @@ var FlexGrid = function (_Component) {
             sortData: this.sortData,
             sortedColumn: sortedColumn,
             sortDirection: sortDirection,
-            sort: sort
+            sort: sort,
+            rowSelection: rowSelection
           }),
           _react2.default.createElement(_.DataRows, _extends({}, this.props, this.state))
         ),
@@ -170,15 +172,16 @@ FlexGrid.propTypes = {
   columns: _propTypes2.default.array.isRequired,
   cells: _propTypes2.default.func.isRequired,
   sort: _propTypes2.default.object,
-  allowSearch: _propTypes2.default.bool,
+  searchable: _propTypes2.default.bool,
   rowsPerPage: _propTypes2.default.number,
   searchOptions: _propTypes2.default.object,
   searchKeys: _propTypes2.default.array,
-  subComponent: _propTypes2.default.func
+  subComponent: _propTypes2.default.func,
+  rowSelection: _propTypes2.default.object
 };
 FlexGrid.defaultProps = {
   rowsPerPage: 10,
-  allowSearch: true,
+  searchable: true,
   searchOptions: {
     shouldSort: true,
     threshold: 0.6,
@@ -189,7 +192,10 @@ FlexGrid.defaultProps = {
   },
   searchKeys: [],
   sort: null,
-  subComponent: null
+  subComponent: null,
+  rowSelection: {
+    showCheckbox: false
+  }
 };
 
 var _initialiseProps = function _initialiseProps() {

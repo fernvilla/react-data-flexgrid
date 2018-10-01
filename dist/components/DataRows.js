@@ -64,13 +64,52 @@ var DataRows = function (_Component) {
       if (!clickable) return;
 
       _this.setVisibileRow(data.rowIndex);
+    }, _this.onCheckboxChange = function (e, data) {
+      var _this$props$rowSelect = _this.props.rowSelection,
+          onRowSelected = _this$props$rowSelect.onRowSelected,
+          onRowDeselected = _this$props$rowSelect.onRowDeselected;
+
+      var action = e.target.checked ? onRowSelected : onRowDeselected;
+
+      action(data);
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(DataRows, [{
+    key: 'renderCheckbox',
+    value: function renderCheckbox(data) {
+      var _this2 = this;
+
+      var rowSelection = this.props.rowSelection;
+      var showCheckbox = rowSelection.showCheckbox;
+
+
+      if (!showCheckbox) return null;
+
+      var _rowSelection$selectB = rowSelection.selectBy,
+          rowKey = _rowSelection$selectB.rowKey,
+          values = _rowSelection$selectB.values;
+
+
+      return _react2.default.createElement(
+        'span',
+        { className: 'fg-row-column fg-checkbox-container' },
+        _react2.default.createElement('input', {
+          type: 'checkbox',
+          onClick: function onClick(e) {
+            return e.stopPropagation();
+          },
+          onChange: function onChange(e) {
+            return _this2.onCheckboxChange(e, data);
+          },
+          checked: values.indexOf(data[rowKey]) > -1
+        })
+      );
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var _props = this.props,
           columns = _props.columns,
@@ -80,18 +119,18 @@ var DataRows = function (_Component) {
           searchText = _props.searchText,
           searchOptions = _props.searchOptions,
           searchKeys = _props.searchKeys,
-          allowSearch = _props.allowSearch,
+          searchable = _props.searchable,
           cells = _props.cells,
           subComponent = _props.subComponent;
 
       //Use column ids as search keys if user doesnt provide any
 
-      var keys = searchKeys.length ? searchKeys : columns.map(function (c) {
+      var dataSeachKeys = searchKeys.length ? searchKeys : columns.map(function (c) {
         return c.name;
       });
 
       // Filter text if prop set to true and there is search text - or use all data
-      var filteredData = allowSearch && searchText.length ? (0, _utils.searchData)(data, searchText, searchOptions, keys) : data;
+      var filteredData = searchable && searchText.length ? (0, _utils.searchData)(data, searchText, searchOptions, dataSeachKeys) : data;
 
       // Paginate filtered data from above
       var paginatedData = filteredData.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
@@ -107,8 +146,9 @@ var DataRows = function (_Component) {
             {
               className: (0, _classnames2.default)('fg-row-data', { clickable: clickable }),
               onClick: function onClick() {
-                return _this2.onRowClick(data);
+                return _this3.onRowClick(data);
               } },
+            _this3.renderCheckbox(data),
             columns.map(function (column, columnIndex) {
               var style = column.style,
                   name = column.name;
@@ -123,7 +163,7 @@ var DataRows = function (_Component) {
               );
             })
           ),
-          _this2.renderSubcomponent(data)
+          _this3.renderSubcomponent(data)
         );
       });
     }

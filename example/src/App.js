@@ -82,7 +82,7 @@ const columns = [
 ];
 
 export default class App extends Component {
-  state = { data: [] };
+  state = { data: [], selectedIds: [0, 5, 8] };
 
   componentDidMount() {
     this.fetchSampleData(amounts[2]);
@@ -96,8 +96,25 @@ export default class App extends Component {
     this.setState({ data: data(amount) });
   }
 
+  onColumnHeaderToggle = rows => {
+    console.log('onColumnHeaderToggle', rows);
+  };
+
+  onRowSelected = data => {
+    console.log('row select', data);
+    this.setState(prevState => ({ selectedIds: [...prevState.selectedIds, data.id] }));
+  };
+
+  onRowDeselected = data => {
+    console.log('row deselect', data);
+
+    this.setState(prevState => ({
+      selectedIds: prevState.selectedIds.filter(id => id !== data.id)
+    }));
+  };
+
   render() {
-    const { data } = this.state;
+    const { data, selectedIds } = this.state;
 
     return (
       <div className="example-container">
@@ -111,6 +128,7 @@ export default class App extends Component {
             ))}
           </select>
         </p>
+
         <hr />
         <br />
         <br />
@@ -120,6 +138,13 @@ export default class App extends Component {
           columns={columns}
           cells={cells}
           sort={sort}
+          rowSelection={{
+            showCheckbox: true,
+            onRowSelected: this.onRowSelected,
+            onRowDeselected: this.onRowDeselected,
+            onColumnHeaderToggle: this.onColumnHeaderToggle,
+            selectBy: { rowKey: 'id', values: selectedIds }
+          }}
           subComponent={({ data }) => {
             return <div style={{ padding: 20 }}>{JSON.stringify(data)}</div>;
           }}
